@@ -33,6 +33,11 @@ class CMGroep_Idin_Block_Adminhtml_System_Config_Support extends Mage_Adminhtml_
 {
     protected $_template = 'cm/idin/system/config/support.phtml';
 
+    /**
+     * Injects extra CSS file, only on the iDIN settings page
+     *
+     * @return Mage_Core_Block_Abstract
+     */
     protected function _prepareLayout()
     {
         $this->getLayout()->getBlock('head')->addCss('cm/idin/css/support.css');

@@ -31,40 +31,74 @@
 
 class CMGroep_Idin_Helper_Customer extends Mage_Core_Helper_Abstract
 {
+    /**
+     * Creates an user and address based off an iDIN status response
+     * Used for registration through iDIN
+     *
+     * Returns false if creation failed
+     *
+     * @param string                              $emailAddress
+     * @param \CMGroep\Idin\Models\StatusResponse $statusResponse
+     *
+     * @return false|Mage_Customer_Model_Customer
+     */
     public function createCustomer($emailAddress, \CMGroep\Idin\Models\StatusResponse $statusResponse)
     {
-        $websiteId = Mage::app()->getWebsite()->getId();
-        $store = Mage::app()->getStore();
-        $groupId = Mage::helper('customer')->getDefaultCustomerGroupId();
+        try {
+            $websiteId = Mage::app()->getWebsite()->getId();
+            $store = Mage::app()->getStore();
+            $groupId = Mage::helper('customer')->getDefaultCustomerGroupId();
 
-        $customer = Mage::getModel('customer/customer');
-        $customer->setWebsiteId($websiteId)
-            ->setStore($store)
-            ->setGroupId($groupId)
-            ->setFirstname($statusResponse->getName()->getInitials())
-            ->setMiddlename($statusResponse->getName()->getLastNamePrefix())
-            ->setLastname($statusResponse->getName()->getLastName())
-            ->setEmail($emailAddress)
-            ->setPassword($statusResponse->getBin())
-            ->setIdinBin($statusResponse->getBin());
+            $customer = Mage::getModel('customer/customer');
+            $customer->setWebsiteId($websiteId)
+                ->setStore($store)
+                ->setGroupId($groupId)
+                ->setFirstname($statusResponse->getName()->getInitials())
+                ->setMiddlename($statusResponse->getName()->getLastNamePrefix())
+                ->setLastname($statusResponse->getName()->getLastName())
+                ->setEmail($emailAddress)
+                ->setPassword($statusResponse->getBin())
+                ->setIdinBin($statusResponse->getBin());
 
-        $customer->save();
+            $customer->save();
 
-        $address = Mage::getModel('customer/address');
-        $address->setCustomerId($customer->getId())
-            ->setFirstname($customer->getFirstname())
-            ->setMiddlename($customer->getMiddlename())
-            ->setLastname($customer->getLastname())
-            ->setCountryId($statusResponse->getAddress()->getCountry())
-            ->setPostcode($statusResponse->getAddress()->getPostalCode())
-            ->setCity($statusResponse->getAddress()->getCity())
-            ->setStreet($statusResponse->getAddress()->getStreet() . ' ' . $statusResponse->getAddress()->getHouseNumber() . ' ' . $statusResponse->getAddress()->getHouseNumberSuffix())
-            ->setIsDefaultBilling(1)
-            ->setIsDefaultShipping(1)
-            ->setSaveInAddressBook(1);
+            $address = Mage::getModel('customer/address');
+            $address->setCustomerId($customer->getId())
+                ->setFirstname($customer->getFirstname())
+                ->setMiddlename($customer->getMiddlename())
+                ->setLastname($customer->getLastname())
+                ->setCountryId($statusResponse->getAddress()->getCountry())
+                ->setPostcode($statusResponse->getAddress()->getPostalCode())
+                ->setCity($statusResponse->getAddress()->getCity())
+                ->setStreet($statusResponse->getAddress()->getStreet() . ' ' . $statusResponse->getAddress()->getHouseNumber() . ' ' . $statusResponse->getAddress()->getHouseNumberSuffix())
+                ->setIsDefaultBilling(1)
+                ->setIsDefaultShipping(1)
+                ->setSaveInAddressBook(1);
 
-        $address->save();
+            $address->save();
 
-        return $customer;
+            return $customer;
+        } catch (Exception $ex) {
+            Mage::logException($ex);
+        }
+
+        return false;
+    }
+
+    /**
+     * Clears current sessions and starts an authenticated
+     * session for given customer
+     *
+     * @param Mage_Customer_model_Customer $customer
+     *
+     * @return bool
+     */
+    public function startSessionForCustomer($customer)
+    {
+        $session = Mage::getSingleton('customer/session');
+        $session->clear();
+        $session->setCustomerAsLoggedIn($customer);
+
+        return true;
     }
 }

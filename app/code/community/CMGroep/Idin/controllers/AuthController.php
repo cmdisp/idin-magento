@@ -31,6 +31,15 @@
 
 class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
 {
+    private function _getSession()
+    {
+        return Mage::getSingleton('core/session');
+    }
+
+    /**
+     * Dispatches the form request to the correct action based on the action
+     * picked by the user
+     */
     public function indexAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -38,7 +47,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
             if ($this->getRequest()->has('form_action') && $this->getRequest()->has('idin_issuer')) {
 
                 if ($this->getRequest()->get('idin_issuer') == '') {
-                    Mage::getSingleton('core/session')->addError(Mage::helper('cmgroep_idin')->__('Please select your bank'));
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Please select your bank'));
                     $this->_redirectReferer();
                     return;
                 }
@@ -53,13 +62,13 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
             }
         }
 
-        Mage::getSingleton('core/session')->addSuccess(Mage::helper('cmgroep_idin')->__('Invalid action'));
+        $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Invalid action'));
         $this->_redirectReferer();
     }
 
     /**
-     * Starts new iDIN transaction for registration
-     * and redirects user to Authentication URL of issuer
+     * Starts new iDIN transaction for registration and redirects the
+     * user to the Authentication URL of issuer
      *
      * @throws Exception
      */
@@ -77,7 +86,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                                 ->execute();
 
         /**
-         * Save transaction for later reference
+         * Save transaction for reference
          */
         Mage::getModel('cmgroep_idin/registration')
                 ->setEntranceCode($entranceCode)
@@ -97,8 +106,30 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                                             ->addFieldToFilter('transaction_id', $this->getRequest()->getParam('trxid'))
                                             ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
 
-            if ($matchingRegistrationCollection->count()) {
-                Mage::getSingleton('core/session')->addSuccess(
+            if ($matchingRegistrationCollection->count() == 1 && $registration = $matchingRegistrationCollection->getFirstItem()) {
+                $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($registration->getTransactionId());
+                $registration->setTransactionResponse(Mage::helper('cmgroep_idin/api')->serializeStatusResponse($transactionStatus));
+                $registration->save();
+
+                /**
+                 * Check if iDIN bin is already registered, if so
+                 * redirect customer to login page
+                 */
+                if (Mage::getResourceModel('customer/customer_collection')
+                        ->addFieldToFilter('idin_bin', $transactionStatus->getBin())
+                        ->count() > 0) {
+
+                    /**
+                     * Delete registration record since bin already exists
+                     */
+                    $registration->delete();
+
+                    $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('An account with your identity already exists, please login in order to continue.'));
+                    $this->_redirect('customer/account/login');
+                    return;
+                }
+
+                $this->_getSession()->addSuccess(
                     Mage::helper('cmgroep_idin')->__('iDIN verification succeeded, please finish your registration. Your iDIN session will expire after 5 minutes.')
                 );
 
@@ -108,10 +139,14 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
             }
         }
 
-        Mage::getSingleton('core/session')->addError(Mage::helper('cmgroep_idin')->__('Invalid data returned from iDIN issuer'));
+        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Invalid data returned from iDIN issuer'));
         $this->_redirect('customer/account/login');
     }
 
+    /**
+     * Finishes registration after entering an email address
+     * and starts a session for the newly created user
+     */
     public function registerAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -122,21 +157,48 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                     ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
 
                 if ($registrationCollection->count() == 1 && $registration = $registrationCollection->getFirstItem()) {
-                    $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($registration->getTransactionId());
+                    /**
+                     * Check if email address is available, otherwise
+                     * return user to form
+                     */
+                    if (Mage::getResourceModel('customer/customer_collection')
+                        ->addFieldToFilter('email', $this->getRequest()->getParam('email'))
+                        ->count() > 0) {
+                        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Emailaddress is already in use'));
+                        $this->_redirect('*/*/finish', ['trxid' => $this->getRequest()->getParam('trxid'), 'ec' => $this->getRequest()->getParam('ec')]);
+                        return;
+                    }
 
-                    $customer = Mage::helper('cmgroep_idin/customer')->createCustomer($this->getRequest()->getParam('email'), $transactionStatus);
+                    /**
+                     * Get status of transaction and delete transaction record
+                     */
+                    $transactionStatus = Mage::helper('cmgroep_idin/api')->deserializeStatusResponse($registration->getTransactionResponse());
+                    $registration->delete();
 
-                    $session = Mage::getSingleton('customer/session');
-                    $session->clear();
-                    $session->setCustomerAsLoggedIn($customer);
-
-                    Mage::getSingleton('core/session')->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully registered with iDIN!'));
-                    $this->_redirect('customer/account');
+                    /**
+                     * Create user account and login
+                     */
+                    if ($customer = Mage::helper('cmgroep_idin/customer')->createCustomer($this->getRequest()->getParam('email'), $transactionStatus)) {
+                        if (Mage::helper('cmgroep_idin/customer')->startSessionForCustomer($customer)) {
+                            $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully registered with iDIN!'));
+                            $this->_redirect('customer/account');
+                        } else {
+                            $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Could not create a new customer session!'));
+                            $this->_redirect('/');
+                        }
+                    } else {
+                        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Failed to create a new account!'));
+                        $this->_redirect('/');
+                    }
                 }
             }
         }
     }
 
+    /**
+     * Starts a new iDIN identity transaction and redirects user to the
+     * Authentication URL of issuer
+     */
     public function loginAction()
     {
         $dataHelper = Mage::helper('cmgroep_idin');
@@ -151,13 +213,15 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         $this->_redirectUrl($transactionResponse->getIssuerAuthenticationUrl());
     }
 
+    /**
+     * Starts a new session based on the identified customer's bin token
+     */
     public function authAction()
     {
         if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
             $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($this->getRequest()->get('trxid'));
 
-            if($transactionStatus->getStatus() == 'success') {
-
+            if ($transactionStatus->getStatus() == 'success') {
                 $idinBin = $transactionStatus->getBin();
                 $customerCollection = Mage::getResourceModel('customer/customer_collection')
                                     ->addFieldToFilter('idin_bin', $idinBin);
@@ -165,13 +229,16 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 if ($customerCollection->count() == 1) {
                     $customer = $customerCollection->getFirstItem();
 
-                    $session = Mage::getSingleton('customer/session');
-                    $session->clear();
-
-                    $session->setCustomerAsLoggedIn($customer);
-
-                    Mage::getSingleton('core/session')->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully logged in with iDIN!'));
-                    $this->_redirect('customer/account');
+                    if (Mage::helper('cmgroep_idin/customer')->startSessionForCustomer($customer)) {
+                        $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully logged in with iDIN!'));
+                        $this->_redirect('customer/account');
+                    } else {
+                        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Could not create a new customer session!'));
+                        $this->_redirect('/');
+                    }
+                } else {
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Could not find a matching account, please make sure your account is linked with iDIN.'));
+                    $this->_redirect('customer/account/login');
                 }
             }
         }

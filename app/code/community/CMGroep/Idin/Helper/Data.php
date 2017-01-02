@@ -34,26 +34,61 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
     const CACHE_TAG_IDIN = 'cmgroep_idin';
     const CACHE_KEY_IDIN_ISSUERS = 'cmgroup_idin_issuers';
 
+    /**
+     * Retrieves the current mode
+     *
+     * @return integer
+     */
     public function getExtensionMode()
     {
         return Mage::getStoreConfig('cmgroep_idin/common/mode');
     }
 
+    /**
+     * Retrieves the merchant token
+     *
+     * @return string
+     */
     public function getMerchantToken()
     {
         return Mage::getStoreConfig('cmgroep_idin/common/merchant_token');
     }
 
+    /**
+     * Returns whether registration is enabled or not
+     *
+     * @return bool
+     */
     public function getIdinRegistrationActive()
     {
         return Mage::getStoreConfig('cmgroep_idin/registration/active') == 1;
     }
 
+    /**
+     * Returns whether login is enabled or not
+     *
+     * @return bool
+     */
+    public function getIdinLoginActive()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/login/active') == 1;
+    }
+
+    /**
+     * Retrieves return url for registration actions
+     *
+     * @return string
+     */
     public function getFinishRegistrationUrl()
     {
         return Mage::getUrl('idin/auth/finish');
     }
 
+    /**
+     * Retrieves return url for login actions
+     *
+     * @return string
+     */
     public function getAuthReturnUrl()
     {
         return Mage::getUrl('idin/auth/auth');

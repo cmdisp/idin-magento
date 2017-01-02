@@ -31,16 +31,32 @@
 
 class CMGroep_Idin_Block_Customer_Account_Registration_Finish extends Mage_Core_Block_Template
 {
+
+    /**
+     * Retrieves the transaction ID from the request
+     *
+     * @return string
+     */
     public function getTransactionId()
     {
         return $this->getRequest()->getParam('trxid');
     }
 
+    /**
+     * Retrieves the Entrance Code from the request
+     *
+     * @return string
+     */
     public function getEntranceCode()
     {
         return $this->getRequest()->getParam('ec');
     }
 
+    /**
+     * Returns the url for finishing registration
+     *
+     * @return string
+     */
     public function getFormAction()
     {
         return $this->getUrl('*/*/register');

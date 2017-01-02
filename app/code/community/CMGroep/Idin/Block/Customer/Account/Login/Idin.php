@@ -31,8 +31,29 @@
 
 class CMGroep_Idin_Block_Customer_Account_Login_Idin extends Mage_Core_Block_Template
 {
+    /** @var array */
     protected $_issuers = null;
 
+    /** @var CMGroep_Idin_Helper_Data */
+    protected $_helper = null;
+
+    /**
+     * @return CMGroep_Idin_Helper_Data
+     */
+    public function getHelper()
+    {
+        if($this->_helper == null) {
+            $this->_helper = Mage::helper('cmgroep_idin');
+        }
+
+        return $this->_helper;
+    }
+
+    /**
+     * Retrieves available issuers
+     *
+     * @return array List of issuers
+     */
     public function getIssuers()
     {
         if ($this->_issuers == null) {
@@ -42,9 +63,45 @@ class CMGroep_Idin_Block_Customer_Account_Login_Idin extends Mage_Core_Block_Tem
         return $this->_issuers;
     }
 
+    /**
+     * @return string URL for iDIN authentication
+     */
     public function getFormAction()
     {
         return $this->getUrl('idin/auth/index');
+    }
+
+    /**
+     * Returns whether registration is enabled or not
+     *
+     * @return bool
+     */
+    public function registrationEnabled()
+    {
+        return $this->_helper->getIdinRegistrationActive();
+    }
+
+    /**
+     * Returns whether registration is enabled or not
+     *
+     * @return bool
+     */
+    public function loginEnabled()
+    {
+        return $this->_helper->getIdinLoginActive();
+    }
+
+    /**
+     * Do not render the block unless one of the authentication
+     * functions is enabled
+     *
+     * @return string
+     */
+    public function _toHtml()
+    {
+        if($this->getHelper()->getIdinLoginActive() || $this->getHelper()->getIdinRegistrationActive()) {
+            return parent::_toHtml();
+        }
     }
 }
 

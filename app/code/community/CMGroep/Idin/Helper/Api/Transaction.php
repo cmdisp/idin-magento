@@ -64,6 +64,8 @@ class CMGroep_Idin_Helper_Api_Transaction extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Starts a new transaction
+     *
      * @param $issuerId Issuer ID of bank
      * @param $entranceCode Entrance Code
      * @param $returnUrl Return url
@@ -82,6 +84,8 @@ class CMGroep_Idin_Helper_Api_Transaction extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Executes the current transaction
+     *
      * @return \CMGroep\Idin\Models\TransactionResponse
      */
     public function execute()

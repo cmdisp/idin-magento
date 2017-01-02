@@ -113,6 +113,13 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <sort_order>10</sort_order>
+
+                            <depends>
+                                <active>
+                                    <fieldset>registration</fieldset>
+                                    <value>1</value>
+                                </active>
+                            </depends>
                         </active>
                     </fields>
                 </login>
