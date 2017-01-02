@@ -1,0 +1,134 @@
+/*
+ * iDIN Colors
+ */
+/*
+ * Basic Form Components
+ */
+.cmgroep__idin__select {
+  width: 100%;
+  background: #FFF;
+  padding: 0 8px;
+  height: 30px;
+}
+.cmgroep__idin__input {
+  float: none;
+  width: 100%;
+  background: #FFF;
+  padding: 0 8px;
+  height: 30px;
+  border: 1px solid #A6A6A6;
+  border-radius: 2px;
+}
+/*
+ * Account Login and Registration
+ */
+.account-login.idin .idin-login-panel,
+.finish-registration.idin .idin-login-panel {
+  color: #000000;
+  padding: 25px 25px 25px 30px;
+  background: #d3e9ea;
+  margin: 0 0 30px 0;
+}
+.account-login.idin .idin-login-panel .info,
+.finish-registration.idin .idin-login-panel .info {
+  min-height: 76px;
+  float: left;
+  width: 40%;
+  padding: 0 25px 0 0;
+  border-right: 2px solid #FFF;
+}
+.account-login.idin .idin-login-panel .info .idin-logo,
+.finish-registration.idin .idin-login-panel .info .idin-logo {
+  float: left;
+  position: relative;
+  content: '';
+  width: 80px;
+  height: 76px;
+  background-image: url(../images/iDIN.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.account-login.idin .idin-login-panel .info .introduction,
+.finish-registration.idin .idin-login-panel .info .introduction {
+  display: table;
+  height: 76px;
+  margin: 0 0 0 100px;
+}
+.account-login.idin .idin-login-panel .info .introduction p,
+.finish-registration.idin .idin-login-panel .info .introduction p {
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 1.6;
+}
+.account-login.idin .idin-login-panel .select-issuer,
+.finish-registration.idin .idin-login-panel .select-issuer,
+.account-login.idin .idin-login-panel .email,
+.finish-registration.idin .idin-login-panel .email {
+  display: table;
+  height: 76px;
+  padding: 0 30px;
+  float: left;
+  width: 30%;
+  border-right: 2px solid #FFF;
+}
+.account-login.idin .idin-login-panel .select-issuer .form-group,
+.finish-registration.idin .idin-login-panel .select-issuer .form-group,
+.account-login.idin .idin-login-panel .email .form-group,
+.finish-registration.idin .idin-login-panel .email .form-group {
+  display: table-cell;
+  vertical-align: middle;
+}
+.account-login.idin .idin-login-panel .select-issuer .form-group label,
+.finish-registration.idin .idin-login-panel .select-issuer .form-group label,
+.account-login.idin .idin-login-panel .email .form-group label,
+.finish-registration.idin .idin-login-panel .email .form-group label {
+  margin: 0 0 5px 0;
+}
+.account-login.idin .idin-login-panel .select-issuer .form-group .cmgroep__idin__input,
+.finish-registration.idin .idin-login-panel .select-issuer .form-group .cmgroep__idin__input,
+.account-login.idin .idin-login-panel .email .form-group .cmgroep__idin__input,
+.finish-registration.idin .idin-login-panel .email .form-group .cmgroep__idin__input {
+  width: 100%;
+  padding: 0 8px;
+  height: 30px;
+}
+.account-login.idin .idin-login-panel .actions,
+.finish-registration.idin .idin-login-panel .actions {
+  display: table;
+  height: 76px;
+  padding: 0 30px;
+  float: left;
+  width: 30%;
+}
+.account-login.idin .idin-login-panel .actions .action-wrapper,
+.finish-registration.idin .idin-login-panel .actions .action-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+.account-login.idin .idin-login-panel .actions .button,
+.finish-registration.idin .idin-login-panel .actions .button {
+  width: 100%;
+}
+.account-login.idin .idin-login-panel .actions .button.register,
+.finish-registration.idin .idin-login-panel .actions .button.register {
+  background: #00b0f0;
+}
+.account-login.idin .idin-login-panel .actions .button.login,
+.finish-registration.idin .idin-login-panel .actions .button.login {
+  background: #1d5393;
+}
+.account-login.idin .idin-login-panel .actions .button:not(:first-child),
+.finish-registration.idin .idin-login-panel .actions .button:not(:first-child) {
+  margin: 0 0 0 0;
+}
+.account-login.idin .idin-login-panel .actions .button:not(:last-child),
+.finish-registration.idin .idin-login-panel .actions .button:not(:last-child) {
+  margin: 0 0 10px 0;
+}
+.account-login.idin .idin-login-panel:after,
+.finish-registration.idin .idin-login-panel:after {
+  clear: both;
+  display: table;
+  content: ' ';
+}
