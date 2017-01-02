@@ -1,0 +1,58 @@
+<?php
+/**
+ * MIT License
+ *
+ * Copyright (c) 2016 CM Groep
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @category   CMGroep
+ * @package    Idin
+ * @author     Epartment Ecommerce B.V. <support@epartment.nl>
+ * @copyright  2016-2017 CM Groep
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+?>
+<div class="finish-registration idin">
+    <div class="page-title">
+        <h1><?php echo $this->__('Finish your registration'); ?></h1>
+    </div>
+    <form action="<?php echo $this->getFormAction() ?>" method="post" class="idin-login-panel">
+        <input type="hidden" name="trxid" value="<?php echo $this->getTransactionId() ?>">
+        <input type="hidden" name="ec" value="<?php echo $this->getEntranceCode() ?>">
+        <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>">
+        <div class="info">
+            <div class="idin-logo"></div>
+            <div class="introduction">
+                <p><?php echo $this->__('Registration with iDIN is almost complete. Please enter your email address in order to finish your registration.') ?></p>
+            </div>
+        </div>
+        <div class="email">
+            <div class="form-group">
+                <label for="email_address"><?php echo $this->__('Email Address'); ?></label>
+                <input type="text" name="email" id="email_address" placeholder="<?php echo $this->__('Please enter your email address') ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Email Address')) ?>" class="cmgroep__idin__input validate-email required-entry" />
+            </div>
+        </div>
+        <div class="actions">
+            <div class="action-wrapper">
+                <button type="submit" class="button register" title="<?php echo $this->__('Login with iDIN'); ?>"><span><span><?php echo $this->__('Complete Registration'); ?></span></span></button>
+            </div>
+        </div>
+    </form>
+</div>

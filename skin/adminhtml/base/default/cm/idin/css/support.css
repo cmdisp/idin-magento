@@ -1,0 +1,151 @@
+.cmgroep_idin_support .row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.cmgroep_idin_support .row:after {
+  clear: both;
+  display: table;
+  content: " ";
+}
+.cmgroep_idin_support .row.contact-details {
+  padding: 25px 0;
+  background: #FFF;
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+}
+.cmgroep_idin_support .row.contact-details h5 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0 0 15px 0;
+}
+.cmgroep_idin_support .row.support-header {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.cmgroep_idin_support .row.support-header h1 {
+  margin-top: 0;
+}
+.cmgroep_idin_support .row .col {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+.cmgroep_idin_support .row .col-10 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 10%;
+}
+.cmgroep_idin_support .row .col-20 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 20%;
+}
+.cmgroep_idin_support .row .col-25 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 25%;
+}
+.cmgroep_idin_support .row .col-30 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 30%;
+}
+.cmgroep_idin_support .row .col-33 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 33.3%;
+}
+.cmgroep_idin_support .row .col-40 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 40%;
+}
+.cmgroep_idin_support .row .col-50 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 50%;
+}
+.cmgroep_idin_support .row .col-60 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 60%;
+}
+.cmgroep_idin_support .row .col-70 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 70%;
+}
+.cmgroep_idin_support .row .col-80 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 80%;
+}
+.cmgroep_idin_support .row .col-90 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 90%;
+}
+.cmgroep_idin_support .row .col-100 {
+  position: relative;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.cmgroep_idin_support .logo-idin-wrapper {
+  position: relative;
+}
+.cmgroep_idin_support .logo-idin-wrapper .logo-idin {
+  position: absolute;
+  width: auto;
+  max-height: 80px;
+  top: -5px;
+  right: 30px;
+  margin: 0 0 0 50px;
+}
+.cmgroep_idin_support .logo-cm {
+  width: auto;
+  max-height: 35px;
+  margin: 15px 0;
+}
+.cmgroep_idin_support .logo-epartment {
+  width: auto;
+  max-height: 45px;
+  margin: 10px 0;
+}

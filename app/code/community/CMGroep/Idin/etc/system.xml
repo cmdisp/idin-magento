@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <cmgroep_idin translate="label">
+            <tab>service</tab>
+            <label>CM iDIN</label>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <sort_order>100</sort_order>
+
+            <groups>
+                <support translate="label">
+                    <label>Contact &amp; Support</label>
+                    <expanded>1</expanded>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>10</sort_order>
+
+                    <fields>
+                        <content>
+                            <frontend_model>cmgroep_idin/adminhtml_system_config_support</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </content>
+                    </fields>
+                </support>
+                <common translate="label">
+                    <label>Common settings</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <sort_order>20</sort_order>
+
+                    <fields>
+                        <active translate="label">
+                            <label>Active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>10</sort_order>
+                        </active>
+                        <mode translate="label">
+                            <label>Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>cmgroep_idin/system_config_source_mode</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>20</sort_order>
+                        </mode>
+                        <merchant_token translate="label">
+                            <label>Merchant Token</label>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>30</sort_order>
+                        </merchant_token>
+                        <!--<available_services translate="label">-->
+                            <!--<label>Available services</label>-->
+                            <!--<frontend_model></frontend_model>-->
+                        <!--</available_services>-->
+                    </fields>
+                </common>
+                <registration translate="label">
+                    <label>Registration with iDIN</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>30</sort_order>
+
+                    <fields>
+                        <active translate="label">
+                            <label>Active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>10</sort_order>
+                        </active>
+                        <email_confirmation_template translate="label">
+                            <label>Email Confirmation Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>20</sort_order>
+                        </email_confirmation_template>
+                    </fields>
+                </registration>
+                <login translate="label">
+                    <label>Login with iDIN</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>40</sort_order>
+
+                    <fields>
+                        <active translate="label comment">
+                            <label>Active</label>
+                            <comment><![CDATA[Please note: every login action will result in a transaction with iDIN. There is a possibility this could lead to higher costs.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>10</sort_order>
+                        </active>
+                    </fields>
+                </login>
+                <age_verification translate="label">
+                    <label>18+ Age Verification with iDIN</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>50</sort_order>
+
+                    <fields>
+                        <active translate="label">
+                            <label>Active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>10</sort_order>
+                        </active>
+                        <required translate="label">
+                            <label>Age Verification Required</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>cmgroep_idin/system_config_source_verificationrequired</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>20</sort_order>
+                        </required>
+                        <block_checkout translate="label">
+                            <label>Block checkout</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>30</sort_order>
+                        </block_checkout>
+                        <filtered_shipping_method translate="label">
+                            <label>Filter shipping methods</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>adminhtml/system_config_source_shipping_allmethods</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>40</sort_order>
+
+                            <depends>
+                                <block_checkout>0</block_checkout>
+                            </depends>
+                        </filtered_shipping_method>
+                        <show_cart_notice translate="label">
+                            <label>Show shopping cart notice</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>50</sort_order>
+                        </show_cart_notice>
+                        <cart_notice translate="label">
+                            <label>Shopping cart notice</label>
+                            <frontend_type>textarea</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>60</sort_order>
+
+                            <depends>
+                                <show_cart_notice>1</show_cart_notice>
+                            </depends>
+                        </cart_notice>
+                    </fields>
+                </age_verification>
+            </groups>
+        </cmgroep_idin>
+    </sections>
+</config>

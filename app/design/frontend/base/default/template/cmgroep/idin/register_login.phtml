@@ -1,0 +1,36 @@
+<div class="account-login idin">
+    <div class="page-title">
+        <h1><?php echo $this->__('Login or Create an Account with iDIN'); ?></h1>
+    </div>
+    <form action="<?php echo $this->getFormAction(); ?>" method="post" class="idin-login-panel" id="idin-login-form">
+        <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>">
+        <div class="info">
+            <div class="idin-logo"></div>
+            <div class="introduction">
+                <p><?php echo $this->__('iDIN is a secure way of identifying yourself with the merchant. It enables quick registration and login through your bank.') ?></p>
+            </div>
+        </div>
+        <div class="select-issuer">
+            <div class="form-group">
+                <label for="idin_issuer_select"><?php echo $this->__('Select your bank') ?></label>
+                <select name="idin_issuer" id="idin_issuer_select" class="select cmgroep__idin__select required-entry">
+                    <option value=""><?php echo $this->__('Select your bank'); ?></option>
+                    <?php foreach ($this->getIssuers() as $issuerCountry => $issuers): ?>
+                        <optgroup label="<?php echo $issuerCountry ?>">
+                            <?php foreach ($issuers as $issuer): ?>
+                                <option value="<?php echo $issuer['issuer_id']; ?>"><?php echo $issuer['issuer_name']; ?></option>
+                            <?php endforeach; ?>
+                        </optgroup>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="actions">
+            <button type="submit" class="button register" name="form_action" value="register" title="<?php echo $this->__('Register with iDIN'); ?>"><span><span><?php echo $this->__('Register with iDIN'); ?></span></span></button>
+            <button type="submit" class="button login" name="form_action" value="login" title="<?php echo $this->__('Login with iDIN'); ?>"><span><span><?php echo $this->__('Login with iDIN'); ?></span></span></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        var idinForm = new VarienForm('idin-login-form');
+    </script>
+</div>

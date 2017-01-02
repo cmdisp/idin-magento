@@ -1,0 +1,12 @@
+{
+  "packageName": "IdinApi",
+  "modelPackage": "CMGroep\\Idin\\Models",
+  "apiPackage": "CMGroep\\Idin\\Api",
+  "variableNamingConvention": "snake_case",
+  "invokerPackage": "CMGroep\\Idin",
+  "packagePath": "Idin",
+  "srcBasePath": "src",
+  "composerVendorName": "cmgroep",
+  "composerProjectName": "cmgroep-php-idin",
+  "artifactVersion": "1.0.0"
+}

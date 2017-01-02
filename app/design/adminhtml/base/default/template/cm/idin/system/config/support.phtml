@@ -1,0 +1,65 @@
+<?php
+/**
+ * MIT License
+ *
+ * Copyright (c) 2016 CM Groep
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @category   CMGroep
+ * @package    Idin
+ * @author     Epartment Ecommerce B.V. <support@epartment.nl>
+ * @copyright  2016-2017 CM Groep
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+?>
+
+<div class="cmgroep_idin_support">
+    <div class="row support-header">
+        <div class="col-70">
+            <h1><?php echo $this->__('Support'); ?></h1>
+            <p><?php echo $this->__('This module is being developed by Epartment Ecommerce for CM Groep. Depending on your question you should contact Epartment Ecommerce or CM Groep.') ?></p>
+        </div>
+        <div class="col-30 logo-idin-wrapper">
+            <img src="<?php echo $this->getSkinUrl('cm/idin/images/logos/iDIN.svg') ?>" alt="<?php echo $this->__('iDIN'); ?>" class="logo-idin">
+        </div>
+    </div>
+    <div class="row contact-details">
+        <div class="col-50">
+            <h5><?php echo $this->__('Common settings and account details'); ?></h5>
+            <img src="<?php echo $this->getSkinUrl('cm/idin/images/logos/CM.svg') ?>" alt="<?php echo $this->__('CM Groep'); ?>" class="logo-cm">
+            <p><?php echo $this->__('If you need help by filling out your account details or settings up common settings, please contact CM Groep.'); ?></p>
+            <p>
+                <?php echo $this->__('Phone:'); ?> +31 (0) 76 - 572 70 00<br/>
+                <?php echo $this->__('Email:'); ?> <a href="mailto:info@cm.nl" target="_blank"><?php echo $this->__('info@cm.nl') ?></a><br/>
+                <?php echo $this->__('Support:');?> <a href="https://www.cm.nl/support" target="_blank">Support portal</a>
+            </p>
+        </div>
+        <div class="col-50">
+            <h5><?php echo $this->__('Module support and advanced configuration'); ?></h5>
+            <img src="<?php echo $this->getSkinUrl('cm/idin/images/logos/Epartment.svg') ?>" alt="<?php echo $this->__('Epartment Ecommerce'); ?>" class="logo-epartment">
+            <p><?php echo $this->__('If you\'re experiencing issues or need help with advanced topics, please contact Epartment Ecommerce.'); ?></p>
+            <p>
+                <?php echo $this->__('Support:'); ?> <a href="http://epartment.freshdesk.com/" target="_blank"><?php echo $this->__('Create a support ticket'); ?></a><br/>
+                <?php echo $this->__('Email:'); ?> <a href="mailto:support@epartment.nl" target="_blank"><?php echo $this->__('support@epartment.nl'); ?></a><br/>
+                <?php echo $this->__('Documentation:'); ?> <a href="#"><?php echo $this->__('iDIN extension documentation'); ?></a><br/>
+            </p>
+        </div>
+    </div>
+</div>

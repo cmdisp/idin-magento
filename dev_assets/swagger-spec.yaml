@@ -1,0 +1,245 @@
+swagger: '2.0'
+info:
+  title: iDIN API
+  description: CMGroep iDIN API
+  version: "1.0.0"
+host: idin-staging.cmhosting.nl
+schemes:
+  - https
+basePath: /prod/idin/v1.0
+produces:
+  - application/json
+paths:
+  /directory:
+    post:
+      summary: Retrieve issuer directory
+      description: |
+        The directory endpoint retrieves the full directory of issuers available for iDIN
+      parameters:
+        - name: merchant_token
+          in: body
+          schema:
+            $ref: '#/definitions/DirectoryRequest'
+      responses:
+        200:
+          description: An array of issuers
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DirectoryResponse'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /transaction:
+    post:
+      summary: Start a new iDIN transaction
+      description: |
+        The transaction endpoint is used for starting new iDIN transactions
+      parameters:
+        - name: merchant_token
+          in: body
+          schema:
+            $ref: '#/definitions/TransactionRequest'
+      responses:
+        200:
+          description: Details of the newly created transaction
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /status:
+    post:
+      summary: Retrieve the status of a transaction
+      description: |
+        After a transaction is finished, use this endpoint to retrieve details about the transaction
+      parameters:
+        - name: merchant_token
+          in: body
+          schema:
+            $ref: '#/definitions/StatusRequest'
+      responses:
+        200: 
+          description: Status details from the transaction, including requested information
+          schema:
+            $ref: '#/definitions/StatusResponse'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  BaseRequest:
+    type: object
+    discriminator: baseRequest
+    required:
+      - merchant_token
+    properties: 
+      merchant_token:
+        type: string
+        description: Security Token of the merchant
+  DirectoryRequest:
+    type: object
+    allOf:
+      - $ref: '#/definitions/BaseRequest'
+  DirectoryResponse:
+    type: object
+    properties:
+      country:
+        type: string
+        description: Country of the issuer
+      issuers:
+        description: An array of issuers
+        type: array
+        items:
+          $ref: '#/definitions/Issuer'
+  TransactionRequest:
+    type: object
+    allOf:
+      - $ref: '#/definitions/BaseRequest'
+      - type: object
+        required:
+         - issuer_id
+         - entrance_code
+         - merchant_return_url
+         - identity
+         - name
+         - address
+         - date_of_birth
+         - 18y_or_older
+        properties:
+          issuer_id:
+            type: string
+            description: The ID of the issuer chosen by the end-user
+          entrance_code:
+            type: string
+            description: This is a token that will allow you to rejoin the user to his session when he returns. It can be a maximum of 40 characters and should only contain the characters a-z, A-Z and 0-9
+          merchant_return_url:
+            type: string
+            description: The place where the bank should redirect the user to at the end of the flow. The bank will append two query parameters to this url when returning the user to you, trxid and ec. The latter will contain the value of entrance_code, trxid is the transaction_id that you will receive in this request.
+          language:
+            type: string
+            description: Currently only nl and en. This is the preferred language the bank will use to communicate with your user.
+          identity:
+            type: boolean
+            description: To retrieve a uniquely identifying token with the bank
+            default: false
+          name:
+            type: boolean
+            description: To retrieve name information
+            default: false
+          address:
+            type: boolean
+            description: To retrieve address information
+            default: false
+          date_of_birth:
+            type: boolean
+            description: The birthdate of the user
+            default: false
+          18y_or_older:
+            type: boolean
+            description: Is the user 18 year or older
+            default: false
+  TransactionResponse:
+    type: object
+    properties:
+      transaction_id:
+        type: string
+        description: ID of the transaction
+      issuer_authentication_url:
+        type: string
+        description: URL where the end-user should be redirected to
+  StatusRequest:
+    type: object
+    allOf:
+      - $ref: '#/definitions/BaseRequest'
+      - type: object
+        required:
+          - transaction_id
+        properties:
+          transaction_id:
+            type: string
+            description: The transaction id the details should be requested for
+  StatusResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        description: The status of the transaction
+      bin:
+        type: string
+        description: Unique token if identity was requested. This value will be consistent for recurring transactions by the same person
+      name:
+        $ref: '#/definitions/IdentityBase'
+      partner:
+        $ref: '#/definitions/IdentityBase'
+      address:
+        $ref: '#/definitions/IdentityAddress'
+      age:
+        $ref: '#/definitions/IdentityAge'
+  IdentityBase:
+    type: object
+    properties:
+      gender:
+        type: string
+        description: male or female
+      initials:
+        type: string
+        description: Initials of the person
+      last_name:
+        type: string
+        description: The last name of the person
+      last_name_prefix:
+        type: string
+        description: The prefix of the last name
+  IdentityAddress:
+    type: object
+    properties:
+      street:
+        type: string
+        description: The street of the person's address
+      house_number:
+        type: string
+        description: The house number of the person's address
+      house_number_suffix: 
+        type: string
+        description: The suffix of the house number
+      postal_code:
+        type: string
+        description: The postal code of the person's address
+      city:
+        type: string
+        description: The city of the person's address
+      country:
+        type: string
+        description: The country of the person's address
+  IdentityAge:
+    type: object
+    properties:
+      date_of_birth:
+        type: string
+        description: Date of birth of the person
+      18y_or_older:
+        type: boolean
+        description: true whether the person is 18 years or older
+  Issuer:
+    type: object
+    properties:
+      issuer_id:
+        type: string
+        description: ID of the issuer
+      issuer_name:
+        type: string
+        description: Name of the issuer
+  Error:
+    type: object
+    properties:
+      status: 
+        type: integer
+        format: int32
+      message:
+        type: string
+      code:
+        type: integer
+        format: int32

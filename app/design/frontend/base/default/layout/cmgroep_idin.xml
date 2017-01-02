@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <idin_base>
+        <reference name="head">
+            <action method="addCss">
+                <file>cm/idin/css/styles.css</file>
+            </action>
+        </reference>
+    </idin_base>
+
+    <customer_account_login>
+        <update handle="idin_base"/>
+        <reference name="content">
+            <block type="cmgroep_idin/customer_account_login_idin" template="cmgroep/idin/register_login.phtml"
+                   name="customer.account.login.idin"
+                   as="customer_account_login_idin"
+                   before="customer_form_login"/>
+        </reference>
+    </customer_account_login>
+
+    <idin_auth_finish>
+        <update handle="page_one_column"/>
+        <update handle="idin_base"/>
+        <reference name="content">
+            <block type="cmgroep_idin/customer_account_registration_finish"
+                   template="cmgroep/idin/registration/finish.phtml"
+                   name="customer.account.registration.finish"
+                   as="customer_account_registration_finish" />
+        </reference>
+    </idin_auth_finish>
+
+</layout>
