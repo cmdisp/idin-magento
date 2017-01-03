@@ -4,6 +4,9 @@
         <CMGroep_Idin>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+                <Mage_Customer />
+            </depends>
         </CMGroep_Idin>
     </modules>
 </config>

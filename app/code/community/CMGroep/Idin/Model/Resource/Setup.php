@@ -54,6 +54,9 @@ class CMGroep_Idin_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
             ->addColumn('transaction_id', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
                 'nullable' => false
             ), 'Transaction ID')
+            ->addColumn('customer_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+                'nullable' => true
+            ), 'Customer ID for existing customers')
             ->addColumn('transaction_response', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
                 'nullable' => true
             ), 'Transaction Response')

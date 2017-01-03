@@ -75,6 +75,16 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Returns whether age verification is enabled or not
+     *
+     * @return bool
+     */
+    public function getIdinAgeVerificationActive()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/age_verification/active') == 1;
+    }
+
+    /**
      * Retrieves return url for registration actions
      *
      * @return string
@@ -92,6 +102,26 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
     public function getAuthReturnUrl()
     {
         return Mage::getUrl('idin/auth/auth');
+    }
+
+    /**
+     * Retrieves return url for connecting existing accounts
+     *
+     * @return string
+     */
+    public function getConnectReturnUrl()
+    {
+        return Mage::getUrl('idin/auth/connectFinish');
+    }
+
+    /**
+     * Retrieves the return url for age verification
+     *
+     * @return string
+     */
+    public function getVerifyAgeReturnUrl()
+    {
+        return Mage::getUrl('idin/auth/verifyAgeFinish');
     }
 
     /**

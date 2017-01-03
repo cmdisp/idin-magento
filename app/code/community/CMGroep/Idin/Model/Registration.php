@@ -7,6 +7,8 @@
  * @method CMGroep_Idin_Model_Registration setEntranceCode(string $value)
  * @method string getTransactionId()
  * @method CMGroep_Idin_Model_Registration setTransactionId(string $value)
+ * @method string getCustomerId()
+ * @method CMGroep_Idin_Model_Registration setCustomerId(string $value)
  * @method string getTransactionResponse()
  * @method CMGroep_Idin_Model_Registration setTransactionResponse(string $value)
  *

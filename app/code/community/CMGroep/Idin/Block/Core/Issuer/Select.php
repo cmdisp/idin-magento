@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2016 CM Groep
+ * Copyright (c) 2017 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,62 +29,23 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-class CMGroep_Idin_Block_Customer_Account_Login_Idin extends CMGroep_Idin_Block_Abstract
+class CMGroep_Idin_Block_Core_Issuer_Select extends Mage_Core_Block_Template
 {
-    /** @var CMGroep_Idin_Helper_Data */
-    protected $_helper = null;
+    /** @var array */
+    protected $_issuers = null;
+    protected $_template = 'cmgroep/idin/core/issuer_select.phtml';
 
     /**
-     * @return CMGroep_Idin_Helper_Data
+     * Retrieves available issuers
+     *
+     * @return array List of issuers
      */
-    public function getHelper()
+    public function getIssuers()
     {
-        if($this->_helper == null) {
-            $this->_helper = Mage::helper('cmgroep_idin');
+        if ($this->_issuers == null) {
+            $this->_issuers = Mage::helper('cmgroep_idin')->getIssuerList();
         }
 
-        return $this->_helper;
-    }
-
-    /**
-     * @return string URL for iDIN authentication
-     */
-    public function getFormAction()
-    {
-        return $this->getUrl('idin/auth/index');
-    }
-
-    /**
-     * Returns whether registration is enabled or not
-     *
-     * @return bool
-     */
-    public function registrationEnabled()
-    {
-        return $this->_helper->getIdinRegistrationActive();
-    }
-
-    /**
-     * Returns whether registration is enabled or not
-     *
-     * @return bool
-     */
-    public function loginEnabled()
-    {
-        return $this->_helper->getIdinLoginActive();
-    }
-
-    /**
-     * Do not render the block unless one of the authentication
-     * functions is enabled
-     *
-     * @return string
-     */
-    public function _toHtml()
-    {
-        if($this->getHelper()->getIdinLoginActive() || $this->getHelper()->getIdinRegistrationActive()) {
-            return parent::_toHtml();
-        }
+        return $this->_issuers;
     }
 }
-

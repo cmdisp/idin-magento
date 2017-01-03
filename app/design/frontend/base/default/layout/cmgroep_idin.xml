@@ -26,8 +26,30 @@
             <block type="cmgroep_idin/customer_account_registration_finish"
                    template="cmgroep/idin/registration/finish.phtml"
                    name="customer.account.registration.finish"
-                   as="customer_account_registration_finish" />
+                   as="customer_account_registration_finish"/>
         </reference>
     </idin_auth_finish>
+
+    <customer_idin_info>
+        <update handle="idin_base" />
+        <reference name="customer_account_dashboard">
+            <block type="cmgroep_idin/customer_account_info"
+                   template="cmgroep/idin/customer/info.phtml"
+                   name="customer.idin.info" as="idin_info">
+                <action method="setChild">
+                    <name>info</name>
+                    <block>customer_account_dashboard_info</block>
+                </action>
+            </block>
+            <action method="setChild">
+                <name>info</name>
+                <block>customer.idin.info</block>
+            </action>
+        </reference>
+    </customer_idin_info>
+
+    <customer_account_index>
+        <update handle="customer_idin_info"/>
+    </customer_account_index>
 
 </layout>

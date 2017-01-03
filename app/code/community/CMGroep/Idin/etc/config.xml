@@ -53,6 +53,9 @@
                 </cmgroep_idin>
             </updates>
         </layout>
+        <events>
+            layout
+        </events>
         <routers>
             <idin>
                 <use>standard</use>

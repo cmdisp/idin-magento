@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2016 CM Groep
+ * Copyright (c) 2017 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,62 +29,15 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-class CMGroep_Idin_Block_Customer_Account_Login_Idin extends CMGroep_Idin_Block_Abstract
+class CMGroep_Idin_Block_Abstract extends Mage_Core_Block_Template
 {
-    /** @var CMGroep_Idin_Helper_Data */
-    protected $_helper = null;
-
     /**
-     * @return CMGroep_Idin_Helper_Data
-     */
-    public function getHelper()
-    {
-        if($this->_helper == null) {
-            $this->_helper = Mage::helper('cmgroep_idin');
-        }
-
-        return $this->_helper;
-    }
-
-    /**
-     * @return string URL for iDIN authentication
-     */
-    public function getFormAction()
-    {
-        return $this->getUrl('idin/auth/index');
-    }
-
-    /**
-     * Returns whether registration is enabled or not
-     *
-     * @return bool
-     */
-    public function registrationEnabled()
-    {
-        return $this->_helper->getIdinRegistrationActive();
-    }
-
-    /**
-     * Returns whether registration is enabled or not
-     *
-     * @return bool
-     */
-    public function loginEnabled()
-    {
-        return $this->_helper->getIdinLoginActive();
-    }
-
-    /**
-     * Do not render the block unless one of the authentication
-     * functions is enabled
+     * Generates Issuer Select HTML
      *
      * @return string
      */
-    public function _toHtml()
+    public function getIssuerSelectHtml()
     {
-        if($this->getHelper()->getIdinLoginActive() || $this->getHelper()->getIdinRegistrationActive()) {
-            return parent::_toHtml();
-        }
+        return $this->getLayout()->createBlock('cmgroep_idin/core_issuer_select')->toHtml();
     }
 }
-
