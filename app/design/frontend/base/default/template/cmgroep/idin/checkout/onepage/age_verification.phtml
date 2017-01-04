@@ -1,0 +1,60 @@
+<?php
+/**
+ * MIT License
+ *
+ * Copyright (c) 2017 CM Groep
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @category   CMGroep
+ * @package    Idin
+ * @author     Epartment Ecommerce B.V. <support@epartment.nl>
+ * @copyright  2016-2017 CM Groep
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+?>
+<form id="co-idin-age-verification" action="<?php echo $this->getVerifyAgeUrl(); ?>" method="post">
+    <input type="hidden" id="checkout_method" name="checkout_method" value="<?php if ($this->isCustomerLoggedIn()): ?>customer<?php endif;?>">
+    <div class="fieldset checkout-step idin-age-verification">
+        <div class="idin-logo"></div>
+        <?php if ($this->isAgeVerificationRequired()): ?>
+            <div class="idin-details">
+                <p><?php echo $this->__('In order to continue, you need to verify your age through iDIN.'); ?></p>
+                <div class="verify-action">
+                    <?php echo $this->getIssuerSelectHtml(); ?>
+                    <button type="button" onclick="ageVerification.start();" class="button"><?php echo $this->__('Verify age with iDIN') ?></button>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="idin-details">
+                <p><?php echo $this->__('Your age has been verified, you can continue to checkout.'); ?></p>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="buttons-set" id="age_verification-buttons-container">
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue')) ?>" class="button" onclick="ageVerification.save()"><span><span><?php echo $this->__('Continue') ?></span></span></button>
+        <span class="please-wait" id="age_verification-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Loading next step...')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Loading next step...')) ?>" class="v-middle" /> <?php echo $this->__('Loading next step...') ?>
+        </span>
+    </div>
+</form>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('cm/idin/js/age_verification.js') ?>"></script>
+<script type="text/javascript">
+    var ageVerification = new IdinAgeVerification('co-idin-age-verification', '<?php echo $this->getUrl('idin/onepage/verify') ?>');
+</script>

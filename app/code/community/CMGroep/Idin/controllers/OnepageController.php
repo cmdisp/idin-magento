@@ -1,5 +1,4 @@
 <?php
-
 /**
  * MIT License
  *
@@ -29,20 +28,32 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-class CMGroep_Idin_Model_Observer
+
+class CMGroep_Idin_OnepageController extends Mage_Core_Controller_Front_Action
 {
     /**
-     * Checks if order requires age verification and blocks the action if so
+     * Get one page checkout model
      *
-     * @param $event
+     * @return Mage_Checkout_Model_Type_Onepage
      */
-    public function salesOrderPlaceBefore($event)
+    public function getOnepage()
     {
-        /**
-         * Check if age verification is still required
-         */
-        if (Mage::helper('cmgroep_idin')->ageVerificationRequired()) {
-            throw new Mage_Core_Exception(Mage::helper('cmgroep_idin')->__('Can\'t place order, please verify your age in order to continue.'));
+        return Mage::getSingleton('checkout/type_onepage');
+    }
+
+    public function verifyAction()
+    {
+        if (Mage::helper('cmgroep_idin')->ageVerificationRequired() == false) {
+            $this->getOnepage()->getCheckout()
+                ->setStepData('age_verification', 'complete', true)
+                ->setStepData('age_verification', 'allow', true);
+
+            $result = array('goto_section' => 'billing', 'allow_sections' => array('age_verification'));
+        } else {
+            $result = array('error' => 1, 'message' => Mage::helper('cmgroep_idin')->__('Please verify your age'));
         }
+
+        $this->getResponse()->setHeader('Content-type', 'application/json', true);
+        return $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 }

@@ -271,3 +271,54 @@
     padding: 0 0 0 15px;
   }
 }
+
+.checkout-step {
+  &.idin-age-verification {
+    @idin-age-verification-height: 80px;
+    display: table;
+
+    width: 100%;
+    height: @idin-age-verification-height + 20px;
+    padding: 20px;
+
+    background: @idin-support-light-blue;
+    color: @idin-main-black;
+
+    .idin-logo {
+      float: left;
+      width: 70px;
+      height: @idin-age-verification-height;
+
+      background-image: url(../images/iDIN.svg);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    .idin-details {
+      p {
+        display: table-cell;
+        vertical-align: middle;
+
+        width: 60%;
+        height: @idin-age-verification-height;
+
+        padding: 0 20px;
+      }
+
+      .verify-action {
+        width: 40%;
+        display: table-cell;
+        vertical-align: middle;
+        height: @idin-age-verification-height;
+
+        .button {
+          background: @idin-main-blue;
+          width: 100%;
+
+          margin: 15px 0 0 0;
+        }
+      }
+    }
+  }
+}

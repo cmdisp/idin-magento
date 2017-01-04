@@ -225,3 +225,38 @@
   text-align: left;
   padding: 0 0 0 15px;
 }
+.checkout-step.idin-age-verification {
+  display: table;
+  width: 100%;
+  height: 100px;
+  padding: 20px;
+  background: #d3e9ea;
+  color: #000000;
+}
+.checkout-step.idin-age-verification .idin-logo {
+  float: left;
+  width: 70px;
+  height: 80px;
+  background-image: url(../images/iDIN.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.checkout-step.idin-age-verification .idin-details p {
+  display: table-cell;
+  vertical-align: middle;
+  width: 60%;
+  height: 80px;
+  padding: 0 20px;
+}
+.checkout-step.idin-age-verification .idin-details .verify-action {
+  width: 40%;
+  display: table-cell;
+  vertical-align: middle;
+  height: 80px;
+}
+.checkout-step.idin-age-verification .idin-details .verify-action .button {
+  background: #00b0f0;
+  width: 100%;
+  margin: 15px 0 0 0;
+}

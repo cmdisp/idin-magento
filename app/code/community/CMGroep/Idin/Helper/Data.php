@@ -154,6 +154,11 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::getUrl('idin/auth/verifyAgeFinish');
     }
 
+    public function getVerifyAgeCheckoutReturnUrl($checkoutMethod)
+    {
+        return Mage::getUrl('idin/auth/verifyAgeCheckoutFinish', ['checkout_method' => $checkoutMethod]);
+    }
+
     /**
      * Returns list of issuers grouped by country
      *

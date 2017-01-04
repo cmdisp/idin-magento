@@ -64,12 +64,49 @@
     </checkout_cart_index>
 
     <checkout_onepage_index>
+        <update handle="idin_base"/>
+        <reference name="checkout.onepage">
+            <block type="cmgroep_idin/checkout_onepage_verification"
+                   template="cmgroep/idin/checkout/onepage/age_verification.phtml"
+                   name="age_verification"/>
+        </reference>
+        <reference name="checkout.progress">
+            <action method="setTemplate" ifconfig="cmgroep_idin/age_verification/active">
+                <template>cmgroep/idin/checkout/onepage/progress.phtml</template>
+            </action>
+            <block type="checkout/onepage_progress"
+                   template="cmgroep/idin/checkout/onepage/progress/age_verification.phtml"
+                   name="age_verification.progress"/>
+        </reference>
         <reference name="content">
-            <block type="cmgroep_idin/checkout_onepage"
-                   name="idin.checkout.onepage"
-                   as="idin_checkout_onepage"
-                   before="-" />
+            <block type="cmgroep_idin/checkout_onepage_js"
+                   template="cmgroep/idin/checkout/onepage.phtml"
+                   name="checkout.onepage.idin.js"
+                   as="checkout_onepage_idin_js" after="-"></block>
         </reference>
     </checkout_onepage_index>
+
+    <checkout_onepage_progress>
+        <reference name="root">
+            <action method="setTemplate" ifconfig="cmgroep_idin/age_verification/active">
+                <template>cmgroep/idin/checkout/onepage/progress.phtml</template>
+            </action>
+        </reference>
+    </checkout_onepage_progress>
+
+    <checkout_onepage_progress_age_verification>
+        <remove name="right"/>
+        <remove name="left"/>
+
+        <block type="checkout/onepage_progress"
+               name="root"
+               output="toHtml"
+               template="cmgroep/idin/checkout/onepage/progress/age_verification.phtml">
+            <action method="setInfoTemplate">
+                <method></method>
+                <template></template>
+            </action>
+        </block>
+    </checkout_onepage_progress_age_verification>
 
 </layout>

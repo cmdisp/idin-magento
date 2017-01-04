@@ -1,5 +1,4 @@
 <?php
-
 /**
  * MIT License
  *
@@ -29,20 +28,17 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-class CMGroep_Idin_Model_Observer
-{
-    /**
-     * Checks if order requires age verification and blocks the action if so
-     *
-     * @param $event
-     */
-    public function salesOrderPlaceBefore($event)
-    {
-        /**
-         * Check if age verification is still required
-         */
-        if (Mage::helper('cmgroep_idin')->ageVerificationRequired()) {
-            throw new Mage_Core_Exception(Mage::helper('cmgroep_idin')->__('Can\'t place order, please verify your age in order to continue.'));
-        }
-    }
-}
+?>
+<?php if ($this->getCheckout()->getStepData('age_verification', 'complete')): ?>
+    <dt class="complete">
+        <?php echo $this->__('Age Verification') ?>
+    </dt>
+    <dd class="complete">
+        <?php echo $this->__('Your age has been verified!'); ?>
+    </dd>
+<?php else: ?>
+    <dt>
+        <?php echo $this->__('Age Verification') ?>
+    </dt>
+<?php endif; ?>
+

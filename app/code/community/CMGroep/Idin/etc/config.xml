@@ -24,6 +24,11 @@
             <cmgroep_idin>
                 <class>CMGroep_Idin_Block</class>
             </cmgroep_idin>
+            <checkout>
+                <rewrite>
+                    <onepage>CMGroep_Idin_Block_Checkout_Onepage</onepage>
+                </rewrite>
+            </checkout>
         </blocks>
         <helpers>
             <cmgroep_idin>

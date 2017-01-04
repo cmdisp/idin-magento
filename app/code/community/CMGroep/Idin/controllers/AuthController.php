@@ -360,33 +360,40 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
     public function verifyAgeAction()
     {
         if ($this->getRequest()->isPost() && $this->getRequest()->has('idin_issuer')) {
+            $dataHelper = Mage::helper('cmgroep_idin');
+            $apiHelper = Mage::helper('cmgroep_idin/api');
+            $entranceCode = $apiHelper->generateEntranceCode();
+
+            $verifyAgeUrl = $dataHelper->getVerifyAgeReturnUrl();
+            if ($this->getRequest()->has('mode') && $this->getRequest()->getParam('mode') == 'checkout') {
+                $verifyAgeUrl = $dataHelper->getVerifyAgeCheckoutReturnUrl($this->getRequest()->getParam('checkout_method'));
+            }
+
+            /**
+             * Log transaction referencing existing customer or quote
+             */
+            $registration = Mage::getModel('cmgroep_idin/registration')
+                ->setEntranceCode($entranceCode);
+
             if (Mage::helper('customer')->isLoggedIn()) {
                 $customer = Mage::helper('customer')->getCurrentCustomer();
+                $registration->setCustomerId($customer->getId());
+            }
 
-                $dataHelper = Mage::helper('cmgroep_idin');
-                $apiHelper = Mage::helper('cmgroep_idin/api');
-                $entranceCode = $apiHelper->generateEntranceCode();
+            if ($this->getRequest()->get('mode') == 'checkout') {
+                $registration->setQuoteId(Mage::helper('checkout')->getQuote()->getId());
+            }
 
+            if (($this->getRequest()->has('mode') && $this->getRequest()->getParam('mode') == 'checkout') ||
+                ($this->getRequest()->has('mode') == false && Mage::helper('customer')->isLoggedIn())) {
                 $transaction = Mage::helper('cmgroep_idin/api_transaction')
-                    ->start($this->getRequest()->getParam('idin_issuer'), $entranceCode, $dataHelper->getVerifyAgeReturnUrl())
-                    ->withIdentity();
-
-                /**
-                 * If age verification is enabled, add it to the request
-                 */
-                if ($dataHelper->getIdinAgeVerificationActive()) {
-                    $transaction->with18yOrOlder();
-                }
+                    ->start($this->getRequest()->getParam('idin_issuer'), $entranceCode, $verifyAgeUrl)
+                    ->withIdentity()
+                    ->with18yOrOlder();
 
                 $transactionResponse = $transaction->execute();
 
-                /**
-                 * Log transaction referencing existing customer
-                 */
-                Mage::getModel('cmgroep_idin/registration')
-                    ->setTransactionId($transactionResponse->getTransactionId())
-                    ->setEntranceCode($entranceCode)
-                    ->setCustomerId($customer->getId())
+                $registration->setTransactionId($transactionResponse->getTransactionId())
                     ->save();
 
                 $this->_redirectUrl($transactionResponse->getIssuerAuthenticationUrl());
@@ -438,5 +445,48 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Invalid request data'));
         $this->_redirect('/');
         return;
+    }
+
+    public function verifyAgeCheckoutFinishAction()
+    {
+        if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
+            $matchingRegistrations = Mage::getResourceModel('cmgroep_idin/registration_collection')
+                ->addFieldToFilter('transaction_id', $this->getRequest()->getParam('trxid'))
+                ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
+
+            if ($matchingRegistrations->count() == 1) {
+                /** @var CMGroep_Idin_Model_Registration $registration */
+                $registration = $matchingRegistrations->getFirstItem();
+                $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($this->getRequest()->getParam('trxid'));
+
+                /**
+                 * If customer was logged in during checkout, save verification for recurring visits
+                 */
+                if (is_null($registration->getCustomerId()) == false) {
+                    $customer = Mage::getModel('customer/customer')->load($registration->getCustomerId());
+                    $customer->setIdinAgeVerified($transactionStatus->getAge()->get18yOrOlder() ? 1 : 0);
+                    $customer->save();
+                }
+
+                /**
+                 * Save verification result on quote
+                 */
+                if (is_null($registration->getQuoteId()) == false) {
+                    $quote = Mage::getModel('sales/quote')->load($registration->getQuoteId());
+                    $quote->setIdinAgeVerified($transactionStatus->getAge()->get18yOrOlder() ? 1 : 0);
+                    $quote->save();
+                }
+
+                $registration->delete();
+
+                $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully verified your age with iDIN!'));
+                $this->_getSession()->setData('idin_checkout_method', $this->getRequest()->getParam('checkout_method'));
+                $this->_redirectUrl(Mage::helper('checkout/url')->getCheckoutUrl());
+                return;
+            }
+        }
+
+        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Invalid request data'));
+        return $this->_redirect('/');
     }
 }
