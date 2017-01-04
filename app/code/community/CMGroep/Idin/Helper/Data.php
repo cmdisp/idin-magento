@@ -85,6 +85,36 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Retrieves the age requirement setting
+     *
+     * @return int
+     */
+    public function getIdinAgeVerificationRequired()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/age_verification/required');
+    }
+
+    /**
+     * Determines is cart notice is enabled
+     *
+     * @return bool
+     */
+    public function getIdinAgeVerificationCartNoticeEnabled()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/age_verification/show_cart_notice') == 1;
+    }
+
+    /**
+     * Retrieves the cart notice to be shown
+     *
+     * @return string
+     */
+    public function getIdinAgeCartVerificationNotice()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/age_verification/cart_notice');
+    }
+
+    /**
      * Retrieves return url for registration actions
      *
      * @return string
@@ -160,5 +190,75 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
 
             return $issuersPerCountry;
         }
+    }
+
+    /**
+     * Determines if verification is required
+     * Checks:
+     *  - Age Verification required or 18+ products
+     *  - 18+ products in cart
+     *  - Customers age verification status
+     *
+     * @return bool
+     */
+    public function ageVerificationRequired()
+    {
+        $customerHelper = Mage::helper('customer');
+        $ageVerified = false;
+
+        if ($customerHelper->isLoggedIn()) {
+            /**
+             * Check customers verification status
+             */
+            if ($customerHelper->getCurrentCustomer()->getIdinAgeVerified()) {
+                $ageVerified = true;
+            }
+        } else {
+            /**
+             * Check current quote session verification status
+             */
+            $quote = Mage::helper('checkout/cart')->getQuote();
+            if ($quote->getIdinAgeVerified()) {
+                $ageVerified = true;
+            }
+        }
+
+        /**
+         * Skip extra processing if age is verified
+         */
+        if ($ageVerified) {
+            return false;
+        }
+
+        if ($this->getIdinAgeVerificationRequired() == CMGroep_Idin_Model_System_Config_Source_Verificationrequired::MODE_ALWAYS) {
+            /**
+             * Verification is always required
+             */
+            return $ageVerified == false;
+        }
+        elseif ($this->getIdinAgeVerificationRequired() == CMGroep_Idin_Model_System_Config_Source_Verificationrequired::MODE_PRODUCTS) {
+            /**
+             * Check cart for 18+ products
+             */
+
+            /** @var Mage_Sales_Model_Quote_Item[] $cartItems */
+            $cartItems = Mage::helper('checkout/cart')->getQuote()->getAllItems();
+
+            /** @var Mage_Sales_Model_Quote_Item $productIds */
+            $cartProductIds = array_map(function($cartItem) {
+                return $cartItem->getProductId();
+            }, $cartItems);
+
+            $productsWithRequiredAgeVerification = Mage::getResourceModel('catalog/product_collection')
+                ->addAttributeToSelect('idin_require_age_verification')
+                ->addFieldToFilter('entity_id', array('in' => $cartProductIds))
+                ->addAttributeToFilter('idin_require_age_verification', 1);
+
+            if($productsWithRequiredAgeVerification->count() > 0) {
+                return $ageVerified == false;
+            }
+        }
+
+        return false;
     }
 }

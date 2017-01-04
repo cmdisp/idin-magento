@@ -31,21 +31,6 @@
 
 class CMGroep_Idin_Block_Customer_Account_Login_Idin extends CMGroep_Idin_Block_Abstract
 {
-    /** @var CMGroep_Idin_Helper_Data */
-    protected $_helper = null;
-
-    /**
-     * @return CMGroep_Idin_Helper_Data
-     */
-    public function getHelper()
-    {
-        if($this->_helper == null) {
-            $this->_helper = Mage::helper('cmgroep_idin');
-        }
-
-        return $this->_helper;
-    }
-
     /**
      * @return string URL for iDIN authentication
      */

@@ -5,4 +5,5 @@ $installer = $this;
 
 $installer->startSetup();
 $installer->createPendingRegistrationsTable();
+$installer->addExtraColumnsToQuoteTable();
 $installer->endSetup();

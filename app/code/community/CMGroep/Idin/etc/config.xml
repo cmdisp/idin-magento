@@ -40,12 +40,23 @@
             <cmgroep_idin_entity_setup>
                 <setup>
                     <module>CMGroep_Idin</module>
-                    <class>Mage_Eav_Model_Entity_Setup</class>
+                    <class>CMGroep_Idin_Model_Entity_Setup</class>
                 </setup>
             </cmgroep_idin_entity_setup>
         </resources>
     </global>
     <frontend>
+        <events>
+            <sales_order_place_before>
+                <observers>
+                    <cmgroep_idin>
+                        <type>model</type>
+                        <class>CMGroep_Idin_Model_Observer</class>
+                        <method>salesOrderPlaceBefore</method>
+                    </cmgroep_idin>
+                </observers>
+            </sales_order_place_before>
+        </events>
         <layout>
             <updates>
                 <cmgroep_idin>
@@ -53,9 +64,6 @@
                 </cmgroep_idin>
             </updates>
         </layout>
-        <events>
-            layout
-        </events>
         <routers>
             <idin>
                 <use>standard</use>

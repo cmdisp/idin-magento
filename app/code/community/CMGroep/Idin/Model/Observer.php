@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MIT License
  *
@@ -28,31 +29,20 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-
-class CMGroep_Idin_Block_Abstract extends Mage_Core_Block_Template
+class CMGroep_Idin_Model_Observer
 {
-    /** @var CMGroep_Idin_Helper_Data */
-    protected $_helper = null;
-
     /**
-     * @return CMGroep_Idin_Helper_Data
-     */
-    public function getHelper()
-    {
-        if($this->_helper == null) {
-            $this->_helper = Mage::helper('cmgroep_idin');
-        }
-
-        return $this->_helper;
-    }
-
-    /**
-     * Generates Issuer Select HTML
+     * Checks if order requires age verification and blocks the action if so
      *
-     * @return string
+     * @param $event
      */
-    public function getIssuerSelectHtml()
+    public function salesOrderPlaceBefore($event)
     {
-        return $this->getLayout()->createBlock('cmgroep_idin/core_issuer_select')->toHtml();
+        /**
+         * Check if age verification is still required
+         */
+        if (Mage::helper('cmgroep_idin')->ageVerificationRequired()) {
+            throw new Exception(Mage::helper('cmgroep_idin')->__('Can\'t place order, please verify your age in order to continue.'));
+        }
     }
 }

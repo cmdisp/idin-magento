@@ -28,31 +28,8 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-
-class CMGroep_Idin_Block_Abstract extends Mage_Core_Block_Template
-{
-    /** @var CMGroep_Idin_Helper_Data */
-    protected $_helper = null;
-
-    /**
-     * @return CMGroep_Idin_Helper_Data
-     */
-    public function getHelper()
-    {
-        if($this->_helper == null) {
-            $this->_helper = Mage::helper('cmgroep_idin');
-        }
-
-        return $this->_helper;
-    }
-
-    /**
-     * Generates Issuer Select HTML
-     *
-     * @return string
-     */
-    public function getIssuerSelectHtml()
-    {
-        return $this->getLayout()->createBlock('cmgroep_idin/core_issuer_select')->toHtml();
-    }
-}
+?>
+<div class="cart-idin-notice">
+    <div class="idin-logo"></div>
+    <span><?php echo $this->getCartNotice(); ?></span>
+</div>

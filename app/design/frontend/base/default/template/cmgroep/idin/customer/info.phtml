@@ -41,7 +41,7 @@
                         <?php if ($this->customerHasVerifiedAge()): ?>
                             <span><?php echo $this->__('Your age has been verified through iDIN.'); ?></span>
                         <?php else: ?>
-                            <span><?php echo $this->__('Your age has not yet been verified through iDIN or you\'re not 18 years or older'); ?></span>
+                            <span><?php echo $this->__('Your age has not yet been verified through iDIN or you\'re not at least 18 years of age'); ?></span>
                             <div class="action-wrapper">
                                 <form action="<?php echo $this->getVerifyAgeWithIdinUrl(); ?>" method="post">
                                     <?php echo $this->getIssuerSelectHtml(); ?>

@@ -29,30 +29,28 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-class CMGroep_Idin_Block_Abstract extends Mage_Core_Block_Template
+class CMGroep_Idin_Block_Checkout_Cart_Notice extends CMGroep_Idin_Block_Abstract
 {
-    /** @var CMGroep_Idin_Helper_Data */
-    protected $_helper = null;
 
     /**
-     * @return CMGroep_Idin_Helper_Data
-     */
-    public function getHelper()
-    {
-        if($this->_helper == null) {
-            $this->_helper = Mage::helper('cmgroep_idin');
-        }
-
-        return $this->_helper;
-    }
-
-    /**
-     * Generates Issuer Select HTML
+     * Only render when verification is still required and notice is enabled
      *
      * @return string
      */
-    public function getIssuerSelectHtml()
+    public function _toHtml()
     {
-        return $this->getLayout()->createBlock('cmgroep_idin/core_issuer_select')->toHtml();
+        if ($this->getHelper()->getIdinAgeVerificationCartNoticeEnabled() && $this->getHelper()->ageVerificationRequired()) {
+            return parent::_toHtml();
+        }
+    }
+
+    /**
+     * Retrieve cart notice from settings
+     *
+     * @return string
+     */
+    public function getCartNotice()
+    {
+        return $this->getHelper()->getIdinAgeCartVerificationNotice();
     }
 }

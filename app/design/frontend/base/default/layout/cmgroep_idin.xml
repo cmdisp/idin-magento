@@ -31,7 +31,7 @@
     </idin_auth_finish>
 
     <customer_idin_info>
-        <update handle="idin_base" />
+        <update handle="idin_base"/>
         <reference name="customer_account_dashboard">
             <block type="cmgroep_idin/customer_account_info"
                    template="cmgroep/idin/customer/info.phtml"
@@ -51,5 +51,25 @@
     <customer_account_index>
         <update handle="customer_idin_info"/>
     </customer_account_index>
+
+    <checkout_cart_index>
+        <update handle="idin_base"/>
+        <reference name="content">
+            <block type="cmgroep_idin/checkout_cart_notice"
+                   template="cmgroep/idin/checkout/cart/notice.phtml"
+                   name="idin.cart.notice"
+                   as="idin_cart_notice"
+                   before="-"/>
+        </reference>
+    </checkout_cart_index>
+
+    <checkout_onepage_index>
+        <reference name="content">
+            <block type="cmgroep_idin/checkout_onepage"
+                   name="idin.checkout.onepage"
+                   as="idin_checkout_onepage"
+                   before="-" />
+        </reference>
+    </checkout_onepage_index>
 
 </layout>

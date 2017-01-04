@@ -158,6 +158,8 @@
   width: 100%;
   height: 80px;
 
+  color: @idin-main-black;
+
   &:after {
     clear: both;
     display: table;
@@ -232,5 +234,40 @@
       top: -40px;
       right: 0;
     }
+  }
+}
+
+.cart-idin-notice {
+  @cart-notice-height: 40px;
+
+  display: table;
+
+  width: 100%;
+  padding: 20px;
+  margin: 0 0 25px 0;
+
+  background: @idin-support-light-blue;
+  color: @idin-main-black;
+
+  .idin-logo {
+    display: table-cell;
+    vertical-align: middle;
+
+    width: 50px;
+    height: @cart-notice-height;
+
+    background-image: url(../images/iDIN.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  span {
+    display: table-cell;
+    vertical-align: middle;
+    height: @cart-notice-height;
+
+    text-align: left;
+    padding: 0 0 0 15px;
   }
 }

@@ -31,28 +31,10 @@
 
 class CMGroep_Idin_Block_Customer_Account_Info extends CMGroep_Idin_Block_Abstract
 {
-
-    /**
-     * @var CMGroep_Idin_Helper_Data
-     */
-    protected $_helper;
-
     /**
      * @var Mage_Customer_Model_Customer
      */
     protected $_customer;
-
-    /**
-     * @return CMGroep_Idin_Helper_Data
-     */
-    public function getHelper()
-    {
-        if ($this->_helper == null) {
-            $this->_helper = Mage::helper('cmgroep_idin');
-        }
-
-        return $this->_helper;
-    }
 
     public function getCustomer()
     {

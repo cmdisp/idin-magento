@@ -31,8 +31,7 @@
 
 class CMGroep_Idin_Model_System_Config_Source_Verificationrequired
 {
-    const MODE_NO = 0;
-    const MODE_YES = 1;
+    const MODE_ALWAYS = 1;
     const MODE_PRODUCTS = 2;
 
     /**
@@ -43,8 +42,7 @@ class CMGroep_Idin_Model_System_Config_Source_Verificationrequired
     public function toOptionArray()
     {
         return array(
-            array('value' => self::MODE_YES, 'label' => Mage::helper('cmgroep_idin')->__('Yes')),
-            array('value' => self::MODE_NO, 'label' => Mage::helper('cmgroep_idin')->__('No')),
+            array('value' => self::MODE_ALWAYS, 'label' => Mage::helper('cmgroep_idin')->__('Always')),
             array('value' => self::MODE_PRODUCTS, 'label' => Mage::helper('cmgroep_idin')->__('Only 18+ products')),
         );
     }
@@ -57,8 +55,7 @@ class CMGroep_Idin_Model_System_Config_Source_Verificationrequired
     public function toArray()
     {
         return array(
-            self::MODE_YES => Mage::helper('cmgroep_idin')->__('Yes'),
-            self::MODE_NO => Mage::helper('cmgroep_idin')->__('No'),
+            self::MODE_ALWAYS => Mage::helper('cmgroep_idin')->__('Always'),
             self::MODE_PRODUCTS => Mage::helper('cmgroep_idin')->__('Only 18+ products'),
         );
     }

@@ -57,6 +57,9 @@ class CMGroep_Idin_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
             ->addColumn('customer_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
                 'nullable' => true
             ), 'Customer ID for existing customers')
+            ->addColumn('quote_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+                'nullable' => true
+            ), 'Quote ID for guest checkout')
             ->addColumn('transaction_response', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
                 'nullable' => true
             ), 'Transaction Response')
@@ -67,6 +70,25 @@ class CMGroep_Idin_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
                 ), array('entrance_code', 'transaction_id'));
 
         $this->getConnection()->createTable($table);
+
+        return true;
+    }
+
+    /**
+     * Adds extra column to quote table for age verification
+     *
+     * @return bool
+     */
+    public function addExtraColumnsToQuoteTable()
+    {
+        $tableName = $this->getTable('sales/quote');
+        $this->getConnection()->addColumn($tableName, 'idin_age_verified', array(
+            'type'     => Varien_Db_Ddl_Table::TYPE_INTEGER,
+            'length'   => 1,
+            'nullable' => false,
+            'default' => 0,
+            'comment' => 'iDIN Age Verification Status'
+        ));
 
         return true;
     }
