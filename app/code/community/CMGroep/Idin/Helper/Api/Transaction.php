@@ -33,7 +33,6 @@ include(Mage::getBaseDir('lib') . DS . 'CMGroep' . DS . 'Idin' . DS . 'autoload.
 
 class CMGroep_Idin_Helper_Api_Transaction extends Mage_Core_Helper_Abstract
 {
-
     /**
      * @var CMGroep_Idin_Helper_Api
      */
@@ -54,11 +53,11 @@ class CMGroep_Idin_Helper_Api_Transaction extends Mage_Core_Helper_Abstract
      */
     public function __construct()
     {
-        if($this->_apiHelper == null) {
+        if ($this->_apiHelper == null) {
             $this->_apiHelper = Mage::helper('cmgroep_idin/api');
         }
 
-        if($this->_idinApi == null) {
+        if ($this->_idinApi == null) {
             $this->_idinApi = $this->_apiHelper->getIdinApi();
         }
     }

@@ -39,7 +39,7 @@ class CMGroep_Idin_Block_Abstract extends Mage_Core_Block_Template
      */
     public function getHelper()
     {
-        if($this->_helper == null) {
+        if ($this->_helper == null) {
             $this->_helper = Mage::helper('cmgroep_idin');
         }
 

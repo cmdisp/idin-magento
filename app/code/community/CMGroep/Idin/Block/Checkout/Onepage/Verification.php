@@ -39,7 +39,7 @@ class CMGroep_Idin_Block_Checkout_Onepage_Verification extends Mage_Checkout_Blo
      */
     public function getHelper()
     {
-        if($this->_helper == null) {
+        if ($this->_helper == null) {
             $this->_helper = Mage::helper('cmgroep_idin');
         }
 
@@ -56,6 +56,10 @@ class CMGroep_Idin_Block_Checkout_Onepage_Verification extends Mage_Checkout_Blo
         return $this->getLayout()->createBlock('cmgroep_idin/core_issuer_select')->toHtml();
     }
 
+    /**
+     * Add step data for age verification
+     * Disable billing step if verification is required
+     */
     protected function _construct()
     {
         $this->getCheckout()->setStepData('age_verification', array(
@@ -71,16 +75,31 @@ class CMGroep_Idin_Block_Checkout_Onepage_Verification extends Mage_Checkout_Blo
         parent::_construct();
     }
 
+    /**
+     * Determines if verification is required
+     *
+     * @return bool
+     */
     public function isAgeVerificationRequired()
     {
         return $this->getHelper()->ageVerificationRequired();
     }
 
+    /**
+     * Get url for starting age verification from the checkout
+     *
+     * @return string
+     */
     public function getVerifyAgeUrl()
     {
         return Mage::getUrl('idin/auth/verifyAge', ['mode' => 'checkout']);
     }
 
+    /**
+     * Only render when age verification is active
+     *
+     * @return string
+     */
     public function _toHtml()
     {
         if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()) {

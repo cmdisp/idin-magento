@@ -37,6 +37,9 @@ IdinAgeVerification.prototype = {
         this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
     },
 
+    /**
+     * Starts the Age Verification Transaction
+     */
     start: function() {
         if ($('checkout_method').value != 'customer') {
             $('checkout_method').value = checkout.method;
@@ -45,6 +48,9 @@ IdinAgeVerification.prototype = {
         $(this.form).submit();
     },
 
+    /**
+     * Calls the verify action and continues the checkout
+     */
     save: function() {
         if (checkout.loadWaiting != false) return;
 
@@ -61,6 +67,12 @@ IdinAgeVerification.prototype = {
         );
     },
 
+    /**
+     * Parses the response from the verify action and triggers the next
+     * checkout step
+     *
+     * @param transport
+     */
     nextStep: function(transport) {
         var response = transport.responseJSON || transport.responseText.evalJSON(true) || {};
 
@@ -73,6 +85,11 @@ IdinAgeVerification.prototype = {
         checkout.setStepResponse(response);
     },
 
+    /**
+     * Resets the step loading indicator
+     *
+     * @param transport
+     */
     resetLoadWaiting: function(transport) {
         checkout.setLoadWaiting(false);
         document.body.fire('age_verification-request:completed', {transport: transport});

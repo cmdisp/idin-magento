@@ -36,6 +36,11 @@ class CMGroep_Idin_Block_Customer_Account_Info extends CMGroep_Idin_Block_Abstra
      */
     protected $_customer;
 
+    /**
+     * Gets the current customer
+     *
+     * @return Mage_Customer_Model_Customer
+     */
     public function getCustomer()
     {
         if ($this->_customer == null) {

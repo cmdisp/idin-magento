@@ -33,6 +33,7 @@ class CMGroep_Idin_Block_Core_Issuer_Select extends Mage_Core_Block_Template
 {
     /** @var array */
     protected $_issuers = null;
+
     protected $_template = 'cmgroep/idin/core/issuer_select.phtml';
 
     /**

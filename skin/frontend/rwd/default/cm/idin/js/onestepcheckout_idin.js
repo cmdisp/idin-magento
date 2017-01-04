@@ -37,11 +37,15 @@ IdinOneStepCheckout.prototype = {
 
         this.insertIdinContainer();
 
-        if(this.requireVerification) {
+        if (this.requireVerification) {
             this.disableOneStepCheckout();
         }
     },
 
+    /**
+     * Inserts the iDIN template above the checkout because
+     * of missing layout handles in OneStepCheckout
+     */
     insertIdinContainer: function() {
         var element = $(this.idinContainer).remove();
         $(this.aboveContainer).insert({
@@ -51,10 +55,16 @@ IdinOneStepCheckout.prototype = {
         element.show();
     },
 
+    /**
+     * Adds the class for disabling the checkout on CSS level
+     */
     disableOneStepCheckout: function() {
         $('onestepcheckout-form').addClassName('idin-disabled');
     },
 
+    /**
+     * Starts the age verification transaction
+     */
     start: function() {
         $(this.form).submit();
     }

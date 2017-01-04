@@ -39,7 +39,7 @@ class CMGroep_Idin_Block_Checkout_Thirdparty_Abstract extends Mage_Core_Block_Te
      */
     public function getHelper()
     {
-        if($this->_helper == null) {
+        if ($this->_helper == null) {
             $this->_helper = Mage::helper('cmgroep_idin');
         }
 
@@ -56,16 +56,31 @@ class CMGroep_Idin_Block_Checkout_Thirdparty_Abstract extends Mage_Core_Block_Te
         return $this->getLayout()->createBlock('cmgroep_idin/core_issuer_select')->toHtml();
     }
 
+    /**
+     * Determines if verification is required
+     *
+     * @return bool
+     */
     public function isAgeVerificationRequired()
     {
         return $this->getHelper()->ageVerificationRequired();
     }
 
+    /**
+     * Get url for starting age verification from the checkout
+     *
+     * @return string
+     */
     public function getVerifyAgeUrl()
     {
         return Mage::getUrl('idin/auth/verifyAge', ['mode' => 'checkout']);
     }
 
+    /**
+     * Only render when age verification is active
+     *
+     * @return string
+     */
     public function _toHtml()
     {
         if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()) {

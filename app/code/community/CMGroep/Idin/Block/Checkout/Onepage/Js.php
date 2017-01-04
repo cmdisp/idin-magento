@@ -31,6 +31,11 @@
 
 class CMGroep_Idin_Block_Checkout_Onepage_Js extends Mage_Core_Block_Template
 {
+    /**
+     * Only render when age verification is active
+     *
+     * @return string
+     */
     public function _toHtml()
     {
         if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()) {
@@ -38,6 +43,12 @@ class CMGroep_Idin_Block_Checkout_Onepage_Js extends Mage_Core_Block_Template
         }
     }
 
+    /**
+     * Get checkout method after age verification in order to
+     * skip the authentication step in OnePageCheckout
+     *
+     * @return string
+     */
     public function getCheckoutMethod()
     {
         return Mage::getSingleton('core/session')->getData('idin_checkout_method');

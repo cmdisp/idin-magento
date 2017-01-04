@@ -49,10 +49,10 @@
         </div>
         <div class="actions">
             <div class="action-wrapper">
-                <?php if($this->registrationEnabled()): ?>
+                <?php if ($this->registrationEnabled()): ?>
                     <button type="submit" class="button register" name="form_action" value="register" title="<?php echo $this->__('Register with iDIN'); ?>"><span><span><?php echo $this->__('Register with iDIN'); ?></span></span></button>
                 <?php endif; ?>
-                <?php if($this->loginEnabled()): ?>
+                <?php if ($this->loginEnabled()): ?>
                     <button type="submit" class="button login" name="form_action" value="login" title="<?php echo $this->__('Login with iDIN'); ?>"><span><span><?php echo $this->__('Login with iDIN'); ?></span></span></button>
                 <?php endif; ?>
             </div>

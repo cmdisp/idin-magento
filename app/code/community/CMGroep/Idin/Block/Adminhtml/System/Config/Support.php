@@ -44,6 +44,13 @@ class CMGroep_Idin_Block_Adminhtml_System_Config_Support extends Mage_Adminhtml_
         return parent::_prepareLayout();
     }
 
+    /**
+     * Renders the template
+     *
+     * @param Varien_Data_Form_Element_Abstract $element
+     *
+     * @return string
+     */
     public function render(Varien_Data_Form_Element_Abstract $element)
     {
         return $this->toHtml();

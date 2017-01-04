@@ -31,7 +31,6 @@
 
 class CMGroep_Idin_Block_Customer_Account_Registration_Finish extends Mage_Core_Block_Template
 {
-
     /**
      * Retrieves the transaction ID from the request
      *

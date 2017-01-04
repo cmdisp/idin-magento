@@ -31,7 +31,6 @@
 
 class CMGroep_Idin_Block_Checkout_Cart_Notice extends CMGroep_Idin_Block_Abstract
 {
-
     /**
      * Only render when verification is still required and notice is enabled
      *

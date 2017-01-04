@@ -31,6 +31,11 @@
 
 class CMGroep_Idin_Model_Entity_Setup extends Mage_Eav_Model_Entity_Setup
 {
+    /**
+     * Adds required customer attributes
+     *
+     * @return bool
+     */
     public function addCustomerAttributes()
     {
         /**
@@ -60,8 +65,15 @@ class CMGroep_Idin_Model_Entity_Setup extends Mage_Eav_Model_Entity_Setup
         ));
 
         $this->addAttributeToGroup($entityTypeId, $defaultAttributeSetId, $defaultAttributeGroupId, 'idin_bin');
+
+        return true;
     }
 
+    /**
+     * Adds required product attributes
+     *
+     * @return bool
+     */
     public function addProductAttributes()
     {
         $entityTypeId = $this->getEntityTypeId(Mage_Catalog_Model_Product::ENTITY);
@@ -77,5 +89,7 @@ class CMGroep_Idin_Model_Entity_Setup extends Mage_Eav_Model_Entity_Setup
             'required' => false,
             'default' => 0
         ));
+
+        return true;
     }
 }

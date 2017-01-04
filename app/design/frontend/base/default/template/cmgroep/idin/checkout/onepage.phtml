@@ -32,9 +32,9 @@
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('cm/idin/js/opcheckout_idin.js'); ?>"></script>
 <script type="text/javascript">
     var accordion = new Accordion('checkoutSteps', '.step-title', true);
-    <?php if($this->getActiveStep()): ?>
+    <?php if ($this->getActiveStep()): ?>
         accordion.openSection('opc-<?php echo $this->getActiveStep() ?>');
-        <?php if($this->getActiveStep() == 'age_verification'): ?>
+        <?php if ($this->getActiveStep() == 'age_verification'): ?>
             accordion.closeSection('opc-billing');
         <?php endif; ?>
     <?php endif ?>

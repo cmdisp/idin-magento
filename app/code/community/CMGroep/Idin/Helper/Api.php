@@ -33,7 +33,6 @@ include(Mage::getBaseDir('lib') . DS . 'CMGroep' . DS . 'Idin' . DS . 'autoload.
 
 class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
 {
-
     /**
      * Retrieves the host to be used depending on the extension mode
      *
@@ -144,11 +143,25 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
         return $entranceCode;
     }
 
+    /**
+     * Serializes a status response for saving it in database
+     *
+     * @param \CMGroep\Idin\Models\StatusResponse $statusReponse
+     *
+     * @return string
+     */
     public function serializeStatusResponse(\CMGroep\Idin\Models\StatusResponse $statusReponse)
     {
         return json_encode(\CMGroep\Idin\ObjectSerializer::sanitizeForSerialization($statusReponse));
     }
 
+    /**
+     * Deserializes a status response from the database
+     *
+     * @param $statusResponseData
+     *
+     * @return object
+     */
     public function deserializeStatusResponse($statusResponseData)
     {
         return \CMGroep\Idin\ObjectSerializer::deserialize(json_decode($statusResponseData), \CMGroep\Idin\Models\StatusResponse::class);

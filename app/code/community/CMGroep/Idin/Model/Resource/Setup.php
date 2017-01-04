@@ -31,7 +31,6 @@
 
 class CMGroep_Idin_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
 {
-
     /**
      * Creates table for pending registrations
      *

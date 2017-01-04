@@ -33,9 +33,14 @@ var IdinCheckout = Class.create(Checkout, {
         this.steps = ['login', 'age_verification', 'billing', 'shipping', 'shipping_method', 'payment', 'review'];
         this.checkoutMethod = checkoutMethod;
 
+        /**
+         * Overwrites the default action after specifying a login method
+         * Normally it would trigger the billing step, this makes sure the customer
+         * is redirected to the age verification step
+         */
         document.observe('login:setMethod', function(event) {
-            if(event.memo.method != '') {
-                if(event.memo.method == 'customer') {
+            if (event.memo.method != '') {
+                if (event.memo.method == 'customer') {
                     checkout.accordion.closeSection('opc-billing');
                 } else {
                     checkout.accordion.closeSection('opc-login');
@@ -44,10 +49,14 @@ var IdinCheckout = Class.create(Checkout, {
             }
         });
 
-        if(this.checkoutMethod != '') {
+        /**
+         * After a age verification transaction is finished this makes sure
+         * the checkout process is continued where the customer left off
+         */
+        if (this.checkoutMethod != '') {
             this.currentStep = 'age_verification';
 
-            if(this.checkoutMethod != 'customer') {
+            if (this.checkoutMethod != 'customer') {
                 checkout.method = this.checkoutMethod;
                 new Ajax.Request(
                     checkout.saveMethodUrl,

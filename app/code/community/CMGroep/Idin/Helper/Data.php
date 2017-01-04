@@ -154,6 +154,14 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::getUrl('idin/auth/verifyAgeFinish');
     }
 
+    /**
+     * Retrieves the return url for age verification initiated from
+     * the checkout
+     *
+     * @param $checkoutMethod
+     *
+     * @return string
+     */
     public function getVerifyAgeCheckoutReturnUrl($checkoutMethod)
     {
         return Mage::getUrl('idin/auth/verifyAgeCheckoutFinish', ['checkout_method' => $checkoutMethod]);
@@ -259,7 +267,7 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
                 ->addFieldToFilter('entity_id', array('in' => $cartProductIds))
                 ->addAttributeToFilter('idin_require_age_verification', 1);
 
-            if($productsWithRequiredAgeVerification->count() > 0) {
+            if ($productsWithRequiredAgeVerification->count() > 0) {
                 return $ageVerified == false;
             }
         }

@@ -31,6 +31,12 @@
 
 class CMGroep_Idin_Block_Checkout_Onepage extends Mage_Checkout_Block_Onepage
 {
+    /**
+     * Add the age verification step to the default OnePageCheckout steps
+     * when age verification is active
+     *
+     * @return array Steps for checkout
+     */
     public function getSteps()
     {
         if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()) {

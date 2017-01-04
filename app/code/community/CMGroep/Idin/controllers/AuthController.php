@@ -31,6 +31,11 @@
 
 class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
 {
+    /**
+     * Retrieves the session
+     *
+     * @return Mage_Core_Model_Session
+     */
     private function _getSession()
     {
         return Mage::getSingleton('core/session');
@@ -357,6 +362,10 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         return;
     }
 
+    /**
+     * Starts a new age verification transaction
+     * Supported from both the checkout as the customer's my account page
+     */
     public function verifyAgeAction()
     {
         if ($this->getRequest()->isPost() && $this->getRequest()->has('idin_issuer')) {
@@ -405,6 +414,10 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         $this->_redirectReferer();
     }
 
+    /**
+     * Callback function for iDIN age verification transaction
+     * Stores the result of the transaction on the customer
+     */
     public function verifyAgeFinishAction()
     {
         if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
@@ -447,6 +460,11 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         return;
     }
 
+    /**
+     * Callback function for iDIN age verification transaction
+     * Stores the result of the transaction on the current quote
+     * and if a customer is logged in, it's also saved for recurring visits
+     */
     public function verifyAgeCheckoutFinishAction()
     {
         if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
