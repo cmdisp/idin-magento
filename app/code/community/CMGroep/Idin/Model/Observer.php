@@ -1,5 +1,4 @@
 <?php
-
 /**
  * MIT License
  *
@@ -29,12 +28,15 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 class CMGroep_Idin_Model_Observer
 {
     /**
      * Checks if order requires age verification and blocks the action if so
      *
      * @param $event
+     *
+     * @throws Mage_Core_Exception
      */
     public function salesOrderPlaceBefore($event)
     {

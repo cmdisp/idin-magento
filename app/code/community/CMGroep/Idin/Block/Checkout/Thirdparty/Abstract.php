@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2016 CM Groep
+ * Copyright (c) 2017 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,28 +29,47 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-/**
- * @method int getRegistrationId()
- * @method CMGroep_Idin_Model_Registration setRegistrationId(int $value)
- * @method string getEntranceCode()
- * @method CMGroep_Idin_Model_Registration setEntranceCode(string $value)
- * @method string getTransactionId()
- * @method CMGroep_Idin_Model_Registration setTransactionId(string $value)
- * @method string getCustomerId()
- * @method CMGroep_Idin_Model_Registration setCustomerId(string $value)
- * @method string getQuoteId()
- * @method CMGroep_Idin_Model_Registration setQuoteId(string $value)
- * @method string getTransactionResponse()
- * @method CMGroep_Idin_Model_Registration setTransactionResponse(string $value)
- *
- * Class CMGroep_Idin_Model_Registration
- */
-class CMGroep_Idin_Model_Registration extends Mage_Core_Model_Abstract
+class CMGroep_Idin_Block_Checkout_Thirdparty_Abstract extends Mage_Core_Block_Template
 {
+    /** @var CMGroep_Idin_Helper_Data */
+    protected $_helper = null;
 
-    protected function _construct()
+    /**
+     * @return CMGroep_Idin_Helper_Data
+     */
+    public function getHelper()
     {
-        $this->_init('cmgroep_idin/registration');
+        if($this->_helper == null) {
+            $this->_helper = Mage::helper('cmgroep_idin');
+        }
+
+        return $this->_helper;
     }
 
+    /**
+     * Generates Issuer Select HTML
+     *
+     * @return string
+     */
+    public function getIssuerSelectHtml()
+    {
+        return $this->getLayout()->createBlock('cmgroep_idin/core_issuer_select')->toHtml();
+    }
+
+    public function isAgeVerificationRequired()
+    {
+        return $this->getHelper()->ageVerificationRequired();
+    }
+
+    public function getVerifyAgeUrl()
+    {
+        return Mage::getUrl('idin/auth/verifyAge', ['mode' => 'checkout']);
+    }
+
+    public function _toHtml()
+    {
+        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()) {
+            return parent::_toHtml();
+        }
+    }
 }

@@ -28,6 +28,7 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 class CMGroep_Idin_Block_Checkout_Onepage extends Mage_Checkout_Block_Onepage
 {
     public function getSteps()

@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2016 CM Groep
+ * Copyright (c) 2017 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,28 +29,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-/**
- * @method int getRegistrationId()
- * @method CMGroep_Idin_Model_Registration setRegistrationId(int $value)
- * @method string getEntranceCode()
- * @method CMGroep_Idin_Model_Registration setEntranceCode(string $value)
- * @method string getTransactionId()
- * @method CMGroep_Idin_Model_Registration setTransactionId(string $value)
- * @method string getCustomerId()
- * @method CMGroep_Idin_Model_Registration setCustomerId(string $value)
- * @method string getQuoteId()
- * @method CMGroep_Idin_Model_Registration setQuoteId(string $value)
- * @method string getTransactionResponse()
- * @method CMGroep_Idin_Model_Registration setTransactionResponse(string $value)
- *
- * Class CMGroep_Idin_Model_Registration
- */
-class CMGroep_Idin_Model_Registration extends Mage_Core_Model_Abstract
+class CMGroep_Idin_Block_Checkout_Thirdparty_Onestepcheckout_Checkout extends CMGroep_Idin_Block_Checkout_Thirdparty_Abstract
 {
-
-    protected function _construct()
-    {
-        $this->_init('cmgroep_idin/registration');
-    }
 
 }

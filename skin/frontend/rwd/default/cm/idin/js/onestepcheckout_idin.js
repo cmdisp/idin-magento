@@ -1,4 +1,3 @@
-<?php
 /**
  * MIT License
  *
@@ -28,29 +27,35 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+var IdinOneStepCheckout = Class.create();
+IdinOneStepCheckout.prototype = {
+    initialize: function(idinContainer, form, aboveContainer, requireVerification) {
+        this.idinContainer = idinContainer;
+        this.form = form;
+        this.aboveContainer = aboveContainer;
+        this.requireVerification = requireVerification;
 
-/**
- * @method int getRegistrationId()
- * @method CMGroep_Idin_Model_Registration setRegistrationId(int $value)
- * @method string getEntranceCode()
- * @method CMGroep_Idin_Model_Registration setEntranceCode(string $value)
- * @method string getTransactionId()
- * @method CMGroep_Idin_Model_Registration setTransactionId(string $value)
- * @method string getCustomerId()
- * @method CMGroep_Idin_Model_Registration setCustomerId(string $value)
- * @method string getQuoteId()
- * @method CMGroep_Idin_Model_Registration setQuoteId(string $value)
- * @method string getTransactionResponse()
- * @method CMGroep_Idin_Model_Registration setTransactionResponse(string $value)
- *
- * Class CMGroep_Idin_Model_Registration
- */
-class CMGroep_Idin_Model_Registration extends Mage_Core_Model_Abstract
-{
+        this.insertIdinContainer();
 
-    protected function _construct()
-    {
-        $this->_init('cmgroep_idin/registration');
+        if(this.requireVerification) {
+            this.disableOneStepCheckout();
+        }
+    },
+
+    insertIdinContainer: function() {
+        var element = $(this.idinContainer).remove();
+        $(this.aboveContainer).insert({
+            before: element
+        });
+
+        element.show();
+    },
+
+    disableOneStepCheckout: function() {
+        $('onestepcheckout-form').addClassName('idin-disabled');
+    },
+
+    start: function() {
+        $(this.form).submit();
     }
-
-}
+};

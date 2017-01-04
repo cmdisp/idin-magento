@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2016 CM Groep
+ * Copyright (c) 2017 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,29 +28,27 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-
-/**
- * @method int getRegistrationId()
- * @method CMGroep_Idin_Model_Registration setRegistrationId(int $value)
- * @method string getEntranceCode()
- * @method CMGroep_Idin_Model_Registration setEntranceCode(string $value)
- * @method string getTransactionId()
- * @method CMGroep_Idin_Model_Registration setTransactionId(string $value)
- * @method string getCustomerId()
- * @method CMGroep_Idin_Model_Registration setCustomerId(string $value)
- * @method string getQuoteId()
- * @method CMGroep_Idin_Model_Registration setQuoteId(string $value)
- * @method string getTransactionResponse()
- * @method CMGroep_Idin_Model_Registration setTransactionResponse(string $value)
- *
- * Class CMGroep_Idin_Model_Registration
- */
-class CMGroep_Idin_Model_Registration extends Mage_Core_Model_Abstract
-{
-
-    protected function _construct()
-    {
-        $this->_init('cmgroep_idin/registration');
-    }
-
-}
+?>
+<div class="checkout-step idin-age-verification onestepcheckout" style="display: none;" id="idin-onestepcheckout-age-verification">
+    <form action="<?php echo $this->getVerifyAgeUrl() ?>" method="post" id="idin-onestepcheckout-form">
+        <div class="idin-logo"></div>
+        <?php if ($this->isAgeVerificationRequired()): ?>
+            <div class="idin-details">
+                <p><?php echo $this->__('In order to continue, you need to verify your age through iDIN.'); ?></p>
+                <div class="select-bank">
+                    <div class="form-group">
+                        <label for=""><?php echo $this->__('Select your bank') ?></label>
+                        <?php echo $this->getIssuerSelectHtml(); ?>
+                    </div>
+                </div>
+                <div class="verify-action">
+                    <button type="button" onclick="idinOneStepCheckout.start();" class="button"><?php echo $this->__('Verify age with iDIN') ?></button>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="idin-details">
+                <p><?php echo $this->__('Your age has been verified, you can continue to checkout.'); ?></p>
+            </div>
+        <?php endif; ?>
+    </form>
+</div>
