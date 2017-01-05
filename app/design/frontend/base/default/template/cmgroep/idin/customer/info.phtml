@@ -35,23 +35,6 @@
         <div class="idin-details">
             <?php if ($this->customerHasIdin()): ?>
                 <span><?php echo $this->__('Your account is connected with iDIN!'); ?></span>
-
-                <?php if ($this->isIdinAgeVerificationEnabled()): ?>
-                    <div class="age-verification">
-                        <?php if ($this->customerHasVerifiedAge()): ?>
-                            <span><?php echo $this->__('Your age has been verified through iDIN.'); ?></span>
-                        <?php else: ?>
-                            <span><?php echo $this->__('Your age has not yet been verified through iDIN or you\'re not at least 18 years of age'); ?></span>
-                            <div class="action-wrapper">
-                                <form action="<?php echo $this->getVerifyAgeWithIdinUrl(); ?>" method="post">
-                                    <?php echo $this->getIssuerSelectHtml(); ?>
-                                    <button type="submit" class="button"><?php echo $this->__('Verify age with iDIN') ?></button>
-                                </form>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-
             <?php elseif ($this->isIdinLoginEnabled()): ?>
                 <span><?php echo $this->__('Connect your account with iDIN and benefit from faster login.'); ?></span>
                 <div class="action-wrapper">
@@ -59,6 +42,21 @@
                         <?php echo $this->getIssuerSelectHtml(); ?>
                         <button type="submit" class="button"><?php echo $this->__('Connect with iDIN') ?></button>
                     </form>
+                </div>
+            <?php endif; ?>
+            <?php if ($this->isIdinAgeVerificationEnabled()): ?>
+                <div class="age-verification">
+                    <?php if ($this->customerHasVerifiedAge()): ?>
+                        <span><?php echo $this->__('Your age has been verified through iDIN.'); ?></span>
+                    <?php else: ?>
+                        <span><?php echo $this->__('Your age has not yet been verified through iDIN or you\'re not at least 18 years of age'); ?></span>
+                        <div class="action-wrapper">
+                            <form action="<?php echo $this->getVerifyAgeWithIdinUrl(); ?>" method="post">
+                                <?php echo $this->getIssuerSelectHtml(); ?>
+                                <button type="submit" class="button"><?php echo $this->__('Verify age with iDIN') ?></button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
         </div>

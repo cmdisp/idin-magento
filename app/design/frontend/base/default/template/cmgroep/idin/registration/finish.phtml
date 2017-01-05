@@ -43,10 +43,15 @@
                 <p><?php echo $this->__('Registration with iDIN is almost complete. Please enter your email address in order to finish your registration.') ?></p>
             </div>
         </div>
-        <div class="email">
+        <div class="finish-form">
             <div class="form-group">
                 <label for="email_address"><?php echo $this->__('Email Address'); ?></label>
                 <input type="text" name="email" id="email_address" placeholder="<?php echo $this->__('Please enter your email address') ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Email Address')) ?>" class="cmgroep__idin__input validate-email required-entry" />
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <label for="phone_number"><?php echo $this->__('Phone Number'); ?></label>
+                <input type="text" name="phone_number" id="phone_number" placeholder="<?php echo $this->__('Please enter your phone number') ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Phone Number')) ?>" class="cmgroep__idin__input required-entry" />
             </div>
         </div>
         <div class="actions">

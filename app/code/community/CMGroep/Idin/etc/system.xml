@@ -93,10 +93,6 @@
                             <show_in_store>0</show_in_store>
                             <sort_order>30</sort_order>
                         </merchant_token>
-                        <!--<available_services translate="label">-->
-                            <!--<label>Available services</label>-->
-                            <!--<frontend_model></frontend_model>-->
-                        <!--</available_services>-->
                     </fields>
                 </common>
                 <registration translate="label">

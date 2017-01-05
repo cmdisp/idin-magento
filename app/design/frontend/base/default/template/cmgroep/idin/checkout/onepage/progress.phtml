@@ -35,10 +35,12 @@
     </div>
     <div class="block-content">
         <dl>
-            <?php if ($this->getCheckout()->getStepData('age_verification', 'is_show')): ?>
-                <div id="age_verification-progress-opcheckout">
-                    <?php echo $this->getChildHtml('age_verification.progress') ?>
-                </div>
+            <?php if (Mage::helper('cmgroep_idin')->ageVerificationRequired(true)): ?>
+                <?php if ($this->getCheckout()->getStepData('age_verification', 'is_show')): ?>
+                    <div id="age_verification-progress-opcheckout">
+                        <?php echo $this->getChildHtml('age_verification.progress') ?>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
 
             <?php if ($this->getCheckout()->getStepData('billing', 'is_show')): ?>

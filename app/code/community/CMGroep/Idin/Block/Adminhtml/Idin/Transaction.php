@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2016 CM Groep
+ * Copyright (c) 2017 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,26 +29,22 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-/**
- * @method int getRegistrationId()
- * @method CMGroep_Idin_Model_Registration setRegistrationId(int $value)
- * @method string getEntranceCode()
- * @method CMGroep_Idin_Model_Registration setEntranceCode(string $value)
- * @method string getTransactionId()
- * @method CMGroep_Idin_Model_Registration setTransactionId(string $value)
- * @method string getCustomerId()
- * @method CMGroep_Idin_Model_Registration setCustomerId(string $value)
- * @method string getQuoteId()
- * @method CMGroep_Idin_Model_Registration setQuoteId(string $value)
- * @method string getTransactionResponse()
- * @method CMGroep_Idin_Model_Registration setTransactionResponse(string $value)
- *
- * Class CMGroep_Idin_Model_Registration
- */
-class CMGroep_Idin_Model_Registration extends Mage_Core_Model_Abstract
+class CMGroep_Idin_Block_Adminhtml_Idin_Transaction extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-    protected function _construct()
+    /**
+     * CMGroep_Idin_Block_Adminhtml_Idin_Transaction constructor
+     */
+    public function __construct()
     {
-        $this->_init('cmgroep_idin/registration');
+        $this->_blockGroup = 'cmgroep_idin';
+        $this->_controller = 'adminhtml_idin_transaction';
+        $this->_headerText = $this->__('iDIN Transaction Log');
+
+        parent::__construct();
+
+        /**
+         * Remove add button
+         */
+        $this->_removeButton('add');
     }
 }

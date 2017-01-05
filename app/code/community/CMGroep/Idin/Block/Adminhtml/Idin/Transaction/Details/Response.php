@@ -29,47 +29,40 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-class CMGroep_Idin_Block_Checkout_Onepage_Js extends Mage_Core_Block_Template
+class CMGroep_Idin_Block_Adminhtml_Idin_Transaction_Details_Response extends Mage_Core_Block_Template
 {
+    protected $_template = 'cm/idin/transaction/response.phtml';
+    protected $_response = null;
+
     /**
-     * Only render when age verification is active
+     * @param $transactionResponse Encoded transaction response
      *
-     * @return string
+     * @return $this
      */
-    public function _toHtml()
+    public function setResponse($transactionResponse)
     {
-        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()
-            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true)) {
-            return parent::_toHtml();
-        }
+        $this->_response = $transactionResponse;
+
+        return $this;
     }
 
     /**
-     * Get checkout method after age verification in order to
-     * skip the authentication step in OnePageCheckout
-     *
      * @return string
      */
-    public function getCheckoutMethod()
+    public function getResponse()
     {
-        return Mage::getSingleton('core/session')->getData('idin_checkout_method');
+        return $this->_response;
     }
 
     /**
-     * Get active step
+     * Deserializes the response and encodes the JSON using Pretty Print
      *
      * @return string
      */
-    public function getActiveStep()
+    public function getFormattedResponse()
     {
-        if (Mage::helper('customer')->isLoggedIn() == false) {
-            return 'login';
-        } else {
-            if (Mage::helper('cmgroep_idin')->ageVerificationRequired()) {
-                return 'age_verification';
-            } else {
-                return 'billing';
-            }
-        }
+        $jsonObject = json_decode($this->getResponse(), true);
+
+        return json_encode($jsonObject, JSON_PRETTY_PRINT);
     }
 }

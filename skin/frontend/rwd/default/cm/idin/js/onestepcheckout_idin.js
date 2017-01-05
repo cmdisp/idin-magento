@@ -29,8 +29,9 @@
  */
 var IdinOneStepCheckout = Class.create();
 IdinOneStepCheckout.prototype = {
-    initialize: function(idinContainer, form, aboveContainer, requireVerification) {
+    initialize: function(idinContainer, idinLoginContainer, form, aboveContainer, requireVerification) {
         this.idinContainer = idinContainer;
+        this.idinLoginContainer = idinLoginContainer;
         this.form = form;
         this.aboveContainer = aboveContainer;
         this.requireVerification = requireVerification;
@@ -53,13 +54,24 @@ IdinOneStepCheckout.prototype = {
         });
 
         element.show();
+
+        var element = $(this.idinLoginContainer).remove();
+        $(this.aboveContainer).insert({
+            before: element
+        });
+
+        element.show();
+    },
+
+    toggleLogin: function() {
+        $('idin-onestepcheckout-login-wrapper').toggle();
     },
 
     /**
      * Adds the class for disabling the checkout on CSS level
      */
     disableOneStepCheckout: function() {
-        $('onestepcheckout-form').addClassName('idin-disabled');
+        $$('.checkoutcontainer')[0].addClassName('idin-disabled');
     },
 
     /**

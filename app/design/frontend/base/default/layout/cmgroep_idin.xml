@@ -50,6 +50,20 @@
         </reference>
     </customer_account_login>
 
+    <customer_account_create>
+        <update handle="idin_base"/>
+        <reference name="content">
+            <block type="cmgroep_idin/customer_account_login_idin" template="cmgroep/idin/register_login.phtml"
+                   name="customer.account.register.idin"
+                   as="customer_account_register_idin"
+                   before="customer_form_register">
+                <action method="setIsRegistration">
+                    <registration>1</registration>
+                </action>
+            </block>
+        </reference>
+    </customer_account_create>
+
     <idin_auth_finish>
         <update handle="page_one_column"/>
         <update handle="idin_base"/>
@@ -96,6 +110,16 @@
 
     <checkout_onepage_index>
         <update handle="idin_base"/>
+        <reference name="checkout.onepage.login.before">
+            <block type="cmgroep_idin/customer_account_login_idin" template="cmgroep/idin/register_login.phtml"
+                   name="customer.account.login.idin"
+                   as="customer_account_login_idin"
+                   before="-">
+                <action method="setIsCheckout">
+                    <checkout>1</checkout>
+                </action>
+            </block>
+        </reference>
         <reference name="checkout.onepage">
             <block type="cmgroep_idin/checkout_onepage_verification"
                    template="cmgroep/idin/checkout/onepage/age_verification.phtml"
@@ -141,11 +165,20 @@
     </checkout_onepage_progress_age_verification>
 
     <onestepcheckout_index_index>
-        <update handle="idin_base" />
+        <update handle="idin_base"/>
         <reference name="before_body_end">
             <block type="cmgroep_idin/checkout_thirdparty_onestepcheckout_checkout" name="onestepcheckout.idin.checkout"
                    as="onestepcheckout_idin_checkout"
-                   template="cmgroep/idin/checkout/third_party/onestepcheckout/checkout.phtml"/>
+                   template="cmgroep/idin/checkout/third_party/onestepcheckout/checkout.phtml">
+                <block type="cmgroep_idin/customer_account_login_idin" template="cmgroep/idin/register_login.phtml"
+                       name="customer.account.login.idin"
+                       as="customer_account_login_idin"
+                       before="-">
+                    <action method="setIsCheckout">
+                        <checkout>1</checkout>
+                    </action>
+                </block>
+            </block>
             <block type="cmgroep_idin/checkout_thirdparty_onestepcheckout_js" name="onestepcheckout.idin.js"
                    as="onestepcheckout_idin_js" template="cmgroep/idin/checkout/third_party/onestepcheckout/js.phtml"/>
         </reference>

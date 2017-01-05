@@ -55,6 +55,8 @@ var IdinCheckout = Class.create(Checkout, {
          */
         if (this.checkoutMethod != '') {
             this.currentStep = 'age_verification';
+            ageVerification.save();
+            checkout.setLoadWaiting(false);
 
             if (this.checkoutMethod != 'customer') {
                 checkout.method = this.checkoutMethod;
@@ -75,8 +77,8 @@ var IdinCheckout = Class.create(Checkout, {
             }
 
             accordion.currentSection = 'opc-age_verification';
-            checkout.gotoSection('billing', false);
-            document.body.fire('login:setMethod', {method : this.checkoutMethod});
+            checkout.gotoSection('billing', true);
+            //document.body.fire('login:setMethod', {method : this.checkoutMethod});
         }
     }
 });

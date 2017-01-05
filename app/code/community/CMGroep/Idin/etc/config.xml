@@ -45,9 +45,9 @@
             <cmgroep_idin_resource>
                 <class>CMGroep_Idin_Model_Resource</class>
                 <entities>
-                    <registration>
-                        <table>cmgroep_idin_registration</table>
-                    </registration>
+                    <transaction>
+                        <table>cmgroep_idin_transaction</table>
+                    </transaction>
                 </entities>
             </cmgroep_idin_resource>
         </models>
@@ -80,6 +80,15 @@
                 </setup>
             </cmgroep_idin_entity_setup>
         </resources>
+        <template>
+            <email>
+                <cmgroep_idin_email_confirmation>
+                    <label>iDIN Registration Confirmation</label>
+                    <type>html</type>
+                    <file>cmgroep/idin/registration_confirmation.html</file>
+                </cmgroep_idin_email_confirmation>
+            </email>
+        </template>
     </global>
     <frontend>
         <events>
@@ -110,4 +119,24 @@
             </idin>
         </routers>
     </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <cmgroep_idin>
+                    <file>cmgroep_idin.xml</file>
+                </cmgroep_idin>
+            </updates>
+        </layout>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <idin before="Mage_Adminhtml">CMGroep_Idin_Adminhtml</idin>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>

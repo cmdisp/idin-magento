@@ -29,10 +29,10 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-class CMGroep_Idin_Model_Resource_Registration_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+class CMGroep_Idin_Model_Resource_Transaction_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     protected function _construct()
     {
-        $this->_init('cmgroep_idin/registration');
+        $this->_init('cmgroep_idin/transaction');
     }
 }

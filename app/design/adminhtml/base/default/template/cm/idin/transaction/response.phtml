@@ -28,48 +28,7 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-
-class CMGroep_Idin_Block_Checkout_Onepage_Js extends Mage_Core_Block_Template
-{
-    /**
-     * Only render when age verification is active
-     *
-     * @return string
-     */
-    public function _toHtml()
-    {
-        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()
-            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true)) {
-            return parent::_toHtml();
-        }
-    }
-
-    /**
-     * Get checkout method after age verification in order to
-     * skip the authentication step in OnePageCheckout
-     *
-     * @return string
-     */
-    public function getCheckoutMethod()
-    {
-        return Mage::getSingleton('core/session')->getData('idin_checkout_method');
-    }
-
-    /**
-     * Get active step
-     *
-     * @return string
-     */
-    public function getActiveStep()
-    {
-        if (Mage::helper('customer')->isLoggedIn() == false) {
-            return 'login';
-        } else {
-            if (Mage::helper('cmgroep_idin')->ageVerificationRequired()) {
-                return 'age_verification';
-            } else {
-                return 'billing';
-            }
-        }
-    }
-}
+?>
+<div class="response">
+    <pre><?php echo $this->getFormattedResponse(); ?></pre>
+</div>

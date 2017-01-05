@@ -31,5 +31,5 @@
 ?>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('cm/idin/js/onestepcheckout_idin.js'); ?>"></script>
 <script type="text/javascript">
-    var idinOneStepCheckout = new IdinOneStepCheckout('idin-onestepcheckout-age-verification', 'idin-onestepcheckout-form', 'onestepcheckout-form', <?php echo $this->isAgeVerificationRequired() ? '1' : '0' ?>);
+    var idinOneStepCheckout = new IdinOneStepCheckout('idin-onestepcheckout-age-verification', 'idin-onestepcheckout-login', 'idin-onestepcheckout-form', $$('.checkoutcontainer')[0], <?php echo $this->isAgeVerificationRequired() ? '1' : '0' ?>);
 </script>

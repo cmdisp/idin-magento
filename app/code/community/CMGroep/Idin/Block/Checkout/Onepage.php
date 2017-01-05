@@ -39,7 +39,8 @@ class CMGroep_Idin_Block_Checkout_Onepage extends Mage_Checkout_Block_Onepage
      */
     public function getSteps()
     {
-        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()) {
+        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()
+            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true)) {
             $steps = parent::getSteps();
 
             $ageVerificationStep = array(

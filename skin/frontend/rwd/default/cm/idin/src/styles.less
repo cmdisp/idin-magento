@@ -66,7 +66,7 @@
 {
   &.idin {
     .idin-login-panel {
-      @idin-login-panel-height: 76px;
+      @idin-login-panel-height: 105px;
 
       color: @idin-main-black;
 
@@ -105,11 +105,16 @@
             display: table-cell;
             vertical-align: middle;
             line-height: 1.6;
+
+            .what-is-idin {
+              display: block;
+              margin-top: 5px;
+            }
           }
         }
       }
 
-      .select-issuer, .email {
+      .select-issuer, .finish-form {
         display: table;
         height: @idin-login-panel-height;
 
@@ -132,6 +137,16 @@
             width: 100%;
             padding: 0 8px;
             height: 30px;
+          }
+        }
+      }
+
+      .finish-form {
+        .form-group {
+          display: block;
+
+          &:not(:first-child) {
+            margin: 5px 0 0 0;
           }
         }
       }
@@ -177,6 +192,43 @@
         content: ' ';
       }
     }
+
+    &.finish-registration {
+      .info {
+        min-height: 115px;
+      }
+
+      .idin-logo, .introduction, .actions {
+        min-height: 115px;
+      }
+    }
+  }
+}
+
+.opc #opc-login {
+  .account-login {
+    &.account-login-checkout {
+
+      .idin-login-panel {
+        margin: 15px 0 0 0;
+
+        .info {
+          .idin-logo {
+            width: 50px;
+          }
+
+          .introduction {
+            margin: 0 0 0 70px;
+
+            p.introduction-text {
+              font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+              font-style: normal;
+              color: @idin-main-black;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -207,6 +259,13 @@
 
       .idin-details {
         height: 40px;
+      }
+
+      .age-verification {
+        height: auto;
+        span {
+          height: auto;
+        }
       }
     }
   }
@@ -252,17 +311,15 @@
   }
 
   .age-verification {
-    position: relative;
+    display: table;
+    height: 80px;
 
     span {
-      float: left;
+      display: table-cell;
+      width: auto;
+      height: 80px;
+      vertical-align: middle;
       font-weight: bold;
-    }
-
-    .action-wrapper {
-      position: absolute;
-      top: -40px;
-      right: 0;
     }
   }
 }
@@ -352,7 +409,7 @@
     }
 
     &.onestepcheckout {
-      margin: 0 0 20px 0;
+      margin: 20px 0 20px 0;
 
       .idin-details {
         display: table;

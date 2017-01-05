@@ -31,6 +31,49 @@
 
 class CMGroep_Idin_Block_Customer_Account_Login_Idin extends CMGroep_Idin_Block_Abstract
 {
+    protected $_isRegistration = false;
+    protected $_isCheckout = false;
+
+    /**
+     * Enable registration only mode
+     *
+     * @param $registration
+     */
+    public function setIsRegistration($registration)
+    {
+        $this->_isRegistration = $registration;
+    }
+
+    /**
+     * Retrieves registration only mode
+     *
+     * @return bool
+     */
+    public function getIsRegistration()
+    {
+        return $this->_isRegistration;
+    }
+
+    /**
+     * Enable checkout only mode
+     *
+     * @param $checkout
+     */
+    public function setIsCheckout($checkout)
+    {
+        $this->_isCheckout = $checkout;
+    }
+
+    /**
+     * Retrieves checkout only mode
+     *
+     * @return bool
+     */
+    public function getIsCheckout()
+    {
+        return $this->_isCheckout;
+    }
+
     /**
      * @return string URL for iDIN authentication
      */

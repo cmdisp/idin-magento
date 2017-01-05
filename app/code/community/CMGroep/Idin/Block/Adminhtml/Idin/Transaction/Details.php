@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2016 CM Groep
+ * Copyright (c) 2017 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,32 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-class CMGroep_Idin_Model_Resource_Registration extends Mage_Core_Model_Resource_Db_Abstract
+class CMGroep_Idin_Block_Adminhtml_Idin_Transaction_Details extends Mage_Adminhtml_Block_Widget_Form_Container
 {
-    protected function _construct()
+    /**
+     * CMGroep_Idin_Block_Adminhtml_Idin_Transaction_Details constructor
+     */
+    public function __construct()
     {
-        $this->_init('cmgroep_idin/registration', 'registration_id');
+        parent::__construct();
+
+        $this->_blockGroup = 'cmgroep_idin';
+        $this->_controller = 'adminhtml_idin_transaction';
+        $this->_mode = 'details';
+        $this->_headerText = $this->__('Details for transaction %s', $this->getTransaction()->getTransactionId());
+
+        $this->_removeButton('reset');
+        $this->_removeButton('delete');
+        $this->_removeButton('save');
+    }
+
+    /**
+     * @return CMGroep_Idin_Model_Transaction
+     */
+    public function getTransaction()
+    {
+        if ($this->getRequest()->getParam('id')) {
+            return Mage::getModel('cmgroep_idin/transaction')->load($this->getRequest()->getParam('id'));
+        }
     }
 }

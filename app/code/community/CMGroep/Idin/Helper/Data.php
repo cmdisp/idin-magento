@@ -104,6 +104,26 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::getStoreConfig('cmgroep_idin/age_verification/show_cart_notice') == 1;
     }
 
+    public function registerTransaction($transactionId, $entranceCode, \CMGroep\Idin\Models\StatusResponse $statusResponse = null)
+    {
+        if (is_null($statusResponse)) {
+            Mage::getModel('cmgroep_idin/transaction')
+                ->setTransactionId($transactionId)
+                ->setEntranceCode($entranceCode)
+                ->save();
+        } else {
+            $matchingTransactionLogCollection = Mage::getResourceModel('cmgroep_idin/transaction_collection')
+                ->addFieldToFilter('transaction_id', $transactionId)
+                ->addFieldToFilter('entrance_code', $entranceCode);
+
+            if ($matchingTransactionLogCollection->count() == 1 && $transactionLog = $matchingTransactionLogCollection->getFirstItem()) {
+                $serializedResponse = Mage::helper('cmgroep_idin/api')->serializeStatusResponse($statusResponse);
+                $transactionLog->setTransactionResponse($serializedResponse);
+                $transactionLog->save();
+            }
+        }
+    }
+
     /**
      * Retrieves the cart notice to be shown
      *
@@ -212,35 +232,39 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
      *  - 18+ products in cart
      *  - Customers age verification status
      *
+     * @param bool $skipCustomerAndQuoteCheck Skip the check if the session has been verified, just check if it should have been done
+     *
      * @return bool
      */
-    public function ageVerificationRequired()
+    public function ageVerificationRequired($skipCustomerAndQuoteCheck = false)
     {
         $customerHelper = Mage::helper('customer');
         $ageVerified = false;
 
-        if ($customerHelper->isLoggedIn()) {
-            /**
-             * Check customers verification status
-             */
-            if ($customerHelper->getCurrentCustomer()->getIdinAgeVerified()) {
-                $ageVerified = true;
+        if ($skipCustomerAndQuoteCheck == false) {
+            if ($customerHelper->isLoggedIn()) {
+                /**
+                 * Check customers verification status
+                 */
+                if ($customerHelper->getCurrentCustomer()->getIdinAgeVerified()) {
+                    $ageVerified = true;
+                }
+            } else {
+                /**
+                 * Check current quote session verification status
+                 */
+                $quote = Mage::helper('checkout/cart')->getQuote();
+                if ($quote->getIdinAgeVerified()) {
+                    $ageVerified = true;
+                }
             }
-        } else {
-            /**
-             * Check current quote session verification status
-             */
-            $quote = Mage::helper('checkout/cart')->getQuote();
-            if ($quote->getIdinAgeVerified()) {
-                $ageVerified = true;
-            }
-        }
 
-        /**
-         * Skip extra processing if age is verified
-         */
-        if ($ageVerified) {
-            return false;
+            /**
+             * Skip extra processing if age is verified
+             */
+            if ($ageVerified) {
+                return false;
+            }
         }
 
         if ($this->getIdinAgeVerificationRequired() == CMGroep_Idin_Model_System_Config_Source_Verificationrequired::MODE_ALWAYS) {

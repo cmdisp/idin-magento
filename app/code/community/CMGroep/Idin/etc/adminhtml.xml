@@ -37,6 +37,14 @@
                 <children>
                     <system>
                         <children>
+                            <tools>
+                                <children>
+                                    <idin_transaction_log translate="label">
+                                        <title>iDIN Transaction Log</title>
+                                        <sort_order>100</sort_order>
+                                    </idin_transaction_log>
+                                </children>
+                            </tools>
                             <config>
                                 <children>
                                     <cmgroep_idin>
@@ -51,4 +59,19 @@
             </admin>
         </resources>
     </acl>
+    <menu>
+        <system>
+            <children>
+                <tools>
+                    <children>
+                        <idin_transaction_log translate="title">
+                            <title>iDIN Transaction Log</title>
+                            <sort_order>100</sort_order>
+                            <action>adminhtml/idin_transaction/index</action>
+                        </idin_transaction_log>
+                    </children>
+                </tools>
+            </children>
+        </system>
+    </menu>
 </config>

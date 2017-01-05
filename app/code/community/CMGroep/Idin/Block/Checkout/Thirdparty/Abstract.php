@@ -83,7 +83,8 @@ class CMGroep_Idin_Block_Checkout_Thirdparty_Abstract extends Mage_Core_Block_Te
      */
     public function _toHtml()
     {
-        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()) {
+        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()
+            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true)) {
             return parent::_toHtml();
         }
     }

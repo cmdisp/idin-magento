@@ -39,14 +39,17 @@ class CMGroep_Idin_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
      */
     public function createPendingRegistrationsTable()
     {
-        $tableName = $this->getTable('cmgroep_idin/registration');
+        $tableName = $this->getTable('cmgroep_idin/transaction');
         $table = $this->getConnection()->newTable($tableName)
-            ->addColumn('registration_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+            ->addColumn('entity_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
                 'primary' => true,
                 'unsigned' => true,
                 'identity' => true,
                 'nullable' => false
-            ), 'Registration Identifier')
+            ), 'Entity Identifier')
+            ->addColumn('transaction_date', Varien_Db_Ddl_Table::TYPE_DATETIME, null, array(
+                'nullable' => false
+            ))
             ->addColumn('entrance_code', Varien_Db_Ddl_Table::TYPE_TEXT, 40, array(
                 'nullable' => false
             ), 'Entrance Code')

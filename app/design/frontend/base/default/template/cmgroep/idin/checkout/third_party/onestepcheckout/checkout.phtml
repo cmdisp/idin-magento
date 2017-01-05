@@ -29,6 +29,11 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 ?>
+<div id="idin-onestepcheckout-login" style="display: none;">
+    <div id="idin-onestepcheckout-login-wrapper" style="display: none;">
+        <?php echo $this->getChildHtml('customer_account_login_idin'); ?>
+    </div>
+</div>
 <div class="checkout-step idin-age-verification onestepcheckout" style="display: none;" id="idin-onestepcheckout-age-verification">
     <form action="<?php echo $this->getVerifyAgeUrl() ?>" method="post" id="idin-onestepcheckout-form">
         <div class="idin-logo"></div>
@@ -43,6 +48,8 @@
                 </div>
                 <div class="verify-action">
                     <button type="button" onclick="idinOneStepCheckout.start();" class="button"><?php echo $this->__('Verify age with iDIN') ?></button>
+                    <br/><br/>
+                    <a href="#" onclick="idinOneStepCheckout.toggleLogin();"><?php echo $this->__('Login or register with iDIN'); ?></a>
                 </div>
             </div>
         <?php else: ?>

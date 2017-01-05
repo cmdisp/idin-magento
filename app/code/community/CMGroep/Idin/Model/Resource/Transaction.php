@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2017 CM Groep
+ * Copyright (c) 2016 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,47 +29,10 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-class CMGroep_Idin_Block_Checkout_Onepage_Js extends Mage_Core_Block_Template
+class CMGroep_Idin_Model_Resource_Transaction extends Mage_Core_Model_Resource_Db_Abstract
 {
-    /**
-     * Only render when age verification is active
-     *
-     * @return string
-     */
-    public function _toHtml()
+    protected function _construct()
     {
-        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()
-            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true)) {
-            return parent::_toHtml();
-        }
-    }
-
-    /**
-     * Get checkout method after age verification in order to
-     * skip the authentication step in OnePageCheckout
-     *
-     * @return string
-     */
-    public function getCheckoutMethod()
-    {
-        return Mage::getSingleton('core/session')->getData('idin_checkout_method');
-    }
-
-    /**
-     * Get active step
-     *
-     * @return string
-     */
-    public function getActiveStep()
-    {
-        if (Mage::helper('customer')->isLoggedIn() == false) {
-            return 'login';
-        } else {
-            if (Mage::helper('cmgroep_idin')->ageVerificationRequired()) {
-                return 'age_verification';
-            } else {
-                return 'billing';
-            }
-        }
+        $this->_init('cmgroep_idin/transaction', 'entity_id');
     }
 }

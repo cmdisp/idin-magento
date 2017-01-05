@@ -55,7 +55,7 @@ class CMGroep_Idin_Block_Customer_Account_Info extends CMGroep_Idin_Block_Abstra
      */
     public function shouldShow()
     {
-        if ($this->getHelper()->getIdinRegistrationActive() || $this->getHelper()->getIdinLoginActive()) {
+        if ($this->getHelper()->getIdinLoginActive() || $this->getHelper()->getIdinAgeVerificationActive()) {
             return true;
         }
 

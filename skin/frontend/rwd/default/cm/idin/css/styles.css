@@ -60,7 +60,7 @@
 }
 .account-login.idin .idin-login-panel .info,
 .finish-registration.idin .idin-login-panel .info {
-  min-height: 76px;
+  min-height: 105px;
   float: left;
   width: 40%;
   padding: 0 25px 0 0;
@@ -72,7 +72,7 @@
   position: relative;
   content: '';
   width: 80px;
-  height: 76px;
+  height: 105px;
   background-image: url(../images/iDIN.svg);
   background-size: contain;
   background-repeat: no-repeat;
@@ -81,7 +81,7 @@
 .account-login.idin .idin-login-panel .info .introduction,
 .finish-registration.idin .idin-login-panel .info .introduction {
   display: table;
-  height: 76px;
+  height: 105px;
   margin: 0 0 0 100px;
 }
 .account-login.idin .idin-login-panel .info .introduction p,
@@ -90,12 +90,17 @@
   vertical-align: middle;
   line-height: 1.6;
 }
+.account-login.idin .idin-login-panel .info .introduction p .what-is-idin,
+.finish-registration.idin .idin-login-panel .info .introduction p .what-is-idin {
+  display: block;
+  margin-top: 5px;
+}
 .account-login.idin .idin-login-panel .select-issuer,
 .finish-registration.idin .idin-login-panel .select-issuer,
-.account-login.idin .idin-login-panel .email,
-.finish-registration.idin .idin-login-panel .email {
+.account-login.idin .idin-login-panel .finish-form,
+.finish-registration.idin .idin-login-panel .finish-form {
   display: table;
-  height: 76px;
+  height: 105px;
   padding: 0 30px;
   float: left;
   width: 30%;
@@ -103,29 +108,37 @@
 }
 .account-login.idin .idin-login-panel .select-issuer .form-group,
 .finish-registration.idin .idin-login-panel .select-issuer .form-group,
-.account-login.idin .idin-login-panel .email .form-group,
-.finish-registration.idin .idin-login-panel .email .form-group {
+.account-login.idin .idin-login-panel .finish-form .form-group,
+.finish-registration.idin .idin-login-panel .finish-form .form-group {
   display: table-cell;
   vertical-align: middle;
 }
 .account-login.idin .idin-login-panel .select-issuer .form-group label,
 .finish-registration.idin .idin-login-panel .select-issuer .form-group label,
-.account-login.idin .idin-login-panel .email .form-group label,
-.finish-registration.idin .idin-login-panel .email .form-group label {
+.account-login.idin .idin-login-panel .finish-form .form-group label,
+.finish-registration.idin .idin-login-panel .finish-form .form-group label {
   margin: 0 0 5px 0;
 }
 .account-login.idin .idin-login-panel .select-issuer .form-group .cmgroep__idin__input,
 .finish-registration.idin .idin-login-panel .select-issuer .form-group .cmgroep__idin__input,
-.account-login.idin .idin-login-panel .email .form-group .cmgroep__idin__input,
-.finish-registration.idin .idin-login-panel .email .form-group .cmgroep__idin__input {
+.account-login.idin .idin-login-panel .finish-form .form-group .cmgroep__idin__input,
+.finish-registration.idin .idin-login-panel .finish-form .form-group .cmgroep__idin__input {
   width: 100%;
   padding: 0 8px;
   height: 30px;
 }
+.account-login.idin .idin-login-panel .finish-form .form-group,
+.finish-registration.idin .idin-login-panel .finish-form .form-group {
+  display: block;
+}
+.account-login.idin .idin-login-panel .finish-form .form-group:not(:first-child),
+.finish-registration.idin .idin-login-panel .finish-form .form-group:not(:first-child) {
+  margin: 5px 0 0 0;
+}
 .account-login.idin .idin-login-panel .actions,
 .finish-registration.idin .idin-login-panel .actions {
   display: table;
-  height: 76px;
+  height: 105px;
   padding: 0 30px;
   float: left;
   width: 30%;
@@ -161,6 +174,32 @@
   display: table;
   content: ' ';
 }
+.account-login.idin.finish-registration .info,
+.finish-registration.idin.finish-registration .info {
+  min-height: 115px;
+}
+.account-login.idin.finish-registration .idin-logo,
+.finish-registration.idin.finish-registration .idin-logo,
+.account-login.idin.finish-registration .introduction,
+.finish-registration.idin.finish-registration .introduction,
+.account-login.idin.finish-registration .actions,
+.finish-registration.idin.finish-registration .actions {
+  min-height: 115px;
+}
+.opc #opc-login .account-login.account-login-checkout .idin-login-panel {
+  margin: 15px 0 0 0;
+}
+.opc #opc-login .account-login.account-login-checkout .idin-login-panel .info .idin-logo {
+  width: 50px;
+}
+.opc #opc-login .account-login.account-login-checkout .idin-login-panel .info .introduction {
+  margin: 0 0 0 70px;
+}
+.opc #opc-login .account-login.account-login-checkout .idin-login-panel .info .introduction p.introduction-text {
+  font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+  font-style: normal;
+  color: #000000;
+}
 .customer-account-idin-info {
   padding: 15px;
   background: #d3e9ea;
@@ -183,6 +222,12 @@
 }
 .customer-account-idin-info.idin-connected.age-verified .idin-details {
   height: 40px;
+}
+.customer-account-idin-info.idin-connected.age-verified .age-verification {
+  height: auto;
+}
+.customer-account-idin-info.idin-connected.age-verified .age-verification span {
+  height: auto;
 }
 .customer-account-idin-info .idin-logo {
   display: table-cell;
@@ -218,16 +263,15 @@
   margin: 15px 0 0 0;
 }
 .customer-account-idin-info .age-verification {
-  position: relative;
+  display: table;
+  height: 80px;
 }
 .customer-account-idin-info .age-verification span {
-  float: left;
+  display: table-cell;
+  width: auto;
+  height: 80px;
+  vertical-align: middle;
   font-weight: bold;
-}
-.customer-account-idin-info .age-verification .action-wrapper {
-  position: absolute;
-  top: -40px;
-  right: 0;
 }
 .cart-idin-notice {
   display: table;
@@ -290,7 +334,7 @@
   margin: 15px 0 0 0;
 }
 .checkout-step.idin-age-verification.onestepcheckout {
-  margin: 0 0 20px 0;
+  margin: 20px 0 20px 0;
 }
 .checkout-step.idin-age-verification.onestepcheckout .idin-details {
   display: table;

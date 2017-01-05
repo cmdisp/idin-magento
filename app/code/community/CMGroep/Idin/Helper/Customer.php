@@ -31,6 +31,7 @@
 
 class CMGroep_Idin_Helper_Customer extends Mage_Core_Helper_Abstract
 {
+
     /**
      * Creates an user and address based off an iDIN status response
      * Used for registration through iDIN
@@ -38,11 +39,12 @@ class CMGroep_Idin_Helper_Customer extends Mage_Core_Helper_Abstract
      * Returns false if creation failed
      *
      * @param string                              $emailAddress
+     * @param string                              $phoneNumber
      * @param \CMGroep\Idin\Models\StatusResponse $statusResponse
      *
      * @return false|Mage_Customer_Model_Customer
      */
-    public function createCustomer($emailAddress, \CMGroep\Idin\Models\StatusResponse $statusResponse)
+    public function createCustomer($emailAddress, $phoneNumber, \CMGroep\Idin\Models\StatusResponse $statusResponse)
     {
         try {
             $websiteId = Mage::app()->getWebsite()->getId();
@@ -75,11 +77,17 @@ class CMGroep_Idin_Helper_Customer extends Mage_Core_Helper_Abstract
                 ->setPostcode($statusResponse->getAddress()->getPostalCode())
                 ->setCity($statusResponse->getAddress()->getCity())
                 ->setStreet($statusResponse->getAddress()->getStreet() . ' ' . $statusResponse->getAddress()->getHouseNumber() . ' ' . $statusResponse->getAddress()->getHouseNumberSuffix())
+                ->setTelephone(empty($phoneNumber) ? '-' : $phoneNumber)
                 ->setIsDefaultBilling(1)
                 ->setIsDefaultShipping(1)
                 ->setSaveInAddressBook(1);
 
             $address->save();
+
+            /**
+             * Send iDIN registration confirmation email
+             */
+            $this->sendConfirmationEmail($customer);
 
             return $customer;
         } catch (Exception $ex) {
@@ -87,6 +95,36 @@ class CMGroep_Idin_Helper_Customer extends Mage_Core_Helper_Abstract
         }
 
         return false;
+    }
+
+    /**
+     * Send customer registration email
+     *
+     * @param Mage_Customer_Model_Customer $customer
+     *
+     * @return $this
+     */
+    public function sendConfirmationEmail($customer)
+    {
+        $templateId = 'cmgroep_idin_email_confirmation';
+
+        if (Mage::getStoreConfig('cmgroep_idin/registration/email_confirmation_template', $customer->getStore()->getId()) !=
+            'cmgroep_idin_registration_email_confirmation_template') {
+            $templateId = Mage::getStoreConfig('cmgroep_idin/registration/email_confirmation_template', $customer->getStore()->getId());
+        }
+
+        /** @var $mailer Mage_Core_Model_Email_Template_Mailer */
+        $mailer = Mage::getModel('core/email_template_mailer');
+        $emailInfo = Mage::getModel('core/email_info');
+        $emailInfo->addTo($customer->getEmail(), $customer->getName());
+        $mailer->addEmailInfo($emailInfo);
+
+        // Set all required params and send emails
+        $mailer->setSender(Mage::getStoreConfig(Mage_Customer_Model_Customer::XML_PATH_REGISTER_EMAIL_IDENTITY, $customer->getStore()->getId()));
+        $mailer->setStoreId($customer->getStore()->getId());
+        $mailer->setTemplateId($templateId);
+        $mailer->setTemplateParams(array('customer' => $customer, 'back_url' => ''));
+        $mailer->send();
     }
 
     /**

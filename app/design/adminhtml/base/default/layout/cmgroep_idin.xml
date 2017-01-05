@@ -1,8 +1,9 @@
-<?php
+<?xml version="1.0"?>
+<!--
 /**
  * MIT License
  *
- * Copyright (c) 2017 CM Groep
+ * Copyright (c) 2016 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,48 +29,23 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+-->
+<layout version="0.1.0">
 
-class CMGroep_Idin_Block_Checkout_Onepage_Js extends Mage_Core_Block_Template
-{
-    /**
-     * Only render when age verification is active
-     *
-     * @return string
-     */
-    public function _toHtml()
-    {
-        if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()
-            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true)) {
-            return parent::_toHtml();
-        }
-    }
+    <adminhtml_idin_transaction_index>
+        <reference name="content">
+            <block type="cmgroep_idin/adminhtml_idin_transaction"
+                   name="idin.transaction.grid"
+                   as="idin_transaction_grid"/>
+        </reference>
+    </adminhtml_idin_transaction_index>
 
-    /**
-     * Get checkout method after age verification in order to
-     * skip the authentication step in OnePageCheckout
-     *
-     * @return string
-     */
-    public function getCheckoutMethod()
-    {
-        return Mage::getSingleton('core/session')->getData('idin_checkout_method');
-    }
+    <adminhtml_idin_transaction_details>
+        <reference name="content">
+            <block type="cmgroep_idin/adminhtml_idin_transaction_details"
+                   name="idin.transaction.details"
+                   as="idin_transaction_details"/>
+        </reference>
+    </adminhtml_idin_transaction_details>
 
-    /**
-     * Get active step
-     *
-     * @return string
-     */
-    public function getActiveStep()
-    {
-        if (Mage::helper('customer')->isLoggedIn() == false) {
-            return 'login';
-        } else {
-            if (Mage::helper('cmgroep_idin')->ageVerificationRequired()) {
-                return 'age_verification';
-            } else {
-                return 'billing';
-            }
-        }
-    }
-}
+</layout>
