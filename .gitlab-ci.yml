@@ -15,6 +15,7 @@ run-build:
     - wget https://github.com/astorm/MagentoTarToConnect/archive/master.zip
     - unzip master.zip
     - rm master.zip
+    - mkdir /builds/epartment/package
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
   only:
     - master
