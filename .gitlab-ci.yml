@@ -7,10 +7,8 @@ run-build:
   stage: build
   script:
     - git status
-
-only:
-  - master
-
-artifacts:
-  paths:
-    - build/*.tar.gz
+  only:
+    - master
+  artifacts:
+    paths:
+      - build/*.tar.gz
