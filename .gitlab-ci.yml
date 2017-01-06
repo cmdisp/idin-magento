@@ -11,6 +11,7 @@ run-build:
     - cd /builds/epartment/cmgroep-idin
     - tar cvf ../CMGroep_Idin.tar .
     - cd ..
+    - rm -rf MagentoTarToConnect-master
     - wget https://github.com/astorm/MagentoTarToConnect/archive/master.zip
     - unzip master.zip
     - rm master.zip
