@@ -6,6 +6,7 @@ stages:
 run-build:
   stage: build
   script:
+    - rm -rf /build/epartments/package
     - apt-get update
     - apt-get install -y wget unzip gzip
     - cd /builds/epartment/cmgroep-idin
@@ -20,4 +21,4 @@ run-build:
     - master
   artifacts:
     paths:
-      - /builds/epartment/package/*
+      - /build/epartment/package/*

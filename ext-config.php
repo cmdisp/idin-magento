@@ -22,7 +22,7 @@ return array(
 'auto_detect_version'   => true,
 
 //Where on your local system you'd like to build the files to
-'path_output'            => '/builds/epartment/package',
+'path_output'            => '/build/epartment/package',
 
 //Magento Connect license value. 
 'stability'              => 'stable',
