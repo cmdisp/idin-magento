@@ -19,4 +19,4 @@ run-build:
     - master
   artifacts:
     paths:
-      - /builds/epartment/*.tar.gz
+      - /builds/epartment/package/*.tar.gz

@@ -3,7 +3,7 @@ return array(
 
 //The base_dir and archive_file path are combined to point to your tar archive
 //The basic idea is a separate process builds the tar file, then this finds it
-'base_dir'               => '/Users/jnijhuis/Development/Prototypes/auto-build-ext',
+'base_dir'               => '/builds/epartment',
 'archive_files'          => 'CMGroep_Idin.tar',
 
 //The Magento Connect extension name.  Must be unique on Magento Connect
@@ -22,7 +22,7 @@ return array(
 'auto_detect_version'   => true,
 
 //Where on your local system you'd like to build the files to
-'path_output'            => '/Users/jnijhuis/Development/Prototypes/auto-build-ext',
+'path_output'            => '/builds/epartment/package',
 
 //Magento Connect license value. 
 'stability'              => 'stable',
