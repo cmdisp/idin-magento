@@ -7,7 +7,7 @@ run-build:
   stage: build
   script:
     - apt-get update
-    - apt-get install -y wget
+    - apt-get install -y wget unzip
     - cd /builds/epartment/cmgroep-idin
     - tar cvf ../CMGroep_Idin.tar .
     - cd ..
