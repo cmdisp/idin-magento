@@ -17,7 +17,7 @@ run-build:
     - unzip master.zip
     - rm master.zip
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
-    - mkdir ./build
+    - mkdir -p ./build
     - mv /builds/epartment/package/*.tgz ./build/
   only:
     - master
