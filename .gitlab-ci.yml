@@ -6,7 +6,7 @@ stages:
 run-build:
   stage: build
   script:
-    - rm -rf /build/epartments/package
+    - rm -rf /builds/epartment/package
     - apt-get update
     - apt-get install -y wget unzip gzip
     - cd /builds/epartment/cmgroep-idin
@@ -17,8 +17,9 @@ run-build:
     - unzip master.zip
     - rm master.zip
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
+    - mv /builds/epartment/package/*.tgz /build/
   only:
     - master
   artifacts:
     paths:
-      - /build/epartment/package/*
+      - /build/*
