@@ -9,7 +9,7 @@ run-build:
     - apt-get update
     - apt-get install -y wget unzip
     - cd /builds/epartment/cmgroep-idin
-    - tar cvf ../CMGroep_Idin.tar .
+    - tar --exclude='./.git' --exclude='./dev_assets' --exclude='./ext-config.php' cvf ../CMGroep_Idin.tar .
     - cd ..
     - rm -rf MagentoTarToConnect-master
     - wget https://github.com/astorm/MagentoTarToConnect/archive/master.zip
