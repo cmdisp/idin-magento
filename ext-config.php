@@ -12,7 +12,7 @@ return array(
 
 //Your extension version.  By default, if you're creating an extension from a 
 //single Magento module, the tar-to-connect script will look to make sure this
-//matches the module version.  You can skip this check by setting the 
+//matches the module version.  You can skip this  check by setting the
 //skip_version_compare value to true
 'extension_version'      => '1.0.3',
 'skip_version_compare'   => true,
