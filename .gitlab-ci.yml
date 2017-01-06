@@ -6,9 +6,15 @@ stages:
 run-build:
   stage: build
   script:
-    - git status
+    - cd /builds/epartment/cmgroep-idin
+    - tar cvf ../CMGroep_Idin.tar .
+    - cd ..
+    - wget https://github.com/astorm/MagentoTarToConnect/archive/master.zip
+    - unzip master.zip
+    - rm master.zip
+    - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
   only:
     - master
   artifacts:
     paths:
-      - build/*.tar.gz
+      - /builds/epartment/*.tar.gz
