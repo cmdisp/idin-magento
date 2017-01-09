@@ -19,6 +19,7 @@ run-build:
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
     - mkdir -p ./cmgroep-idin/build
     - mv /builds/epartment/package/*.tgz ./cmgroep-idin/build/
+    - dig git.dev.epartment.nl
   only:
     - master
   artifacts:
