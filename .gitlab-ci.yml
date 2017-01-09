@@ -8,7 +8,7 @@ run-build:
   script:
     - rm -rf /builds/epartment/package
     - apt-get update
-    - apt-get install -y wget unzip gzip dig
+    - apt-get install -y wget unzip gzip dnsutils
     - cd /builds/epartment/cmgroep-idin
     - tar cvf ../CMGroep_Idin.tar . --exclude=.git --exclude=dev_assets --exclude=ext-config.php
     - cd ..
