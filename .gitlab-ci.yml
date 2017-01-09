@@ -3,12 +3,12 @@ image: php:5.6
 stages:
   - build
 
-run-build:
+extension:
   stage: build
   script:
     - rm -rf /builds/epartment/package
     - apt-get update
-    - apt-get install -y wget unzip gzip dnsutils
+    - apt-get install -y wget unzip gzip
     - cd /builds/epartment/cmgroep-idin
     - tar cvf ../CMGroep_Idin.tar . --exclude=.git --exclude=dev_assets --exclude=ext-config.php
     - cd ..
@@ -19,9 +19,8 @@ run-build:
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
     - mkdir -p ./cmgroep-idin/build
     - mv /builds/epartment/package/*.tgz ./cmgroep-idin/build/
-    - dig git.dev.epartment.nl
   only:
-    - master
+    - tags
   artifacts:
     paths:
       - build/*.tgz
