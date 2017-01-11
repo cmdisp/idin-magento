@@ -125,9 +125,17 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                                             ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
 
             if ($matchingTransactionLogCollection->count() == 1 && $transactionLog = $matchingTransactionLogCollection->getFirstItem()) {
-                $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($transactionLog->getTransactionId());
-                $transactionLog->setTransactionResponse(Mage::helper('cmgroep_idin/api')->serializeStatusResponse($transactionStatus));
-                $transactionLog->save();
+
+                /**
+                 * Only retrieve response the first time, consecutive requests will fetch it from the DB.
+                 */
+                if (empty($transactionLog->getTransactionResponse())) {
+                    $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($transactionLog->getTransactionId());
+                    $transactionLog->setTransactionResponse(Mage::helper('cmgroep_idin/api')->serializeStatusResponse($transactionStatus));
+                    $transactionLog->save();
+                } else {
+                    $transactionStatus = Mage::helper('cmgroep_idin/api')->deserializeStatusResponse($transactionLog->getTransactionResponse());
+                }
 
                 if ($transactionStatus->getStatus() != 'success') {
                     $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN verification failed or canceled. Please try again later.'));
