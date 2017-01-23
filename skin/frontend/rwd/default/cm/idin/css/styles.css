@@ -208,10 +208,16 @@
   height: 80px;
   color: #000000;
 }
+.customer-account-idin-info + .customer-account-idin-info {
+  margin-top: 25px;
+}
 .customer-account-idin-info:after {
   clear: both;
   display: table;
   content: ' ';
+}
+.customer-account-idin-info .idin-details span {
+  padding-right: 15px;
 }
 .customer-account-idin-info.idin-connected.age-verified {
   height: 40px;
@@ -271,7 +277,6 @@
   width: auto;
   height: 80px;
   vertical-align: middle;
-  font-weight: bold;
 }
 .cart-idin-notice {
   display: table;

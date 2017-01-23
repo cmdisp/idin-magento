@@ -94,6 +94,11 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::getStoreConfig('cmgroep_idin/age_verification/required');
     }
 
+    public function getIdinSaveAgeVerificationResult()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/age_verification/save_verification_result') == 1;
+    }
+
     /**
      * Determines is cart notice is enabled
      *
@@ -219,7 +224,7 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
             /**
              * Save issuers for 24h in cache
              */
-            $cache->save(json_encode($issuersPerCountry), self::CACHE_KEY_IDIN_ISSUERS, array(self::CACHE_TAG_IDIN), 60*60*24);
+            $cache->save(json_encode($issuersPerCountry), self::CACHE_KEY_IDIN_ISSUERS, array(self::CACHE_TAG_IDIN), 60*60*24*7);
 
             return $issuersPerCountry;
         }
@@ -242,6 +247,8 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
         $ageVerified = false;
 
         if ($skipCustomerAndQuoteCheck == false) {
+            $quote = Mage::helper('checkout/cart')->getQuote();
+
             if ($customerHelper->isLoggedIn()) {
                 /**
                  * Check customers verification status
@@ -253,10 +260,16 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
                 /**
                  * Check current quote session verification status
                  */
-                $quote = Mage::helper('checkout/cart')->getQuote();
                 if ($quote->getIdinAgeVerified()) {
                     $ageVerified = true;
                 }
+            }
+
+            /**
+             * Always verify the age when not saved and quote has not yet been verified
+             */
+            if ($this->getIdinSaveAgeVerificationResult() == false && $quote->getIdinAgeVerified() == false) {
+                $ageVerified = false;
             }
 
             /**

@@ -33,7 +33,7 @@
 <config>
     <modules>
         <CMGroep_Idin>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </CMGroep_Idin>
     </modules>
     <global>
@@ -127,6 +127,17 @@
                 </cmgroep_idin>
             </updates>
         </layout>
+        <events>
+            <admin_system_config_changed_section_cmgroep_idin>
+                <observers>
+                    <cmgroep_idin>
+                        <type>model</type>
+                        <class>CMGroep_Idin_Model_Adminhtml_Observer</class>
+                        <method>updateIdinProductAttribute</method>
+                    </cmgroep_idin>
+                </observers>
+            </admin_system_config_changed_section_cmgroep_idin>
+        </events>
     </adminhtml>
     <admin>
         <routers>
@@ -139,4 +150,11 @@
             </adminhtml>
         </routers>
     </admin>
+    <default>
+        <cmgroep_idin>
+            <age_verification>
+                <save_verification_result>1</save_verification_result>
+            </age_verification>
+        </cmgroep_idin>
+    </default>
 </config>

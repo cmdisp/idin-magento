@@ -10,6 +10,26 @@ basePath: /prod/idin/v1.0
 produces:
   - application/json
 paths:
+  /merchants/{merchant_token}:
+    get:
+      summary : Retrieve merchant details
+      description: |
+        The merchants endpoint retrieves contract details and credit statistics
+      parameters:
+        - name: merchant_token
+          in: path
+          description: Merchant Token
+          required: true
+          type: string
+      responses:
+        200:
+          description: Contract details of the merchant
+          schema:
+            $ref: '#/definitions/MerchantResponse'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /directory:
     post:
       summary: Retrieve issuer directory
@@ -61,7 +81,7 @@ paths:
           schema:
             $ref: '#/definitions/StatusRequest'
       responses:
-        200: 
+        200:
           description: Status details from the transaction, including requested information
           schema:
             $ref: '#/definitions/StatusResponse'
@@ -75,7 +95,7 @@ definitions:
     discriminator: baseRequest
     required:
       - merchant_token
-    properties: 
+    properties:
       merchant_token:
         type: string
         description: Security Token of the merchant
@@ -83,6 +103,60 @@ definitions:
     type: object
     allOf:
       - $ref: '#/definitions/BaseRequest'
+  MerchantResponse:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of Merchant
+      status:
+        type: string
+        description: Status of the Merchant, inactive or active
+      services:
+        $ref: '#/definitions/MerchantResponseServices'
+      balance:
+        $ref: '#/definitions/MerchantResponseBalance'
+      contact:
+        $ref: '#/definitions/MerchantResponseContact'
+  MerchantResponseServices:
+    type: object
+    properties:
+      identity:
+        type: boolean
+        description: Determines if Identity service enabled
+      name:
+        type: boolean
+        description: Determines if Name service enabled
+      address:
+        type: boolean
+        description: Determines if Address service enabled
+      date_of_birth:
+        type: boolean
+        description: Determines if Date of Birth service enabled
+      18y_or_older:
+        type: boolean
+        description: Determines if 18+ service enabled
+  MerchantResponseBalance:
+    type: object
+    properties:
+      used:
+        type: integer
+        description: Amount of used credits
+      available:
+        type: integer
+        description: Amount of available credits
+  MerchantResponseContact:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the merchant's contact person
+      email:
+        type: string
+        description: Emailaddress of the merchant's contact person
+      phone:
+        type: string
+        description: Phone Number of the merchant's contact person
   DirectoryResponse:
     type: object
     properties:

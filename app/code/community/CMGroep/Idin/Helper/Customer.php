@@ -62,10 +62,6 @@ class CMGroep_Idin_Helper_Customer extends Mage_Core_Helper_Abstract
                 ->setPassword($statusResponse->getBin())
                 ->setIdinBin($statusResponse->getBin());
 
-            if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()) {
-                $customer->setIdinAgeVerified($statusResponse->getAge()->get18yOrOlder() ? 1 : 0);
-            }
-
             $customer->save();
 
             $address = Mage::getModel('customer/address');

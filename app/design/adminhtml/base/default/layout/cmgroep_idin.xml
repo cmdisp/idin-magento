@@ -48,4 +48,23 @@
         </reference>
     </adminhtml_idin_transaction_details>
 
+    <adminhtml_sales_order_view>
+        <reference name="sales_order_tabs">
+            <action method="addTab">
+                <name>idin_transactions</name>
+                <block>cmgroep_idin/adminhtml_sales_order_view_tab_idin</block>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <action method="addTabAfter">
+                <name>idin_transactions</name>
+                <block>cmgroep_idin/adminhtml_customer_edit_tab_idin</block>
+                <after>tags</after>
+            </action>
+        </reference>
+    </adminhtml_customer_edit>
+
 </layout>

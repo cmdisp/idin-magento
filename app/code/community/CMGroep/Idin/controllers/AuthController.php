@@ -89,13 +89,6 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                                 ->withName()
                                 ->withAddress();
 
-        /**
-         * If age verification is enabled, add it to the request
-         */
-        if ($dataHelper->getIdinAgeVerificationActive()) {
-            $transaction->with18yOrOlder();
-        }
-
         $transactionResponse = $transaction->execute();
 
         /**
@@ -313,13 +306,6 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                         ->start($this->getRequest()->getParam('idin_issuer'), $entranceCode, $dataHelper->getConnectReturnUrl())
                         ->withIdentity();
 
-                    /**
-                     * If age verification is enabled, add it to the request
-                     */
-                    if ($dataHelper->getIdinAgeVerificationActive()) {
-                        $transaction->with18yOrOlder();
-                    }
-
                     $transactionResponse = $transaction->execute();
 
                     /**
@@ -467,27 +453,16 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
 
                 Mage::helper('cmgroep_idin')->registerTransaction($transaction->getTransactionId(), $transaction->getEntranceCode(), $transactionStatus);
 
-                /**
-                 * Cache Customer ID and remove transaction record
+                /*
+                 * Store result of age verification
                  */
-                $registrationCustomerId = $transaction->getCustomerId();
+                $customer = Mage::getModel('customer/customer')->load( $transaction->getCustomerId());
+                $customer->setIdinAgeVerified($transactionStatus->getAge()->get18yOrOlder() ? 1 : 0);
+                $customer->save();
 
-                /**
-                 * Check if bin already exists
-                 */
-                $customersWithBin = Mage::getResourceModel('customer/customer_collection')
-                    ->addFieldToFilter('idin_bin', $transactionStatus->getBin());
-
-                if ($customersWithBin->count() == 1) {
-                    $customer = Mage::getModel('customer/customer')->load($registrationCustomerId);
-
-                    $customer->setIdinAgeVerified($transactionStatus->getAge()->get18yOrOlder() ? 1 : 0);
-                    $customer->save();
-
-                    $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully verified your age with iDIN!'));
-                    $this->_redirect('customer/account/index');
-                    return;
-                }
+                $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully verified your age with iDIN!'));
+                $this->_redirect('customer/account/index');
+                return;
             }
         }
 

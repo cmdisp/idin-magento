@@ -242,10 +242,20 @@
 
   color: @idin-main-black;
 
+  + .customer-account-idin-info {
+    margin-top: 25px;
+  }
+
   &:after {
     clear: both;
     display: table;
     content: ' ';
+  }
+
+  .idin-details {
+    span {
+      padding-right: 15px;
+    }
   }
 
   &.idin-connected {
@@ -319,7 +329,6 @@
       width: auto;
       height: 80px;
       vertical-align: middle;
-      font-weight: bold;
     }
   }
 }
