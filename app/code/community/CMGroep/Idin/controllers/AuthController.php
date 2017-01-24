@@ -67,7 +67,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
             }
         }
 
-        $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Invalid action'));
+        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Invalid action'));
         $this->_redirectReferer();
     }
 

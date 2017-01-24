@@ -78,7 +78,6 @@ var IdinCheckout = Class.create(Checkout, {
 
             accordion.currentSection = 'opc-age_verification';
             checkout.gotoSection('billing', true);
-            //document.body.fire('login:setMethod', {method : this.checkoutMethod});
         }
     }
 });

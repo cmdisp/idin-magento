@@ -42,7 +42,7 @@ class CMGroep_Idin_OnepageController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Verifies if the age has been verified succesfully and updates the
+     * Verifies if the age has been verified successfully and updates the
      * step data
      *
      * @return Zend_Controller_Response_Abstract

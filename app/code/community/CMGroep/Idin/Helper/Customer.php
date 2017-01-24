@@ -40,6 +40,7 @@ class CMGroep_Idin_Helper_Customer extends Mage_Core_Helper_Abstract
      *
      * @param string                              $emailAddress
      * @param string                              $phoneNumber
+     * @param string                              $password
      * @param \CMGroep\Idin\Models\StatusResponse $statusResponse
      *
      * @return false|Mage_Customer_Model_Customer

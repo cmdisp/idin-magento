@@ -104,6 +104,11 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::getStoreConfig('cmgroep_idin/age_verification/required');
     }
 
+    /**
+     * Determines if the age verification result should be saved
+     *
+     * @return bool
+     */
     public function getIdinSaveAgeVerificationResult()
     {
         return Mage::getStoreConfig('cmgroep_idin/age_verification/save_verification_result') == 1;
@@ -232,7 +237,7 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
             }
 
             /**
-             * Save issuers for 24h in cache
+             * Save issuers for 7d in cache
              */
             $cache->save(json_encode($issuersPerCountry), self::CACHE_KEY_IDIN_ISSUERS, array(self::CACHE_TAG_IDIN), 60*60*24*7);
 
