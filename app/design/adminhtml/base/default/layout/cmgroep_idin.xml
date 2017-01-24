@@ -65,6 +65,13 @@
                 <after>tags</after>
             </action>
         </reference>
+        <reference name="customer_edit_tab_view">
+            <block type="cmgroep_idin/adminhtml_customer_edit_tab_view_idin"
+                   name="idin.info"
+                   alias="idin_info"
+                   template="cm/idin/customer/tab/view/idin.phtml"
+                   before="-"></block>
+        </reference>
     </adminhtml_customer_edit>
 
 </layout>

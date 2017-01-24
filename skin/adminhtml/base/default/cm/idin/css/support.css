@@ -1,3 +1,13 @@
+.customer-details-idin .idin-cell {
+  width: 70px;
+  max-width: 70px;
+}
+.customer-details-idin .idin-cell .logo-idin {
+  max-height: 50px;
+}
+.customer-details-idin .idin-details {
+  vertical-align: middle;
+}
 .cmgroep_idin_support .row {
   margin-left: -15px;
   margin-right: -15px;
