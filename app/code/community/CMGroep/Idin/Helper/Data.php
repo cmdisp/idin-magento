@@ -35,6 +35,16 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
     const CACHE_KEY_IDIN_ISSUERS = 'cmgroup_idin_issuers';
 
     /**
+     * Returns whether login is enabled or not
+     *
+     * @return bool
+     */
+    public function getExtensionActive()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/common/active') == 1;
+    }
+
+    /**
      * Retrieves the current mode
      *
      * @return integer

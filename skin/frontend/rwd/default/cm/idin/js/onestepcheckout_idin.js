@@ -41,6 +41,8 @@ IdinOneStepCheckout.prototype = {
         if (this.requireVerification) {
             this.disableOneStepCheckout();
         }
+
+        $$('.account-login-checkout:not(#' + this.idinLoginContainer + ')')[0].hide();
     },
 
     /**

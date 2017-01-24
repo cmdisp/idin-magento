@@ -196,9 +196,20 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                     $transactionStatus = Mage::helper('cmgroep_idin/api')->deserializeStatusResponse($transactionLog->getTransactionResponse());
 
                     /**
+                     * Verify optionally specified password
+                     */
+                    if ($this->getRequest()->has('password') && strlen($this->getRequest()->get('password')) > 0) {
+                        if ($this->getRequest()->get('password') != $this->getRequest()->get('password_confirm')) {
+                            $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Please make sure your passwords match'));
+                            $this->_redirectReferer();
+                            return;
+                        }
+                    }
+
+                    /**
                      * Create user account and login
                      */
-                    if ($customer = Mage::helper('cmgroep_idin/customer')->createCustomer($this->getRequest()->getParam('email'), $this->getRequest()->getParam('phone_number'), $transactionStatus)) {
+                    if ($customer = Mage::helper('cmgroep_idin/customer')->createCustomer($this->getRequest()->getParam('email'), $this->getRequest()->getParam('phone_number'), $this->getRequest()->getParam('password'), $transactionStatus)) {
                         $transactionLog->setCustomerId($customer->getId());
                         $transactionLog->save();
 
@@ -277,7 +288,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                         $this->_redirect('/');
                     }
                 } else {
-                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Could not find a matching account, please make sure your account is linked with iDIN.'));
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Could not find a matching account, please make sure your account is linked with iDIN or create an account by registering with iDIN below.'));
                     $this->_redirect('customer/account/login');
                 }
             }

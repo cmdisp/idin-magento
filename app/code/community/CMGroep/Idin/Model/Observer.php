@@ -43,7 +43,7 @@ class CMGroep_Idin_Model_Observer
         /**
          * Check if age verification is still required
          */
-        if (Mage::helper('cmgroep_idin')->ageVerificationRequired()) {
+        if (Mage::helper('cmgroep_idin')->ageVerificationRequired() && Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive() && Mage::helper('cmgroep_idin')->getExtensionActive()) {
             throw new Mage_Core_Exception(Mage::helper('cmgroep_idin')->__('Can\'t place order, please verify your age in order to continue.'));
         }
     }

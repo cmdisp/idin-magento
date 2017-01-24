@@ -126,7 +126,7 @@
                    name="age_verification"/>
         </reference>
         <reference name="checkout.progress">
-            <action method="setTemplate" ifconfig="cmgroep_idin/age_verification/active">
+            <action method="setTemplate" ifconfig="cmgroep_idin/common/active">
                 <template>cmgroep/idin/checkout/onepage/progress.phtml</template>
             </action>
             <block type="checkout/onepage_progress"
@@ -166,6 +166,16 @@
 
     <onestepcheckout_index_index>
         <update handle="idin_base"/>
+        <reference name="content">
+            <block type="cmgroep_idin/customer_account_login_idin" template="cmgroep/idin/register_login.phtml"
+                   name="checkout.login.idin"
+                   as="checkout_login_idin"
+                   before="-">
+                <action method="setIsCheckout">
+                    <checkout>1</checkout>
+                </action>
+            </block>
+        </reference>
         <reference name="before_body_end">
             <block type="cmgroep_idin/checkout_thirdparty_onestepcheckout_checkout" name="onestepcheckout.idin.checkout"
                    as="onestepcheckout_idin_checkout"

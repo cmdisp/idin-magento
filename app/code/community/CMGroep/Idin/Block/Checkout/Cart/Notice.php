@@ -38,7 +38,7 @@ class CMGroep_Idin_Block_Checkout_Cart_Notice extends CMGroep_Idin_Block_Abstrac
      */
     public function _toHtml()
     {
-        if ($this->getHelper()->getIdinAgeVerificationCartNoticeEnabled() && $this->getHelper()->ageVerificationRequired()) {
+        if (($this->getHelper()->getIdinAgeVerificationCartNoticeEnabled() && $this->getHelper()->getIdinAgeVerificationActive() && $this->getHelper()->ageVerificationRequired()) && $this->getHelper()->getExtensionActive()) {
             return parent::_toHtml();
         }
     }

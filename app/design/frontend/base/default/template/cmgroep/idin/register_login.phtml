@@ -32,8 +32,10 @@
 <div class="account-login idin <?php if ($this->getIsCheckout()): ?>account-login-checkout<?php endif; ?>">
     <?php if ($this->getIsCheckout() == false): ?>
         <div class="page-title">
-            <?php if ($this->getIsRegistration()): ?>
+            <?php if ($this->getIsRegistration() || ($this->registrationEnabled() && $this->loginEnabled() == false)): ?>
                 <h1><?php echo $this->__('Create an Account with iDIN'); ?></h1>
+            <?php elseif ($this->registrationEnabled() == false && $this->loginEnabled()): ?>
+                <h1><?php echo $this->__('Login with iDIN'); ?></h1>
             <?php else: ?>
                 <h1><?php echo $this->__('Login or Create an Account with iDIN'); ?></h1>
             <?php endif; ?>

@@ -91,6 +91,15 @@
         </template>
     </global>
     <frontend>
+        <translate>
+            <modules>
+                <cmgroep_idin>
+                    <files>
+                        <default>CMGroep_Idin.csv</default>
+                    </files>
+                </cmgroep_idin>
+            </modules>
+        </translate>
         <events>
             <sales_order_place_before>
                 <observers>
@@ -120,6 +129,15 @@
         </routers>
     </frontend>
     <adminhtml>
+        <translate>
+            <modules>
+                <cmgroep_idin>
+                    <files>
+                        <default>CMGroep_Idin.csv</default>
+                    </files>
+                </cmgroep_idin>
+            </modules>
+        </translate>
         <layout>
             <updates>
                 <cmgroep_idin>

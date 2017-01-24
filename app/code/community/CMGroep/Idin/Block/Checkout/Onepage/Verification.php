@@ -103,7 +103,7 @@ class CMGroep_Idin_Block_Checkout_Onepage_Verification extends Mage_Checkout_Blo
     public function _toHtml()
     {
         if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()
-            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true)) {
+            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true) && Mage::helper('cmgroep_idin')->getExtensionActive()) {
             return parent::_toHtml();
         }
     }

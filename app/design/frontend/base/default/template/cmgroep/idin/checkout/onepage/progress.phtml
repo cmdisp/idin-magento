@@ -35,7 +35,7 @@
     </div>
     <div class="block-content">
         <dl>
-            <?php if (Mage::helper('cmgroep_idin')->ageVerificationRequired(true)): ?>
+            <?php if (Mage::helper('cmgroep_idin')->ageVerificationRequired(true) && Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()): ?>
                 <?php if ($this->getCheckout()->getStepData('age_verification', 'is_show')): ?>
                     <div id="age_verification-progress-opcheckout">
                         <?php echo $this->getChildHtml('age_verification.progress') ?>

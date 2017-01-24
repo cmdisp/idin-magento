@@ -59,6 +59,18 @@
   border-radius: 2px;
 }
 
+.button {
+  &.danger {
+    background: white;
+    color: @idin-main-blue;
+
+    &:hover, &:focus, &:active {
+      background: white;
+      color: @idin-main-blue;
+    }
+  }
+}
+
 /*
  * Account Login and Registration
  */
@@ -155,7 +167,7 @@
         display: table;
         height: @idin-login-panel-height;
 
-        padding: 0 30px;
+        padding: 0 0 0 30px;
         float: left;
         width: 30%;
 
@@ -201,6 +213,12 @@
       .idin-logo, .introduction, .actions {
         min-height: 115px;
       }
+    }
+  }
+
+  #idin-finish-form {
+    .finish-form, .idin-logo, .introduction, .actions {
+      height: 235px;
     }
   }
 }

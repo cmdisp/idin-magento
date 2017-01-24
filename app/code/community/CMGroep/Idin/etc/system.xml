@@ -140,13 +140,6 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <sort_order>10</sort_order>
-
-                            <depends>
-                                <active>
-                                    <fieldset>registration</fieldset>
-                                    <value>1</value>
-                                </active>
-                            </depends>
                         </active>
                     </fields>
                 </login>
@@ -176,9 +169,9 @@
                             <show_in_store>1</show_in_store>
                             <sort_order>20</sort_order>
                         </required>
-                        <save_verification_result translate="label">
+                        <save_verification_result translate="label comment">
                             <label>Save 18+ verification result</label>
-                            <comment><![CDATA[When set to "No", the customer has to verify their age on every checkout.]]></comment>
+                            <comment><![CDATA[When set to &quot;No&quot;, the customer has to verify their age on every checkout.]]></comment>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <show_in_default>1</show_in_default>
@@ -197,6 +190,7 @@
                         </show_cart_notice>
                         <cart_notice translate="label">
                             <label>Shopping cart notice</label>
+                            <validate>required-entry</validate>
                             <frontend_type>textarea</frontend_type>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

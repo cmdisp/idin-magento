@@ -110,7 +110,7 @@ class CMGroep_Idin_Block_Customer_Account_Login_Idin extends CMGroep_Idin_Block_
      */
     public function _toHtml()
     {
-        if ($this->getHelper()->getIdinLoginActive() || $this->getHelper()->getIdinRegistrationActive()) {
+        if (($this->getHelper()->getIdinLoginActive() || $this->getHelper()->getIdinRegistrationActive()) && $this->getHelper()->getExtensionActive()) {
             return parent::_toHtml();
         }
     }
