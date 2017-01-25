@@ -105,6 +105,21 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Retrieves merchant information
+     *
+     * @param $merchantToken
+     *
+     * @return \CMGroep\Idin\Models\MerchantResponse
+     */
+    public function getMerchantInformation($merchantToken)
+    {
+        $api = $this->getIdinApi();
+        $merchantResponse = $api->merchantsMerchantTokenGet($merchantToken);
+
+        return $merchantResponse;
+    }
+
+    /**
      * Retrieves the transaction status for a transaction
      *
      * @param $transactionId

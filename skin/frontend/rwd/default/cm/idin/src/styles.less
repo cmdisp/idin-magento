@@ -38,6 +38,15 @@
 @idin-support-coral: #ff4355;
 
 /*
+ * Breakpoints
+ */
+@bp-xsmall: 479px;
+@bp-small: 599px;
+@bp-medium: 770px;
+@bp-large: 979px;
+@bp-xlarge: 1199px;
+
+/*
  * Basic Form Components
  */
 .cmgroep__idin__select
@@ -95,6 +104,14 @@
         padding: 0 25px 0 0;
         border-right: 2px solid #FFF;
 
+        @media (max-width: @bp-large) {
+          min-height: unset;
+          float: none;
+          width: 100%;
+          padding: 0;
+          border-right: none;
+        }
+
         .idin-logo {
           float: left;
           position: relative;
@@ -136,6 +153,17 @@
 
         border-right: 2px solid #FFF;
 
+        @media (max-width: @bp-large) {
+          width: 50%;
+          padding: 0 30px 0 0;
+        }
+
+        @media (max-width: @bp-small) {
+          width: 100%;
+          padding: 0;
+          border-right: none;
+        }
+
         .form-group {
           display: table-cell;
           vertical-align: middle;
@@ -170,6 +198,16 @@
         padding: 0 0 0 30px;
         float: left;
         width: 30%;
+
+        @media (max-width: @bp-large) {
+          width: 50%;
+        }
+
+        @media (max-width: @bp-small) {
+          width: 100%;
+          padding: 0;
+          height: auto;
+        }
 
         .action-wrapper {
           display: table-cell;
@@ -217,8 +255,19 @@
   }
 
   #idin-finish-form {
+    .info {
+      border-right: 0;
+    }
+    .finish-form {
+      border-left: 2px solid #FFF;
+
+      @media (max-width: @bp-large) {
+        border-left: none;
+      }
+
+    }
     .finish-form, .idin-logo, .introduction, .actions {
-      height: 235px;
+      min-height: 145px;
     }
   }
 }
@@ -338,6 +387,34 @@
     }
   }
 
+  @media (max-width: @bp-small) {
+    display: block;
+    height: auto;
+    
+    .idin-logo {
+      display: block;
+      float: none;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .idin-details {
+      display: block;
+      height: auto;
+
+      .age-verification {
+        span {
+          display: block;
+        }
+
+        .action-wrapper {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+  }
+
   .age-verification {
     display: table;
     height: 80px;
@@ -380,6 +457,42 @@
     display: table-cell;
     vertical-align: middle;
     height: @cart-notice-height;
+
+    text-align: left;
+    padding: 0 0 0 15px;
+  }
+}
+
+.product-idin-notice
+{
+  @product-notice-height: 40px;
+
+  display: table;
+
+  width: 100%;
+  padding: 15px;
+  margin: 0 0 25px 0;
+
+  background: @idin-support-light-blue;
+  color: @idin-main-black;
+
+  .idin-logo {
+    display: table-cell;
+    vertical-align: middle;
+
+    width: 50px;
+    height: @product-notice-height;
+
+    background-image: url(../images/iDIN.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  span {
+    display: table-cell;
+    vertical-align: middle;
+    height: @product-notice-height;
 
     text-align: left;
     padding: 0 0 0 15px;

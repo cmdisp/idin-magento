@@ -115,6 +115,16 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Determines is product notice is enabled
+     *
+     * @return bool
+     */
+    public function getIdinAgeVerificationProductNoticeSetting()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/age_verification/show_product_notice');
+    }
+
+    /**
      * Determines is cart notice is enabled
      *
      * @return bool
@@ -152,6 +162,16 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
     public function getIdinAgeCartVerificationNotice()
     {
         return Mage::getStoreConfig('cmgroep_idin/age_verification/cart_notice');
+    }
+
+    /**
+     * Retrieves the product notice to be shown
+     *
+     * @return string
+     */
+    public function getIdinAgeProductVerificationNotice()
+    {
+        return Mage::getStoreConfig('cmgroep_idin/age_verification/product_notice');
     }
 
     /**

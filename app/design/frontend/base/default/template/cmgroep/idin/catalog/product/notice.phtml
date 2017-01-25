@@ -2,7 +2,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2016 CM Groep
+ * Copyright (c) 2017 CM Groep
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,38 +28,8 @@
  * @copyright  2016-2017 CM Groep
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-
-class CMGroep_Idin_Model_System_Config_Source_Mode
-{
-    const GATEWAY_TEST = 'https://idin.cmtelecom.com/idin/v1.0/test';
-    const GATEWAY_LIVE = 'https://idin.cmtelecom.com/idin/v1.0';
-
-    const MODE_TEST = 0;
-    const MODE_LIVE = 1;
-
-    /**
-     * Options getter
-     *
-     * @return array
-     */
-    public function toOptionArray()
-    {
-        return array(
-            array('value' => self::MODE_TEST, 'label' => Mage::helper('cmgroep_idin')->__('Test')),
-            array('value' => self::MODE_LIVE, 'label' => Mage::helper('cmgroep_idin')->__('Live')),
-        );
-    }
-
-    /**
-     * Get options in "key-value" format
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return array(
-            self::MODE_TEST => Mage::helper('cmgroep_idin')->__('Test'),
-            self::MODE_LIVE => Mage::helper('cmgroep_idin')->__('Live'),
-        );
-    }
-}
+?>
+<div class="product-idin-notice">
+    <div class="idin-logo"></div>
+    <span><?php echo $this->getProductNotice(); ?></span>
+</div>

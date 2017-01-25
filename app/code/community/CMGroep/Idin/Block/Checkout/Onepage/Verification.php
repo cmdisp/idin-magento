@@ -68,7 +68,7 @@ class CMGroep_Idin_Block_Checkout_Onepage_Verification extends Mage_Checkout_Blo
             'allow'     => true,
         ));
 
-        if ($this->getHelper()->ageVerificationRequired()) {
+        if ($this->getHelper()->ageVerificationRequired() && $this->getHelper()->getExtensionActive() && $this->getHelper()->getIdinAgeVerificationActive()) {
             $this->getCheckout()->setStepData('billing', 'allow', false);
         }
 

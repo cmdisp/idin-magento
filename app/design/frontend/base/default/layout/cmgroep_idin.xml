@@ -164,11 +164,16 @@
         </block>
     </checkout_onepage_progress_age_verification>
 
+    <!-- Remove login method from OSC when logged in -->
+    <customer_logged_in>
+        <remove name="checkout.login.idin.osc" />
+    </customer_logged_in>
+
     <onestepcheckout_index_index>
         <update handle="idin_base"/>
         <reference name="content">
             <block type="cmgroep_idin/customer_account_login_idin" template="cmgroep/idin/register_login.phtml"
-                   name="checkout.login.idin"
+                   name="checkout.login.idin.osc"
                    as="checkout_login_idin"
                    before="-">
                 <action method="setIsCheckout">
@@ -193,5 +198,73 @@
                    as="onestepcheckout_idin_js" template="cmgroep/idin/checkout/third_party/onestepcheckout/js.phtml"/>
         </reference>
     </onestepcheckout_index_index>
+
+    <!-- Product View Layout updates -->
+
+    <PRODUCT_TYPE_simple>
+        <update handle="idin_base"/>
+        <reference name="product.info.simple.extra">
+            <block type="cmgroep_idin/catalog_product_notice"
+                   template="cmgroep/idin/catalog/product/notice.phtml"
+                   name="idin.product.notice"
+                   as="idin_product_notice"
+                   before="-"/>
+        </reference>
+    </PRODUCT_TYPE_simple>
+
+    <PRODUCT_TYPE_configurable>
+        <update handle="idin_base"/>
+        <reference name="product.info.container1">
+            <block type="cmgroep_idin/catalog_product_notice"
+                   template="cmgroep/idin/catalog/product/notice.phtml"
+                   name="idin.product.notice"
+                   as="idin_product_notice"
+                   before="-"/>
+        </reference>
+    </PRODUCT_TYPE_configurable>
+
+    <PRODUCT_TYPE_grouped>
+        <update handle="idin_base"/>
+        <reference name="product.info.container1">
+            <block type="cmgroep_idin/catalog_product_notice"
+                   template="cmgroep/idin/catalog/product/notice.phtml"
+                   name="idin.product.notice"
+                   as="idin_product_notice"
+                   before="-"/>
+        </reference>
+    </PRODUCT_TYPE_grouped>
+
+    <PRODUCT_TYPE_bundle>
+        <update handle="idin_base"/>
+        <reference name="product.info.container1">
+            <block type="cmgroep_idin/catalog_product_notice"
+                   template="cmgroep/idin/catalog/product/notice.phtml"
+                   name="idin.product.notice"
+                   as="idin_product_notice"
+                   before="-"/>
+        </reference>
+    </PRODUCT_TYPE_bundle>
+
+    <PRODUCT_TYPE_virtual>
+        <update handle="idin_base"/>
+        <reference name="product.info.container1">
+            <block type="cmgroep_idin/catalog_product_notice"
+                   template="cmgroep/idin/catalog/product/notice.phtml"
+                   name="idin.product.notice"
+                   as="idin_product_notice"
+                   before="-"/>
+        </reference>
+    </PRODUCT_TYPE_virtual>
+
+    <PRODUCT_TYPE_downloadable>
+        <update handle="idin_base"/>
+        <reference name="product.info.container1">
+            <block type="cmgroep_idin/catalog_product_notice"
+                   template="cmgroep/idin/catalog/product/notice.phtml"
+                   name="idin.product.notice"
+                   as="idin_product_notice"
+                   before="-"/>
+        </reference>
+    </PRODUCT_TYPE_downloadable>
 
 </layout>

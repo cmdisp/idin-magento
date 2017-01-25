@@ -1,3 +1,6 @@
+/*
+ * iDIN Colors
+ */
 .customer-details-idin .idin-cell {
   width: 70px;
   max-width: 70px;
@@ -7,6 +10,11 @@
 }
 .customer-details-idin .idin-details {
   vertical-align: middle;
+}
+.cmgroep_idin_support .extension-version {
+  font-size: 11px;
+  float: left;
+  margin: 5px 0 -5px 0;
 }
 .cmgroep_idin_support .row {
   margin-left: -15px;
@@ -158,4 +166,25 @@
   width: auto;
   max-height: 45px;
   margin: 10px 0;
+}
+.unavailable-idin-service .entry-edit-head {
+  background: #9F9F9F;
+}
+.unavailable-idin-service fieldset.config {
+  position: relative;
+  opacity: 0.5;
+}
+.unavailable-idin-service fieldset.config:after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: not-allowed;
+  border-left: 1px solid #9F9F9F;
+  border-right: 1px solid #9F9F9F;
+  border-bottom: 1px solid #9F9F9F;
 }

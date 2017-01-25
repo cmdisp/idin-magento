@@ -501,6 +501,12 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
 
                 Mage::helper('cmgroep_idin')->registerTransaction($transaction->getTransactionId(), $transaction->getEntranceCode(), $transactionStatus);
 
+                if ($transactionStatus->getStatus() != 'success') {
+                    $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN verification failed or canceled. Please try again later.'));
+                    $this->_redirectUrl(Mage::helper('checkout/url')->getCheckoutUrl());
+                    return;
+                }
+
                 /**
                  * If customer was logged in during checkout, save verification for recurring visits
                  */

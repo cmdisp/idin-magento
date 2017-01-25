@@ -29,13 +29,11 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-class CMGroep_Idin_Model_System_Config_Source_Mode
+class CMGroep_Idin_Model_System_Config_Source_Showproductnotice
 {
-    const GATEWAY_TEST = 'https://idin.cmtelecom.com/idin/v1.0/test';
-    const GATEWAY_LIVE = 'https://idin.cmtelecom.com/idin/v1.0';
-
-    const MODE_TEST = 0;
-    const MODE_LIVE = 1;
+    const MODE_NO = 0;
+    const MODE_ALWAYS = 1;
+    const MODE_PRODUCTS = 2;
 
     /**
      * Options getter
@@ -45,8 +43,9 @@ class CMGroep_Idin_Model_System_Config_Source_Mode
     public function toOptionArray()
     {
         return array(
-            array('value' => self::MODE_TEST, 'label' => Mage::helper('cmgroep_idin')->__('Test')),
-            array('value' => self::MODE_LIVE, 'label' => Mage::helper('cmgroep_idin')->__('Live')),
+            array('value' => self::MODE_NO, 'label' => Mage::helper('cmgroep_idin')->__('No')),
+            array('value' => self::MODE_ALWAYS, 'label' => Mage::helper('cmgroep_idin')->__('Always')),
+            array('value' => self::MODE_PRODUCTS, 'label' => Mage::helper('cmgroep_idin')->__('Only 18+ products')),
         );
     }
 
@@ -58,8 +57,9 @@ class CMGroep_Idin_Model_System_Config_Source_Mode
     public function toArray()
     {
         return array(
-            self::MODE_TEST => Mage::helper('cmgroep_idin')->__('Test'),
-            self::MODE_LIVE => Mage::helper('cmgroep_idin')->__('Live'),
+            self::MODE_NO => Mage::helper('cmgroep_idin')->__('No'),
+            self::MODE_ALWAYS => Mage::helper('cmgroep_idin')->__('Always'),
+            self::MODE_PRODUCTS => Mage::helper('cmgroep_idin')->__('Only 18+ products'),
         );
     }
 }

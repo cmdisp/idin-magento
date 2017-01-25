@@ -45,7 +45,10 @@ IdinAgeVerification.prototype = {
             $('checkout_method').value = checkout.method;
         }
 
-        $(this.form).submit();
+        var form = new VarienForm(this.form);
+        if (form.validator && form.validator.validate()) {
+            $(this.form).submit();
+        }
     },
 
     /**

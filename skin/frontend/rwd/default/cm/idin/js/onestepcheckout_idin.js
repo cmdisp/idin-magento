@@ -80,6 +80,10 @@ IdinOneStepCheckout.prototype = {
      * Starts the age verification transaction
      */
     start: function() {
-        $(this.form).submit();
+        var form = new VarienForm(this.form);
+
+        if (form.validator && form.validator.validate()) {
+            $(this.form).submit();
+        }
     }
 };

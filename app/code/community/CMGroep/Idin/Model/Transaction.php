@@ -42,8 +42,6 @@
  * @method CMGroep_Idin_Model_Transaction setCustomerId(string $value)
  * @method string getQuoteId()
  * @method CMGroep_Idin_Model_Transaction setQuoteId(string $value)
- * @method string getTransactionResponse()
- * @method CMGroep_Idin_Model_Transaction setTransactionResponse(string $value)
  *
  * Class CMGroep_Idin_Model_Transaction
  */
@@ -66,5 +64,34 @@ class CMGroep_Idin_Model_Transaction extends Mage_Core_Model_Abstract
         }
 
         return parent::_beforeSave();
+    }
+
+    /**
+     * Set transaction response
+     *
+     * @param $value
+     */
+    public function setTransactionResponse($value)
+    {
+        /**
+         * Encrypt response before saving
+         */
+        $encryptedResponse = Mage::helper('core')->encrypt($value);
+        $this->setData('transaction_response', $encryptedResponse);
+    }
+
+    /**
+     * Retrieve transaction response
+     *
+     * @return string
+     */
+    public function getTransactionResponse()
+    {
+        /**
+         * Decrypt response before returning
+         */
+        $decryptedResponse = Mage::helper('core')->decrypt($this->getData('transaction_response'));
+
+        return $decryptedResponse;
     }
 }

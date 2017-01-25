@@ -55,4 +55,12 @@ class CMGroep_Idin_Block_Adminhtml_System_Config_Support extends Mage_Adminhtml_
     {
         return $this->toHtml();
     }
+
+    /**
+     * Retrieves current extension version
+     */
+    public function getExtensionVersion()
+    {
+        return (string) Mage::getConfig()->getNode()->modules->CMGroep_Idin->version;
+    }
 }

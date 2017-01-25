@@ -53,15 +53,20 @@
                 <label for="phone_number" class="required"><em>*</em><?php echo $this->__('Phone Number'); ?></label>
                 <input type="text" name="phone_number" id="phone_number" placeholder="<?php echo $this->__('Please enter your phone number') ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Phone Number')) ?>" class="cmgroep__idin__input required-entry" />
             </div>
-            <div class="clearfix"></div>
             <div class="form-group">
-                <label for="password"><?php echo $this->__('Optional password'); ?></label>
-                <input type="password" name="password" id="password" placeholder="<?php echo $this->__('Optionally specify a password') ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Optionally specify a password')) ?>" class="cmgroep__idin__input" />
+                <label for="enable_password"><input type="checkbox" id="enable_password" name="enable_password" onclick="$('password_wrapper').toggle();"> <?php echo $this->__('Enable login with password'); ?></label>
             </div>
-            <div class="clearfix"></div>
-            <div class="form-group">
-                <label for="password_confirm"><?php echo $this->__('Repeat password'); ?></label>
-                <input type="password" name="password_confirm" id="password_confirm" placeholder="<?php echo $this->__('If specified, please confirm your password') ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('If specified, please confirm your password')) ?>" class="cmgroep__idin__input" />
+            <div class="password-wrapper" id="password_wrapper" style="display: none;">
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <label for="password"><?php echo $this->__('Optional password'); ?></label>
+                    <input type="password" name="password" id="password" placeholder="<?php echo $this->__('Optionally specify a password') ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Optionally specify a password')) ?>" class="cmgroep__idin__input validate-password" />
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <label for="password_confirm"><?php echo $this->__('Repeat password'); ?></label>
+                    <input type="password" name="password_confirm" id="password_confirm" placeholder="<?php echo $this->__('If specified, please confirm your password') ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('If specified, please confirm your password')) ?>" class="cmgroep__idin__input" />
+                </div>
             </div>
         </div>
         <div class="actions">
