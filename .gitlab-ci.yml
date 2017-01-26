@@ -24,7 +24,7 @@ extension:
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
     - pip install -r requirements.txt
     - mkdocs build
-    - tar -cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz /builds/epartment/cmgroep-idin/dev_assets/documentation/site/*
+    - tar -cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site/*
 #  only:
 #    - tags
   artifacts:
