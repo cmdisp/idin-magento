@@ -6,7 +6,6 @@ stages:
 extension:
   stage: build
   script:
-    - rm /builds/epartment/cmgroep-idin/build/*.tar.gz
     - rm -rf /builds/epartment/package
     - apt-get update
     - apt-get install -y wget unzip gzip
@@ -31,7 +30,7 @@ extension:
 docs:
   stage: build
   script:
-    - rm /builds/epartment/cmgroep-idin/build/*.tar.gz
+#    - rm /builds/epartment/cmgroep-idin/build/documentation.tar.gz
     - apt-get update
     - apt-get install -y python python-pip python-dev build-essential
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
