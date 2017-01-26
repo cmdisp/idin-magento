@@ -20,8 +20,8 @@ extension:
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
     - mkdir -p ./cmgroep-idin/build
     - mv /builds/epartment/package/*.tgz ./cmgroep-idin/build/
-  only:
-    - tags
+#  only:
+#    - tags
   artifacts:
     name: "Extension"
     paths:
@@ -41,8 +41,8 @@ docs:
     - mkdir -p /builds/epartment/cmgroep-idin/build
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site
     - tar cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz .
-  only:
-    - tags
+#  only:
+#    - tags
   artifacts:
     name: "Documentation"
     paths:
@@ -52,5 +52,5 @@ upload:
   stage: deploy
   script:
     - ls .
-  only:
-    - tags
+#  only:
+#    - tags
