@@ -33,6 +33,8 @@ docs:
   script:
     - cd build
     - extension_filename=$(ls | grep tgz)
+    - extension_url='http://docs.epartment.nl/idin/releases/'$extension_filename
+    - scp *.tgz epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/releases/
     - apt-get update
     - apt-get install -y python python-pip python-dev build-essential
     - pip install --upgrade pip
@@ -43,6 +45,7 @@ docs:
     - mkdocs build
     - mkdir -p /builds/epartment/cmgroep-idin/build
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site
+    - scp * epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/
     - tar cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz .
 #  only:
 #    - tags
