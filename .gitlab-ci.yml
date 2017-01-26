@@ -8,7 +8,7 @@ extension:
   script:
     - rm -rf /builds/epartment/package
     - apt-get update
-    - apt-get install -y wget unzip gzip
+    - apt-get install -y wget unzip gzip python python-pip
     - cd /builds/epartment/cmgroep-idin
     - tar cvf ../CMGroep_Idin.tar . --exclude=.git --exclude=dev_assets --exclude=ext-config.php --exclude=.gitignore --exclude=.gitlab-ci.yml
     - cd ..
@@ -19,7 +19,6 @@ extension:
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
     - mkdir -p ./cmgroep-idin/build
     - mv /builds/epartment/package/*.tgz ./cmgroep-idin/build/
-    - apt-get install python python-pip
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
     - pip install -r requirements.txt
     - mkdocs build
