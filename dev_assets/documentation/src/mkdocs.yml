@@ -16,9 +16,6 @@ extra:
       text: 'Overpass'
       code: 'Overpass Mono'
 
-toc:
-  title: 'Inhoudsopgave'
-
 markdown_extensions:
  - admonition
  - toc(permalink=true)
