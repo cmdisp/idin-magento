@@ -39,7 +39,7 @@ docs:
     - pip install --upgrade virtualenv
     - gem install yaml_command
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
-    - yaml set --save --file mkdocs.yml extension.file ($extension_filename)
+    - yaml set --save --file mkdocs.yml extension.file $extension_filename
     - pip install -r requirements.txt
     - mkdocs build
     - mkdir -p /builds/epartment/cmgroep-idin/build
