@@ -42,7 +42,9 @@ IdinOneStepCheckout.prototype = {
             this.disableOneStepCheckout();
         }
 
-        $$('.account-login-checkout:not(#' + this.idinLoginContainer + ')')[0].hide();
+        if ($$('.account-login-checkout:not(#' + this.idinLoginContainer + ')').length > 0) {
+            $$('.account-login-checkout:not(#' + this.idinLoginContainer + ')')[0].hide();
+        }
     },
 
     /**
@@ -57,12 +59,14 @@ IdinOneStepCheckout.prototype = {
 
         element.show();
 
-        var element = $(this.idinLoginContainer).remove();
-        $(this.aboveContainer).insert({
-            before: element
-        });
+        if ($(this.idinLoginContainer)) {
+            var element = $(this.idinLoginContainer).remove();
+            $(this.aboveContainer).insert({
+                before: element
+            });
 
-        element.show();
+            element.show();
+        }
     },
 
     toggleLogin: function() {

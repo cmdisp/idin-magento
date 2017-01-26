@@ -57,8 +57,11 @@
                 </div>
             </div>
         <?php else: ?>
-            <div class="idin-details">
-                <p><?php echo $this->__('Your age has been verified, you can continue to checkout.'); ?></p>
+            <div class="idin-details age-verified">
+                <p>
+                    <?php echo $this->__('Your age has been verified, you can continue to checkout.'); ?>
+                    <button type="button" onclick="idinOneStepCheckout.toggleLogin();" class="button"><?php echo $this->__('Login with iDIN'); ?></button>
+                </p>
             </div>
         <?php endif; ?>
     </form>
