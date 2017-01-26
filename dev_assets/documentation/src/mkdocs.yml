@@ -1,0 +1,53 @@
+site_name: CM iDIN Magento Extensie
+site_description: De officiële iDIN extensie van CM voor Magento
+site_author: Epartment E-Commerce
+site_url: http://www.cm.nl/
+
+theme: 'material'
+theme_dir: 'theme/material'
+
+copyright: 'CM Groep iDIN Magento Extensie - &copy; CM Groep 2016 - 2017'
+
+extra:
+  palette:
+    primary: 'idin-blue'
+    accent: 'idin-coral'
+  font:
+      text: 'Overpass'
+      code: 'Overpass Mono'
+
+toc:
+  title: 'Inhoudsopgave'
+
+markdown_extensions:
+ - admonition
+ - toc(permalink=true)
+ - pymdownx.betterem(smart_enable=all)
+ - pymdownx.emoji:
+       emoji_generator: !!python/name:pymdownx.emoji.to_svg
+ - pymdownx.magiclink
+ - pymdownx.tasklist(custom_checkbox=true)
+ - pymdownx.tilde
+ - pymdownx.smartsymbols
+ - pymdownx.critic
+
+pages:
+  - Introductie: index.md
+  - Functionaliteiten:
+      - Registratie met iDIN: features/registration.md
+      - Authenticatie met iDIN: features/authentication.md
+      - Leeftijdsverificatie met iDIN: features/age_verification.md
+  - Installatie: installation.md
+  - Configuratie:
+    - Algemeen: configuration/common.md
+    - Registratie configureren: configuration/registration.md
+    - Authenticatie configureren: configuration/authentication.md
+    - Leeftijdsverificatie configureren: configuration/age_verification.md
+  - Veel gestelde vragen: faq.md
+  - Changelog: changelog.md
+
+# URL for extension download
+extension:
+  title: CMGroep_Idin-0.1.5.tar.gz
+  version: 0.1.5
+  file: http://www.google.nl/extensie.tar.gz

@@ -14,6 +14,9 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <span class="md-flex__ellipsis md-header-nav__title">
           {% block site_name %}
+            <span class="md-header-nav__parent">
+              {{ config.site_name }}
+            </span>
             {% if page %}
               {% for parent in page.ancestors %}
                 <span class="md-header-nav__parent">
@@ -33,8 +36,8 @@
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
           <div class="md-header-nav__source">
-            {% if config.repo_url %}
-              {% include "partials/source.html" %}
+            {% if config.extension %}
+              {% include "partials/extension.html" %}
             {% endif %}
           </div>
       </div>

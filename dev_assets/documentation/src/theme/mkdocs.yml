@@ -37,8 +37,8 @@ theme_dir: material
 # Options
 extra:
   palette:
-    primary: indigo
-    accent: indigo
+    primary: idin-blue
+    accent: idin-coral
   social:
     - type: github-alt
       link: https://github.com/squidfunk
