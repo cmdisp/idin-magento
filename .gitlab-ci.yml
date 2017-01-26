@@ -38,7 +38,7 @@ docs:
     - pip install --upgrade pip
     - pip install --upgrade virtualenv
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
-    - awk 's{if(/\s*-\s*"[^"]*"/) next; else s=0} /extension.file:/{s=$extension_filename}1' mkdocs.yml
+    - sed -i 's/EXTENSION_TITLE_PLACEHOLDER/'$extension_filename'/g' mkdocs.yml
     - pip install -r requirements.txt
     - mkdocs build
     - mkdir -p /builds/epartment/cmgroep-idin/build

@@ -45,6 +45,6 @@ pages:
 
 # URL for extension download
 extension:
-  title: CMGroep_Idin-0.1.5.tar.gz
-  version: 0.1.5
-  file: http://www.google.nl/extensie.tar.gz
+  title: EXTENSION_TITLE_PLACEHOLDER
+  version: EXTENSION_VERSION_PLACEHOLDER
+  file: EXTENSION_FILE_PLACEHOLDER
