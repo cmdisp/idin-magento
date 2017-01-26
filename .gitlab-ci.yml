@@ -51,6 +51,7 @@ docs:
 upload:
   stage: deploy
   script:
+    - cd build
     - ls .
 #  only:
 #    - tags
