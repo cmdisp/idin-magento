@@ -29,6 +29,7 @@ docs:
   stage: build
   script:
 #    - rm /builds/epartment/cmgroep-idin/build/documentation.tar.gz
+    - pwd
     - apt-get update
     - apt-get install -y python python-pip python-dev build-essential
     - pip install --upgrade pip
@@ -36,7 +37,6 @@ docs:
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
     - pip install -r requirements.txt
     - mkdocs build
-    - pwd
     - tar cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site/*
 #  only:
 #    - tags
