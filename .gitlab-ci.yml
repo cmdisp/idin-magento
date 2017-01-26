@@ -18,7 +18,6 @@ before_script:
 stages:
   - build
   - docs
-  - deploy
 
 extension:
   stage: build
@@ -36,8 +35,8 @@ extension:
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
     - mkdir -p ./cmgroep-idin/build
     - mv /builds/epartment/package/*.tgz ./cmgroep-idin/build/
-#  only:
-#    - tags
+  only:
+    - tags
   artifacts:
     name: "Extension"
     paths:
@@ -65,16 +64,5 @@ docs:
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site
     - scp -P 339 -r ./* epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/
     - tar cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz .
-#  only:
-#    - tags
-  artifacts:
-    name: "Documentation"
-    paths:
-      - build/*.tar.gz
-
-upload:
-  stage: deploy
-  script:
-    - cd build
-#  only:
-#    - tags
+  only:
+    - tags
