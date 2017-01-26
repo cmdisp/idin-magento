@@ -19,8 +19,12 @@ extension:
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
     - mkdir -p ./cmgroep-idin/build
     - mv /builds/epartment/package/*.tgz ./cmgroep-idin/build/
-  only:
-    - tags
+    - apt-get install python python-pip
+    - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
+    - pip install -r requirements.txt
+    - mkdocs build
+#  only:
+#    - tags
   artifacts:
     paths:
       - build/*.tgz
