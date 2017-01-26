@@ -34,12 +34,11 @@ docs:
     - cd build
     - extension_filename=$(ls | grep tgz)
     - apt-get update
-    - apt-get install -y python python-pip python-dev build-essential ruby
+    - apt-get install -y python python-pip python-dev build-essential
     - pip install --upgrade pip
     - pip install --upgrade virtualenv
-    - gem install yaml_command
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
-    - yaml set --save --file mkdocs.yml extension.file $extension_filename
+    - awk 's{if(/\s*-\s*"[^"]*"/) next; else s=0} /extension.file:/{s=$extension_filename}1' mkdocs.yml
     - pip install -r requirements.txt
     - mkdocs build
     - mkdir -p /builds/epartment/cmgroep-idin/build
