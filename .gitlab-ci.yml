@@ -36,6 +36,7 @@ docs:
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
     - pip install -r requirements.txt
     - mkdocs build
+    - pwd
     - tar cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site/*
 #  only:
 #    - tags
