@@ -2,6 +2,7 @@ image: php:5.6
 
 stages:
   - build
+  - deploy
 
 extension:
   stage: build
@@ -19,16 +20,16 @@ extension:
     - php MagentoTarToConnect-master/magento-tar-to-connect.php ./cmgroep-idin/ext-config.php
     - mkdir -p ./cmgroep-idin/build
     - mv /builds/epartment/package/*.tgz ./cmgroep-idin/build/
-#  only:
-#    - tags
+  only:
+    - tags
   artifacts:
+    name: "Extension"
     paths:
       - build/*.tgz
 
 docs:
   stage: build
   script:
-#    - rm /builds/epartment/cmgroep-idin/build/documentation.tar.gz
     - pwd
     - apt-get update
     - apt-get install -y python python-pip python-dev build-essential
@@ -40,8 +41,16 @@ docs:
     - mkdir -p /builds/epartment/cmgroep-idin/build
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site
     - tar cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz .
-#  only:
-#    - tags
+  only:
+    - tags
   artifacts:
+    name: "Documentation"
     paths:
       - build/*.tar.gz
+
+upload:
+  stage: deploy
+  script:
+    - ls .
+  only:
+    - tags
