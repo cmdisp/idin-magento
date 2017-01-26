@@ -50,7 +50,7 @@ docs:
     - apt-get install -y python python-pip python-dev build-essential openssh-client
     - cd build
     - extension_filename=$(ls | grep tgz)
-    - extension_url='http://docs.epartment.nl/idin/releases/'$extension_filename
+    - extension_url='http:\/\/docs.epartment.nl\/idin\/releases\/'$extension_filename
     - ssh -p 339 epartment@production119.hipex.io 'mkdir -p ~/domains/docs.epartment.nl/public_html/idin/releases'
     - scp -P 339 *.tgz epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/releases/
     - cd ..
