@@ -2,6 +2,7 @@ image: php:5.6
 
 stages:
   - build
+  - docs
   - deploy
 
 extension:
@@ -28,7 +29,7 @@ extension:
       - build/*.tgz
 
 docs:
-  stage: build
+  stage: docs
   script:
     - pwd
     - apt-get update
@@ -52,6 +53,5 @@ upload:
   stage: deploy
   script:
     - cd build
-    - ls .
 #  only:
 #    - tags
