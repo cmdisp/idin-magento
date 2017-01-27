@@ -49,8 +49,6 @@ docs:
     - pip install --upgrade pip
     - pip install --upgrade virtualenv
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
-    - sed -i 's/EXTENSION_TITLE_PLACEHOLDER/'$extension_filename'/g' mkdocs.yml
-    - sed -i 's/EXTENSION_FILE_PLACEHOLDER/'$extension_url'/g' mkdocs.yml
     - pip install -r requirements.txt
     - mkdocs build
     - mkdir -p /builds/epartment/cmgroep-idin/build
