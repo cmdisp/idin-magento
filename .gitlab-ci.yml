@@ -14,8 +14,15 @@ before_script:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 stages:
+  - test
   - build
   - docs
+
+run_tests:
+  stage: test
+  image: php:5.6
+  script:
+    - ls -la
 
 extension:
   stage: build
@@ -39,6 +46,7 @@ extension:
     - scp -P 339 *.tgz epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/releases/
   only:
     - tags
+  when: on_success
 
 docs:
   stage: docs
