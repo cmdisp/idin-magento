@@ -2,8 +2,7 @@
 * First public release of iDIN extension :tada:
 * Version bump for administrative purposes :grin:
 
-[Deze versie is niet publiekelijk beschikbaar](#)
-
+[Deze versie downloaden](http://docs.epartment.nl/idin/releases/CMGroep_Idin-1.0.0.tgz)
 
 ### 0.1.6 <small> - 27 januari 2017</small>
 * Changed User-Agent for API client in order to easily determine which version of the extension is used.
