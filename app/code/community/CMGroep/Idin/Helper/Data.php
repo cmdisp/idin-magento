@@ -35,6 +35,14 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
     const CACHE_KEY_IDIN_ISSUERS = 'cmgroup_idin_issuers';
 
     /**
+     * Retrieves current extension version
+     */
+    public function getExtensionVersion()
+    {
+        return (string) Mage::getConfig()->getNode()->modules->CMGroep_Idin->version;
+    }
+
+    /**
      * Returns whether login is enabled or not
      *
      * @return bool

@@ -57,6 +57,7 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
     {
         $apiConfiguration = new \CMGroep\Idin\Configuration();
         $apiConfiguration->setHost($this->getApiHost());
+        $apiConfiguration->setUserAgent(sprintf('Magento-CMGroep-iDIN/%s', Mage::helper('cmgroep_idin')->getExtensionVersion()));
 
         $apiClient = new \CMGroep\Idin\ApiClient($apiConfiguration);
 
