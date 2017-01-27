@@ -31,9 +31,9 @@ markdown_extensions:
 pages:
   - Introductie: index.md
   - Functionaliteiten:
-      - Registratie met iDIN: features/registration.md
-      - Authenticatie met iDIN: features/authentication.md
-      - Leeftijdsverificatie met iDIN: features/age_verification.md
+    - Registratie met iDIN: features/registration.md
+    - Authenticatie met iDIN: features/authentication.md
+    - Leeftijdsverificatie met iDIN: features/age_verification.md
   - Installatie: installation.md
   - Configuratie:
     - Algemeen: configuration/common.md
@@ -41,9 +41,10 @@ pages:
     - Authenticatie configureren: configuration/authentication.md
     - Leeftijdsverificatie configureren: configuration/age_verification.md
   - Veel gestelde vragen: faq.md
+  - Ondersteuning: support.md
   - Changelog: changelog.md
 
 # URL for extension download
 extension:
-  title: CMGroep_Idin-0.1.5.tgz
-  file: http://docs.epartment.nl/idin/releases/CMGroep_Idin-0.1.5.tgz
+  title: CMGroep_Idin-1.0.0.tgz
+  file: http://docs.epartment.nl/idin/releases/CMGroep_Idin-1.0.0.tgz
