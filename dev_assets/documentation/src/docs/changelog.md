@@ -2,6 +2,8 @@
 * Added extra button to login with iDIN after age verification as guest has occured on OneStepCheckout
 * Javascript fixes for hidden blocks in case of logged in users on OneStepCheckout
 
+[Download deze versie](http://docs.epartment.nl/idin/releases/CMGroep_Idin-0.1.5.tgz)
+
 ### 0.1.4 <small> - 25 januari 2017</small>
 * Added optional password checkbox
 * Disable services which are not enabled through the iDIN API for the merchant

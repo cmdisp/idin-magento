@@ -1,26 +1,10 @@
-image: php:5.6
-
-before_script:
-  # Install ssh-agent if not already installed, it is required by Docker.
-  # (change apt-get to yum if you use a CentOS-based image)
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-
-  # Run ssh-agent (inside the build environment)
-  - eval $(ssh-agent -s)
-
-  # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-
-  # For Docker builds disable host key checking.
-  - mkdir -p ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-
 stages:
   - build
   - docs
 
 extension:
   stage: build
+  image: php:5.6
   script:
     - rm -rf /builds/epartment/package
     - apt-get update
@@ -44,9 +28,24 @@ extension:
 
 docs:
   stage: docs
+  image: python:2.7
+  before_script:
+    # Install ssh-agent if not already installed, it is required by Docker.
+    # (change apt-get to yum if you use a CentOS-based image)
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+
+    # Run ssh-agent (inside the build environment)
+    - eval $(ssh-agent -s)
+
+    # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+
+    # For Docker builds disable host key checking.
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - apt-get update
-    - apt-get install -y python python-pip python-dev build-essential openssh-client
+    - apt-get install -y openssh-client
     - cd build
     - extension_filename=$(ls | grep tgz)
     - extension_url='http:\/\/docs.epartment.nl\/idin\/releases\/'$extension_filename
