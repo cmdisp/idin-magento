@@ -62,6 +62,5 @@ docs:
     - mkdir -p /builds/epartment/cmgroep-idin/build
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site
     - scp -P 339 -r ./* epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/
-    - tar cvf /builds/epartment/cmgroep-idin/build/documentation.tar.gz .
 #  only:
 #    - tags
