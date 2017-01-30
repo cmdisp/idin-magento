@@ -33,7 +33,7 @@
 <config>
     <modules>
         <CMGroep_Idin>
-            <version>0.1.6</version>
+            <version>0.1.8</version>
         </CMGroep_Idin>
     </modules>
     <global>
