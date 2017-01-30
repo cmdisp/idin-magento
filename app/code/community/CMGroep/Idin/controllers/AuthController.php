@@ -36,7 +36,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
      *
      * @return Mage_Core_Model_Session
      */
-    private function _getSession()
+    protected function _getSession()
     {
         return Mage::getSingleton('core/session');
     }
@@ -48,9 +48,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
     public function indexAction()
     {
         if ($this->getRequest()->isPost()) {
-
             if ($this->getRequest()->has('form_action') && $this->getRequest()->has('idin_issuer')) {
-
                 if ($this->getRequest()->get('idin_issuer') == '') {
                     $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Please select your bank'));
                     $this->_redirectReferer();
@@ -84,7 +82,11 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         $entranceCode = $apiHelper->generateEntranceCode();
 
         $transaction = Mage::helper('cmgroep_idin/api_transaction')
-                                ->start($this->getRequest()->getParam('idin_issuer'), $entranceCode, $dataHelper->getFinishRegistrationUrl())
+                                ->start(
+                                    $this->getRequest()->getParam('idin_issuer'),
+                                    $entranceCode,
+                                    $dataHelper->getFinishRegistrationUrl()
+                                )
                                 ->withIdentity()
                                 ->withName()
                                 ->withAddress();
@@ -115,9 +117,10 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
             $matchingTransactionLogCollection = Mage::getResourceModel('cmgroep_idin/transaction_collection')
                                             ->addFieldToFilter('transaction_id', $this->getRequest()->getParam('trxid'))
-                                            ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
+                                            ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'))
+                                            ->setPageSize(1);
 
-            if ($matchingTransactionLogCollection->count() == 1 && $transactionLog = $matchingTransactionLogCollection->getFirstItem()) {
+            if ($matchingTransactionLogCollection->getSize() == 1 && $transactionLog = $matchingTransactionLogCollection->getFirstItem()) {
 
                 /**
                  * Only retrieve response the first time, consecutive requests will fetch it from the DB.
@@ -142,8 +145,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                  */
                 if (Mage::getResourceModel('customer/customer_collection')
                         ->addFieldToFilter('idin_bin', $transactionStatus->getBin())
-                        ->count() > 0) {
-
+                        ->getSize() > 0) {
                     $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('An account with your identity already exists, please login in order to continue.'));
                     $this->_redirect('customer/account/login');
                     return;
@@ -169,74 +171,74 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
      */
     public function registerAction()
     {
-        if ($this->getRequest()->isPost()) {
-            if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec') && $this->getRequest()->has('email')) {
+        if ($this->getRequest()->isPost() &&
+            $this->getRequest()->has('trxid') &&
+            $this->getRequest()->has('ec') && $this->getRequest()->has('email')) {
+            $transactionLogCollection = Mage::getResourceModel('cmgroep_idin/transaction_collection')
+                ->addFieldToFilter('transaction_id', $this->getRequest()->getParam('trxid'))
+                ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'))
+                ->setPageSize(1);
 
-                $transactionLogCollection = Mage::getResourceModel('cmgroep_idin/transaction_collection')
-                    ->addFieldToFilter('transaction_id', $this->getRequest()->getParam('trxid'))
-                    ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
+            /** @var CMGroep_Idin_Model_Transaction $transactionLog */
+            if ($transactionLogCollection->getSize() == 1 && $transactionLog = $transactionLogCollection->getFirstItem()) {
+                /**
+                 * Check if email address is available, otherwise
+                 * return user to form
+                 */
+                if (Mage::getResourceModel('customer/customer_collection')
+                    ->addFieldToFilter('email', $this->getRequest()->getParam('email'))
+                    ->getSize() > 0) {
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Emailaddress is already in use'));
+                    $this->_redirect('*/*/finish', array('trxid' => $this->getRequest()->getParam('trxid'), 'ec' => $this->getRequest()->getParam('ec')));
+                    return;
+                }
 
-                /** @var CMGroep_Idin_Model_Transaction $transactionLog */
-                if ($transactionLogCollection->count() == 1 && $transactionLog = $transactionLogCollection->getFirstItem()) {
-                    /**
-                     * Check if email address is available, otherwise
-                     * return user to form
-                     */
-                    if (Mage::getResourceModel('customer/customer_collection')
-                        ->addFieldToFilter('email', $this->getRequest()->getParam('email'))
-                        ->count() > 0) {
-                        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Emailaddress is already in use'));
-                        $this->_redirect('*/*/finish', ['trxid' => $this->getRequest()->getParam('trxid'), 'ec' => $this->getRequest()->getParam('ec')]);
+                /**
+                 * Get status of transaction
+                 */
+                $transactionStatus = Mage::helper('cmgroep_idin/api')->deserializeStatusResponse($transactionLog->getTransactionResponse());
+
+                /**
+                 * Verify optionally specified password
+                 */
+                if ($this->getRequest()->has('password') && $this->getRequest()->get('password') !== '') {
+                    if ($this->getRequest()->get('password') != $this->getRequest()->get('password_confirm')) {
+                        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Please make sure your passwords match'));
+                        $this->_redirectReferer();
                         return;
                     }
+                }
 
-                    /**
-                     * Get status of transaction
-                     */
-                    $transactionStatus = Mage::helper('cmgroep_idin/api')->deserializeStatusResponse($transactionLog->getTransactionResponse());
+                /**
+                 * Create user account and login
+                 */
+                if ($customer = Mage::helper('cmgroep_idin/customer')->createCustomer($this->getRequest()->getParam('email'), $this->getRequest()->getParam('phone_number'), $this->getRequest()->getParam('password'), $transactionStatus)) {
+                    $transactionLog->setCustomerId($customer->getId());
+                    $transactionLog->save();
 
-                    /**
-                     * Verify optionally specified password
-                     */
-                    if ($this->getRequest()->has('password') && strlen($this->getRequest()->get('password')) > 0) {
-                        if ($this->getRequest()->get('password') != $this->getRequest()->get('password_confirm')) {
-                            $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Please make sure your passwords match'));
-                            $this->_redirectReferer();
-                            return;
-                        }
-                    }
+                    if (Mage::helper('cmgroep_idin/customer')->startSessionForCustomer($customer)) {
+                        $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully registered with iDIN!'));
 
-                    /**
-                     * Create user account and login
-                     */
-                    if ($customer = Mage::helper('cmgroep_idin/customer')->createCustomer($this->getRequest()->getParam('email'), $this->getRequest()->getParam('phone_number'), $this->getRequest()->getParam('password'), $transactionStatus)) {
-                        $transactionLog->setCustomerId($customer->getId());
-                        $transactionLog->save();
+                        if ($transactionLog->getQuoteId()) {
+                            /** @var Mage_Sales_Model_Quote $quoteModel */
+                            $quoteModel = Mage::getModel('sales/quote')->load($transactionLog->getQuoteId());
+                            $quoteModel->assignCustomer($customer);
+                            $quoteModel->setIsActive(true);
+                            $quoteModel->save();
 
-                        if (Mage::helper('cmgroep_idin/customer')->startSessionForCustomer($customer)) {
-                            $this->_getSession()->addSuccess(Mage::helper('cmgroep_idin')->__('Succesfully registered with iDIN!'));
-
-                            if ($transactionLog->getQuoteId()) {
-                                /** @var Mage_Sales_Model_Quote $quoteModel */
-                                $quoteModel = Mage::getModel('sales/quote')->load($transactionLog->getQuoteId());
-                                $quoteModel->assignCustomer($customer);
-                                $quoteModel->setIsActive(true);
-                                $quoteModel->save();
-
-                                $this->_getSession()->setData('idin_checkout_method', 'customer');
-                                Mage::getSingleton('checkout/session')->loadCustomerQuote();
-                                $this->_redirectUrl(Mage::helper('checkout/url')->getCheckoutUrl());
-                            } else {
-                                $this->_redirect('customer/account');
-                            }
+                            $this->_getSession()->setData('idin_checkout_method', 'customer');
+                            Mage::getSingleton('checkout/session')->loadCustomerQuote();
+                            $this->_redirectUrl(Mage::helper('checkout/url')->getCheckoutUrl());
                         } else {
-                            $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Could not create a new customer session!'));
-                            $this->_redirect('/');
+                            $this->_redirect('customer/account');
                         }
                     } else {
-                        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Failed to create a new account!'));
+                        $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Could not create a new customer session!'));
                         $this->_redirect('/');
                     }
+                } else {
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Failed to create a new account!'));
+                    $this->_redirect('/');
                 }
             }
         }
@@ -275,9 +277,10 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
             if ($transactionStatus->getStatus() == 'success') {
                 $idinBin = $transactionStatus->getBin();
                 $customerCollection = Mage::getResourceModel('customer/customer_collection')
-                                    ->addFieldToFilter('idin_bin', $idinBin);
+                                    ->addFieldToFilter('idin_bin', $idinBin)
+                                    ->setPageSize(1);
 
-                if ($customerCollection->count() == 1) {
+                if ($customerCollection->getSize() == 1) {
                     $customer = $customerCollection->getFirstItem();
 
                     if (Mage::helper('cmgroep_idin/customer')->startSessionForCustomer($customer)) {
@@ -347,9 +350,10 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
             $matchingTransactions = Mage::getResourceModel('cmgroep_idin/transaction_collection')
                 ->addFieldToFilter('transaction_id', $this->getRequest()->getParam('trxid'))
-                ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
+                ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'))
+                ->setPageSize(1);
 
-            if ($matchingTransactions->count() == 1) {
+            if ($matchingTransactions->getSize() == 1) {
                 /** @var CMGroep_Idin_Model_Transaction $transaction */
                 $transaction = $matchingTransactions->getFirstItem();
                 $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($transaction->getTransactionId());
@@ -391,7 +395,6 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
 
         $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Invalid request data'));
         $this->_redirect('/');
-        return;
     }
 
     /**
@@ -455,9 +458,10 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
             $matchingTransactions = Mage::getResourceModel('cmgroep_idin/transaction_collection')
                 ->addFieldToFilter('transaction_id', $this->getRequest()->getParam('trxid'))
-                ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
+                ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'))
+                ->setPageSize(1);
 
-            if ($matchingTransactions->count() == 1) {
+            if ($matchingTransactions->getSize() == 1) {
                 /** @var CMGroep_Idin_Model_Transaction $transaction */
                 $transaction = $matchingTransactions->getFirstItem();
                 $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($transaction->getTransactionId());
@@ -467,7 +471,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 /*
                  * Store result of age verification
                  */
-                $customer = Mage::getModel('customer/customer')->load( $transaction->getCustomerId());
+                $customer = Mage::getModel('customer/customer')->load($transaction->getCustomerId());
                 $customer->setIdinAgeVerified($transactionStatus->getAge()->get18yOrOlder() ? 1 : 0);
                 $customer->save();
 
@@ -479,7 +483,6 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
 
         $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Invalid request data'));
         $this->_redirect('/');
-        return;
     }
 
     /**
@@ -492,9 +495,10 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
             $matchingTransactions = Mage::getResourceModel('cmgroep_idin/transaction_collection')
                 ->addFieldToFilter('transaction_id', $this->getRequest()->getParam('trxid'))
-                ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'));
+                ->addFieldToFilter('entrance_code', $this->getRequest()->getParam('ec'))
+                ->setPageSize(1);
 
-            if ($matchingTransactions->count() == 1) {
+            if ($matchingTransactions->getSize() == 1) {
                 /** @var CMGroep_Idin_Model_Transaction $transaction */
                 $transaction = $matchingTransactions->getFirstItem();
                 $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($this->getRequest()->getParam('trxid'));
@@ -510,7 +514,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 /**
                  * If customer was logged in during checkout, save verification for recurring visits
                  */
-                if (is_null($transaction->getCustomerId()) == false) {
+                if ($transaction->getCustomerId() !== null) {
                     $customer = Mage::getModel('customer/customer')->load($transaction->getCustomerId());
                     $customer->setIdinAgeVerified($transactionStatus->getAge()->get18yOrOlder() ? 1 : 0);
                     $customer->save();
@@ -519,7 +523,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 /**
                  * Save verification result on quote
                  */
-                if (is_null($transaction->getQuoteId()) == false) {
+                if ($transaction->getQuoteId() !== null) {
                     /** @var Mage_Sales_Model_Quote $quote */
                     $quote = Mage::getModel('sales/quote')->load($transaction->getQuoteId());
                     $quote->setIdinAgeVerified($transactionStatus->getAge()->get18yOrOlder() ? 1 : 0);

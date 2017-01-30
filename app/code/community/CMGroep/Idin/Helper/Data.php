@@ -144,7 +144,7 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function registerTransaction($transactionId, $entranceCode, \CMGroep\Idin\Models\StatusResponse $statusResponse = null)
     {
-        if (is_null($statusResponse)) {
+        if ($statusResponse === null) {
             Mage::getModel('cmgroep_idin/transaction')
                 ->setTransactionId($transactionId)
                 ->setEntranceCode($entranceCode)
@@ -152,9 +152,10 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
         } else {
             $matchingTransactionLogCollection = Mage::getResourceModel('cmgroep_idin/transaction_collection')
                 ->addFieldToFilter('transaction_id', $transactionId)
-                ->addFieldToFilter('entrance_code', $entranceCode);
+                ->addFieldToFilter('entrance_code', $entranceCode)
+                ->setPageSize(1);
 
-            if ($matchingTransactionLogCollection->count() == 1 && $transactionLog = $matchingTransactionLogCollection->getFirstItem()) {
+            if ($matchingTransactionLogCollection->getSize() == 1 && $transactionLog = $matchingTransactionLogCollection->getFirstItem()) {
                 $serializedResponse = Mage::helper('cmgroep_idin/api')->serializeStatusResponse($statusResponse);
                 $transactionLog->setTransactionResponse($serializedResponse);
                 $transactionLog->save();
@@ -232,7 +233,7 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getVerifyAgeCheckoutReturnUrl($checkoutMethod)
     {
-        return Mage::getUrl('idin/auth/verifyAgeCheckoutFinish', ['checkout_method' => $checkoutMethod]);
+        return Mage::getUrl('idin/auth/verifyAgeCheckoutFinish', array('checkout_method' => $checkoutMethod));
     }
 
     /**
@@ -257,10 +258,10 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
             /** @var \CMGroep\Idin\Models\DirectoryResponse $idinDirectory */
             foreach ($idinDirectories as $idinDirectory) {
                 foreach ($idinDirectory->getIssuers() as $issuer) {
-                    $issuersPerCountry[$idinDirectory->getCountry()][] = [
+                    $issuersPerCountry[$idinDirectory->getCountry()][] = array(
                         'issuer_id' => $issuer->getIssuerId(),
                         'issuer_name' => $issuer->getIssuerName()
-                    ];
+                    );
                 }
             }
 
@@ -328,8 +329,7 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
              * Verification is always required
              */
             return $ageVerified == false;
-        }
-        elseif ($this->getIdinAgeVerificationRequired() == CMGroep_Idin_Model_System_Config_Source_Verificationrequired::MODE_PRODUCTS) {
+        } elseif ($this->getIdinAgeVerificationRequired() == CMGroep_Idin_Model_System_Config_Source_Verificationrequired::MODE_PRODUCTS) {
             /**
              * Check cart for 18+ products
              */
@@ -338,16 +338,19 @@ class CMGroep_Idin_Helper_Data extends Mage_Core_Helper_Abstract
             $cartItems = Mage::helper('checkout/cart')->getQuote()->getAllItems();
 
             /** @var Mage_Sales_Model_Quote_Item $productIds */
-            $cartProductIds = array_map(function($cartItem) {
-                return $cartItem->getProductId();
-            }, $cartItems);
+            $cartProductIds = array_map(
+                function ($cartItem) {
+                    return $cartItem->getProductId();
+                },
+                $cartItems
+            );
 
             $productsWithRequiredAgeVerification = Mage::getResourceModel('catalog/product_collection')
                 ->addAttributeToSelect('idin_require_age_verification')
                 ->addFieldToFilter('entity_id', array('in' => $cartProductIds))
                 ->addAttributeToFilter('idin_require_age_verification', 1);
 
-            if ($productsWithRequiredAgeVerification->count() > 0) {
+            if ($productsWithRequiredAgeVerification->getSize() > 0) {
                 return $ageVerified == false;
             }
         }

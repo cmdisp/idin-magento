@@ -48,21 +48,29 @@ class CMGroep_Idin_Model_Entity_Setup extends Mage_Eav_Model_Entity_Setup
         /**
          * Add iDIN attributes to Customer Entity
          */
-        $this->addAttribute($entityTypeId, 'idin_bin', array(
-            'type' => 'varchar',
-            'label' => 'iDIN Bin Token',
-            'required' => false,
-            'visible' => false,
-            'user_defined' => 0
-        ));
+        $this->addAttribute(
+            $entityTypeId,
+            'idin_bin',
+            array(
+                'type' => 'varchar',
+                'label' => 'iDIN Bin Token',
+                'required' => false,
+                'visible' => false,
+                'user_defined' => 0
+            )
+        );
 
-        $this->addAttribute($entityTypeId, 'idin_age_verified', array(
-            'type' => 'int',
-            'label' => 'iDIN Age Verified',
-            'required' => false,
-            'visible' => false,
-            'user_defined' => 0
-        ));
+        $this->addAttribute(
+            $entityTypeId,
+            'idin_age_verified',
+            array(
+                'type' => 'int',
+                'label' => 'iDIN Age Verified',
+                'required' => false,
+                'visible' => false,
+                'user_defined' => 0
+            )
+        );
 
         $this->addAttributeToGroup($entityTypeId, $defaultAttributeSetId, $defaultAttributeGroupId, 'idin_bin');
 
@@ -78,17 +86,21 @@ class CMGroep_Idin_Model_Entity_Setup extends Mage_Eav_Model_Entity_Setup
     {
         $entityTypeId = $this->getEntityTypeId(Mage_Catalog_Model_Product::ENTITY);
 
-        $this->addAttribute($entityTypeId, 'idin_require_age_verification', array(
-            'group' => Mage::helper('cmgroep_idin')->__('iDIN'),
-            'label' => Mage::helper('cmgroep_idin')->__('18+ Product'),
-            'type' => 'int',
-            'input' => 'boolean',
-            'source_model' => 'eav/entity_attribute_source_boolean',
-            'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
-            'visible' => true,
-            'required' => false,
-            'default' => 0
-        ));
+        $this->addAttribute(
+            $entityTypeId,
+            'idin_require_age_verification',
+            array(
+                'group' => Mage::helper('cmgroep_idin')->__('iDIN'),
+                'label' => Mage::helper('cmgroep_idin')->__('18+ Product'),
+                'type' => 'int',
+                'input' => 'boolean',
+                'source_model' => 'eav/entity_attribute_source_boolean',
+                'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
+                'visible' => true,
+                'required' => false,
+                'default' => 0
+            )
+        );
 
         return true;
     }

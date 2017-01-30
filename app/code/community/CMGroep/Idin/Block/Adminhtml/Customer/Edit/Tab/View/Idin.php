@@ -42,6 +42,7 @@ class CMGroep_Idin_Block_Adminhtml_Customer_Edit_Tab_View_Idin extends Mage_Admi
         if (!$this->_customer) {
             $this->_customer = Mage::registry('current_customer');
         }
+
         return $this->_customer;
     }
 

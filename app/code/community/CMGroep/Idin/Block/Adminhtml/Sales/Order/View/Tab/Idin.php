@@ -56,23 +56,32 @@ class CMGroep_Idin_Block_Adminhtml_Sales_Order_View_Tab_Idin extends Mage_Adminh
      */
     public function _prepareColumns()
     {
-        $this->addColumn('entity_id', array(
-            'header' => $this->__('#'),
-            'width' => '100px',
-            'index' => 'entity_id'
-        ));
+        $this->addColumn(
+            'entity_id',
+            array(
+                'header' => $this->__('#'),
+                'width' => '100px',
+                'index' => 'entity_id'
+            )
+        );
 
-        $this->addColumn('transaction_date', array(
-            'header' => $this->__('Date'),
-            'width' => '150px',
-            'type' => 'datetime',
-            'index' => 'transaction_date'
-        ));
+        $this->addColumn(
+            'transaction_date',
+            array(
+                'header' => $this->__('Date'),
+                'width' => '150px',
+                'type' => 'datetime',
+                'index' => 'transaction_date'
+            )
+        );
 
-        $this->addColumn('transaction_id', array(
-            'header' => $this->__('Transaction #'),
-            'index' => 'transaction_id'
-        ));
+        $this->addColumn(
+            'transaction_id',
+            array(
+                'header' => $this->__('Transaction #'),
+                'index' => 'transaction_id'
+            )
+        );
 
         return $this;
     }
@@ -107,7 +116,7 @@ class CMGroep_Idin_Block_Adminhtml_Sales_Order_View_Tab_Idin extends Mage_Adminh
         /** Make sure the collection has initialized */
         $this->_prepareCollection();
 
-        return $this->getCollection()->count() > 0;
+        return $this->getCollection()->getSize() > 0;
     }
 
     /**
@@ -120,7 +129,7 @@ class CMGroep_Idin_Block_Adminhtml_Sales_Order_View_Tab_Idin extends Mage_Adminh
         /** Make sure the collection has initialized */
         $this->_prepareCollection();
 
-        return $this->getCollection()->count() == 0;
+        return $this->getCollection()->getSize() == 0;
     }
 
     /**
@@ -132,6 +141,6 @@ class CMGroep_Idin_Block_Adminhtml_Sales_Order_View_Tab_Idin extends Mage_Adminh
      */
     public function getRowUrl($item)
     {
-        return $this->getUrl('adminhtml/idin_transaction/details', ['id' => $item->getId()]);
+        return $this->getUrl('adminhtml/idin_transaction/details', array('id' => $item->getId()));
     }
 }

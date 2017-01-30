@@ -73,7 +73,7 @@ class CMGroep_Idin_Block_Checkout_Thirdparty_Abstract extends Mage_Core_Block_Te
      */
     public function getVerifyAgeUrl()
     {
-        return Mage::getUrl('idin/auth/verifyAge', ['mode' => 'checkout']);
+        return Mage::getUrl('idin/auth/verifyAge', array('mode' => 'checkout'));
     }
 
     /**
@@ -84,7 +84,8 @@ class CMGroep_Idin_Block_Checkout_Thirdparty_Abstract extends Mage_Core_Block_Te
     public function _toHtml()
     {
         if (Mage::helper('cmgroep_idin')->getIdinAgeVerificationActive()
-            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true) && Mage::helper('cmgroep_idin')->getExtensionActive()) {
+            && Mage::helper('cmgroep_idin')->ageVerificationRequired(true)
+            && Mage::helper('cmgroep_idin')->getExtensionActive()) {
             return parent::_toHtml();
         }
     }

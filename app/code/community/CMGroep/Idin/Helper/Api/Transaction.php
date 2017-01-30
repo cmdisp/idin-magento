@@ -29,7 +29,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-include(Mage::getBaseDir('lib') . DS . 'CMGroep' . DS . 'Idin' . DS . 'autoload.php');
+require_once(Mage::getBaseDir('lib') . DS . 'CMGroep' . DS . 'Idin' . DS . 'autoload.php');
 
 class CMGroep_Idin_Helper_Api_Transaction extends Mage_Core_Helper_Abstract
 {

@@ -29,7 +29,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-include(Mage::getBaseDir('lib') . DS . 'CMGroep' . DS . 'Idin' . DS . 'autoload.php');
+require_once(Mage::getBaseDir('lib') . DS . 'CMGroep' . DS . 'Idin' . DS . 'autoload.php');
 
 class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
 {
@@ -38,7 +38,7 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
      *
      * @return string
      */
-    private function getApiHost()
+    public function getApiHost()
     {
         if (Mage::helper('cmgroep_idin')->getExtensionMode() == CMGroep_Idin_Model_System_Config_Source_Mode::MODE_LIVE) {
             return CMGroep_Idin_Model_System_Config_Source_Mode::GATEWAY_LIVE;
@@ -53,7 +53,7 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
      *
      * @return \CMGroep\Idin\ApiClient
      */
-    private function getApiClient()
+    public function getApiClient()
     {
         $apiConfiguration = new \CMGroep\Idin\Configuration();
         $apiConfiguration->setHost($this->getApiHost());
@@ -148,7 +148,7 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
     public function generateEntranceCode()
     {
         $entranceCode = '';
-        $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+        $characters = array_merge(range('A', 'Z'), range('a', 'z'), range('0', '9'));
         $max = count($characters) - 1;
 
         for ($i = 0; $i < 40; $i++) {
@@ -180,6 +180,9 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
      */
     public function deserializeStatusResponse($statusResponseData)
     {
-        return \CMGroep\Idin\ObjectSerializer::deserialize(json_decode($statusResponseData), \CMGroep\Idin\Models\StatusResponse::class);
+        return \CMGroep\Idin\ObjectSerializer::deserialize(
+            json_decode($statusResponseData),
+            \CMGroep\Idin\Models\StatusResponse::class
+        );
     }
 }

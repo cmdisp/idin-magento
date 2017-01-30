@@ -48,11 +48,11 @@ class CMGroep_Idin_Model_Adminhtml_Observer
     /**
      * Retrieves available services based on selected mode and merchant_token
      */
-    private function refreshAvailableServices()
+    protected function refreshAvailableServices()
     {
         $merchantToken = Mage::getStoreConfig('cmgroep_idin/common/merchant_token');
 
-        if (strlen($merchantToken) > 0) {
+        if ($merchantToken !== '') {
             $apiHelper = Mage::helper('cmgroep_idin/api');
             $merchantInformation = $apiHelper->getMerchantInformation($merchantToken);
 
@@ -96,7 +96,7 @@ class CMGroep_Idin_Model_Adminhtml_Observer
     /**
      * If the module is de-activated, hide the iDIN 18+ Product Attribute
      */
-    private function updateIdinProductAttributes()
+    protected function updateIdinProductAttributes()
     {
         $moduleStatus = Mage::getStoreConfig('cmgroep_idin/common/active');
 
@@ -125,7 +125,7 @@ class CMGroep_Idin_Model_Adminhtml_Observer
         $idinGroups = $config->getNode('sections/cmgroep_idin/groups')->children();
 
         /** @var Mage_Core_Model_Config_Element $idinGroup */
-        foreach($idinGroups as $idinGroup) {
+        foreach ($idinGroups as $idinGroup) {
             if ($idinGroup->required_services) {
                 $frontendClass = 'available-idin-service';
                 $requiredServices = explode(',', $idinGroup->required_services);

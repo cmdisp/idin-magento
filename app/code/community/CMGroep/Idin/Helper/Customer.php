@@ -45,7 +45,7 @@ class CMGroep_Idin_Helper_Customer extends Mage_Core_Helper_Abstract
      *
      * @return false|Mage_Customer_Model_Customer
      */
-    public function createCustomer($emailAddress, $phoneNumber, $password = '', \CMGroep\Idin\Models\StatusResponse $statusResponse)
+    public function createCustomer($emailAddress, $phoneNumber, $password, \CMGroep\Idin\Models\StatusResponse $statusResponse)
     {
         try {
             $websiteId = Mage::app()->getWebsite()->getId();

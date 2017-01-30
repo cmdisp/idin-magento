@@ -62,11 +62,14 @@ class CMGroep_Idin_Block_Checkout_Onepage_Verification extends Mage_Checkout_Blo
      */
     protected function _construct()
     {
-        $this->getCheckout()->setStepData('age_verification', array(
-            'label'     => $this->getHelper()->__('Age Verification'),
-            'is_show'   => $this->isShow(),
-            'allow'     => true,
-        ));
+        $this->getCheckout()->setStepData(
+            'age_verification',
+            array(
+                'label'     => $this->getHelper()->__('Age Verification'),
+                'is_show'   => $this->isShow(),
+                'allow'     => true,
+            )
+        );
 
         if ($this->getHelper()->ageVerificationRequired() && $this->getHelper()->getExtensionActive() && $this->getHelper()->getIdinAgeVerificationActive()) {
             $this->getCheckout()->setStepData('billing', 'allow', false);
@@ -92,7 +95,7 @@ class CMGroep_Idin_Block_Checkout_Onepage_Verification extends Mage_Checkout_Blo
      */
     public function getVerifyAgeUrl()
     {
-        return Mage::getUrl('idin/auth/verifyAge', ['mode' => 'checkout']);
+        return Mage::getUrl('idin/auth/verifyAge', array('mode' => 'checkout'));
     }
 
     /**

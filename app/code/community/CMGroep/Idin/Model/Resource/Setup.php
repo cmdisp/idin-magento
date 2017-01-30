@@ -41,35 +41,78 @@ class CMGroep_Idin_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
     {
         $tableName = $this->getTable('cmgroep_idin/transaction');
         $table = $this->getConnection()->newTable($tableName)
-            ->addColumn('entity_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-                'primary' => true,
-                'unsigned' => true,
-                'identity' => true,
-                'nullable' => false
-            ), 'Entity Identifier')
-            ->addColumn('transaction_date', Varien_Db_Ddl_Table::TYPE_DATETIME, null, array(
-                'nullable' => false
-            ))
-            ->addColumn('entrance_code', Varien_Db_Ddl_Table::TYPE_TEXT, 40, array(
-                'nullable' => false
-            ), 'Entrance Code')
-            ->addColumn('transaction_id', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
-                'nullable' => false
-            ), 'Transaction ID')
-            ->addColumn('customer_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-                'nullable' => true
-            ), 'Customer ID for existing customers')
-            ->addColumn('quote_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-                'nullable' => true
-            ), 'Quote ID for guest checkout')
-            ->addColumn('transaction_response', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
-                'nullable' => true
-            ), 'Transaction Response')
+            ->addColumn(
+                'entity_id',
+                Varien_Db_Ddl_Table::TYPE_INTEGER,
+                null,
+                array(
+                    'primary' => true,
+                    'unsigned' => true,
+                    'identity' => true,
+                    'nullable' => false
+                ),
+                'Entity Identifier'
+            )
+            ->addColumn(
+                'transaction_date',
+                Varien_Db_Ddl_Table::TYPE_DATETIME,
+                null,
+                array(
+                    'nullable' => false
+                )
+            )
+            ->addColumn(
+                'entrance_code',
+                Varien_Db_Ddl_Table::TYPE_TEXT,
+                40,
+                array(
+                    'nullable' => false
+                ),
+                'Entrance Code'
+            )
+            ->addColumn(
+                'transaction_id',
+                Varien_Db_Ddl_Table::TYPE_TEXT,
+                255,
+                array(
+                    'nullable' => false
+                ),
+                'Transaction ID'
+            )
+            ->addColumn(
+                'customer_id',
+                Varien_Db_Ddl_Table::TYPE_INTEGER,
+                null,
+                array(
+                    'nullable' => true
+                ),
+                'Customer ID for existing customers'
+            )
+            ->addColumn(
+                'quote_id',
+                Varien_Db_Ddl_Table::TYPE_INTEGER,
+                null,
+                array(
+                    'nullable' => true
+                ),
+                'Quote ID for guest checkout'
+            )
+            ->addColumn(
+                'transaction_response',
+                Varien_Db_Ddl_Table::TYPE_TEXT,
+                null,
+                array(
+                    'nullable' => true
+                ),
+                'Transaction Response'
+            )
             ->addIndex(
                 $this->getConnection()->getIndexName(
                     $tableName,
                     array('entrance_code', 'transaction_id')
-                ), array('entrance_code', 'transaction_id'));
+                ),
+                array('entrance_code', 'transaction_id')
+            );
 
         $this->getConnection()->createTable($table);
 
@@ -84,13 +127,17 @@ class CMGroep_Idin_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
     public function addExtraColumnsToQuoteTable()
     {
         $tableName = $this->getTable('sales/quote');
-        $this->getConnection()->addColumn($tableName, 'idin_age_verified', array(
-            'type'     => Varien_Db_Ddl_Table::TYPE_INTEGER,
-            'length'   => 1,
-            'nullable' => false,
-            'default' => 0,
-            'comment' => 'iDIN Age Verification Status'
-        ));
+        $this->getConnection()->addColumn(
+            $tableName,
+            'idin_age_verified',
+            array(
+                'type'     => Varien_Db_Ddl_Table::TYPE_INTEGER,
+                'length'   => 1,
+                'nullable' => false,
+                'default' => 0,
+                'comment' => 'iDIN Age Verification Status'
+            )
+        );
 
         return true;
     }

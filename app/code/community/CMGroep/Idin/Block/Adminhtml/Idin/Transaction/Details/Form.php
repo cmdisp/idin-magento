@@ -50,63 +50,98 @@ class CMGroep_Idin_Block_Adminhtml_Idin_Transaction_Details_Form extends Mage_Ad
      */
     protected function _prepareForm()
     {
-        $form = new Varien_Data_Form(array(
-            'id' => 'detail_form'
-        ));
+        $form = new Varien_Data_Form(
+            array(
+                'id' => 'detail_form'
+            )
+        );
 
-        $transactionDetailsFieldset = $form->addFieldset('transaction_details_fieldset', array(
-            'legend' => $this->__('Transaction Information'),
-            'class'  => 'fieldset'
-        ));
+        $transactionDetailsFieldset = $form->addFieldset(
+            'transaction_details_fieldset',
+            array(
+                'legend' => $this->__('Transaction Information'),
+                'class'  => 'fieldset'
+            )
+        );
 
-        $transactionDetailsFieldset->addField('transaction_date', 'label', array(
-            'label' => $this->__('Transaction Date'),
-            'value' => Mage::helper('core')->formatDate($this->getTransaction()->getTransactionDate(), Mage_Core_Model_Locale::FORMAT_TYPE_LONG, true)
-        ));
+        $transactionDetailsFieldset->addField(
+            'transaction_date',
+            'label',
+            array(
+                'label' => $this->__('Transaction Date'),
+                'value' => Mage::helper('core')->formatDate(
+                    $this->getTransaction()->getTransactionDate(), Mage_Core_Model_Locale::FORMAT_TYPE_LONG, true
+                )
+            )
+        );
 
-        $transactionDetailsFieldset->addField('transaction_id', 'label', array(
-            'label' => $this->__('Transaction ID'),
-            'value' => $this->getTransaction()->getTransactionId()
-        ));
+        $transactionDetailsFieldset->addField(
+            'transaction_id',
+            'label',
+            array(
+                'label' => $this->__('Transaction ID'),
+                'value' => $this->getTransaction()->getTransactionId()
+            )
+        );
 
-        $transactionDetailsFieldset->addField('entrance_code', 'label', array(
-            'label' => $this->__('Entrance Code'),
-            'value' => $this->getTransaction()->getEntranceCode()
-        ));
+        $transactionDetailsFieldset->addField(
+            'entrance_code',
+            'label',
+            array(
+                'label' => $this->__('Entrance Code'),
+                'value' => $this->getTransaction()->getEntranceCode()
+            )
+        );
 
         if ($this->getTransaction()->getCustomerId()) {
-            $transactionDetailsFieldset->addField('customer_id', 'link', array(
-                'label' => $this->__('Customer #'),
-                'href' => $this->getUrl('adminhtml/customer/edit', ['id' => $this->getTransaction()->getCustomerId()]),
-                'value' => $this->getTransaction()->getCustomerId()
-            ));
+            $transactionDetailsFieldset->addField(
+                'customer_id',
+                'link',
+                array(
+                    'label' => $this->__('Customer #'),
+                    'href' => $this->getUrl('adminhtml/customer/edit', array('id' => $this->getTransaction()->getCustomerId())),
+                    'value' => $this->getTransaction()->getCustomerId()
+                )
+            );
         }
 
         if ($this->getTransaction()->getQuoteId()) {
             $orderCollection = Mage::getResourceModel('sales/order_collection')
-                ->addAttributeToFilter('quote_id', $this->getTransaction()->getQuoteId());
+                ->addAttributeToFilter('quote_id', $this->getTransaction()->getQuoteId())
+                ->setPageSize(1);
 
-            if ($orderCollection->count() > 0 && $order = $orderCollection->getFirstItem()) {
-                $transactionDetailsFieldset->addField('order_id', 'link', array(
-                    'label' => $this->__('Order #'),
-                    'href' => $this->getUrl('adminhtml/sales_order/view', ['order_id' => $order->getId()]),
-                    'value' => $order->getIncrementId()
-                ));
+            if ($orderCollection->getSize() > 0 && $order = $orderCollection->getFirstItem()) {
+                $transactionDetailsFieldset->addField(
+                    'order_id',
+                    'link',
+                    array(
+                        'label' => $this->__('Order #'),
+                        'href' => $this->getUrl('adminhtml/sales_order/view', array('order_id' => $order->getId())),
+                        'value' => $order->getIncrementId()
+                    )
+                );
             }
         }
 
-        $transactionResponseFieldset = $form->addFieldset('transaction_response_fieldset', array(
-            'legend' => $this->__('Transaction Response'),
-            'class'  => 'fieldset'
-        ));
+        $transactionResponseFieldset = $form->addFieldset(
+            'transaction_response_fieldset',
+            array(
+                'legend' => $this->__('Transaction Response'),
+                'class'  => 'fieldset'
+            )
+        );
 
-        $transactionResponseFieldset->addField('status_response', 'hidden', array(
-            'name'               => '',
-            'after_element_html' => $this->getLayout()
-                ->createBlock('cmgroep_idin/adminhtml_idin_transaction_details_response')
-                ->setResponse($this->getTransaction()->getTransactionResponse())
-                ->toHtml()
-        ));
+        $transactionResponseFieldset->addField(
+            'status_response',
+            'hidden',
+            array(
+                'name' => '',
+                'after_element_html' => $this->getLayout()
+                    ->createBlock('cmgroep_idin/adminhtml_idin_transaction_details_response')
+                    ->setResponse($this->getTransaction()->getTransactionResponse())
+                    ->toHtml()
+            )
+        );
 
         $form->setUseContainer(true);
         $this->setForm($form);

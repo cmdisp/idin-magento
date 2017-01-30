@@ -39,7 +39,7 @@ class CMGroep_Idin_Block_Catalog_Product_Notice extends CMGroep_Idin_Block_Abstr
      *
      * @return Mage_Catalog_Model_Product
      */
-    private function getProduct()
+    public function getProduct()
     {
         if ($this->_product == null) {
             $this->_product = Mage::registry('current_product');
@@ -53,9 +53,11 @@ class CMGroep_Idin_Block_Catalog_Product_Notice extends CMGroep_Idin_Block_Abstr
      *
      * @return bool
      */
-    private function productRequiredAgeVerification()
+    public function productRequiredAgeVerification()
     {
-        $productRequiresAgeVerification = Mage::getResourceModel('catalog/product')->getAttributeRawValue($this->getProduct()->getId(), 'idin_require_age_verification', Mage::app()->getStore()->getId());
+        $productRequiresAgeVerification = Mage::getResourceModel('catalog/product')->getAttributeRawValue(
+            $this->getProduct()->getId(), 'idin_require_age_verification', Mage::app()->getStore()->getId()
+        );
 
         return $productRequiresAgeVerification == 1;
     }
@@ -70,12 +72,12 @@ class CMGroep_Idin_Block_Catalog_Product_Notice extends CMGroep_Idin_Block_Abstr
         /**
          * Determine if notice should be visible based on the settings
          */
-        $showProductNoticeSetting = $this->getHelper()->getIdinAgeVerificationProductNoticeSetting();
+        $noticeSetting = $this->getHelper()->getIdinAgeVerificationProductNoticeSetting();
 
         if ($this->getHelper()->getExtensionActive() && $this->getHelper()->getIdinAgeVerificationActive()) {
-            if ($showProductNoticeSetting == CMGroep_Idin_Model_System_Config_Source_Showproductnotice::MODE_ALWAYS) {
+            if ($noticeSetting == CMGroep_Idin_Model_System_Config_Source_Showproductnotice::MODE_ALWAYS) {
                 return parent::_toHtml();
-            } else if ($showProductNoticeSetting == CMGroep_Idin_Model_System_Config_Source_Showproductnotice::MODE_PRODUCTS) {
+            } else if ($noticeSetting == CMGroep_Idin_Model_System_Config_Source_Showproductnotice::MODE_PRODUCTS) {
                 if ($this->productRequiredAgeVerification()) {
                     return parent::_toHtml();
                 }

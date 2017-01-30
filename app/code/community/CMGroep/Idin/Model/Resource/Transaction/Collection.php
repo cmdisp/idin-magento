@@ -35,4 +35,14 @@ class CMGroep_Idin_Model_Resource_Transaction_Collection extends Mage_Core_Model
     {
         $this->_init('cmgroep_idin/transaction');
     }
+
+    public function joinOrderTable()
+    {
+        $this->getSelect()
+            ->joinLeft(
+                array('order' => $this->getTable('sales/order')),
+                'order.quote_id = main_table.quote_id',
+                array('order_increment_id' => 'increment_id')
+            );
+    }
 }

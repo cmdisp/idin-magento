@@ -56,12 +56,7 @@ class CMGroep_Idin_Block_Adminhtml_Idin_Transaction_Grid extends Mage_Adminhtml_
         /**
          * Join order table
          */
-        $transactionCollection->getSelect()
-            ->joinLeft(
-                array('order' => $transactionCollection->getTable('sales/order')),
-                'order.quote_id = main_table.quote_id',
-                array('order_increment_id' => 'increment_id')
-            );
+        $transactionCollection->joinOrderTable();
 
         $this->setCollection($transactionCollection);
 
@@ -75,33 +70,48 @@ class CMGroep_Idin_Block_Adminhtml_Idin_Transaction_Grid extends Mage_Adminhtml_
      */
     protected function _prepareColumns()
     {
-        $this->addColumn('entity_id', array(
-            'header' => $this->__('#'),
-            'width' => '100px',
-            'index' => 'entity_id'
-        ));
+        $this->addColumn(
+            'entity_id',
+            array(
+                'header' => $this->__('#'),
+                'width' => '100px',
+                'index' => 'entity_id'
+            )
+        );
 
-        $this->addColumn('transaction_date', array(
-            'header' => $this->__('Date'),
-            'width' => '150px',
-            'type' => 'datetime',
-            'index' => 'transaction_date'
-        ));
+        $this->addColumn(
+            'transaction_date',
+            array(
+                'header' => $this->__('Date'),
+                'width' => '150px',
+                'type' => 'datetime',
+                'index' => 'transaction_date'
+            )
+        );
 
-        $this->addColumn('transaction_id', array(
-            'header' => $this->__('Transaction #'),
-            'index' => 'transaction_id'
-        ));
+        $this->addColumn(
+            'transaction_id',
+            array(
+                'header' => $this->__('Transaction #'),
+                'index' => 'transaction_id'
+            )
+        );
 
-        $this->addColumn('customer_id', array(
-            'header' => $this->__('Customer #'),
-            'index' => 'customer_id'
-        ));
+        $this->addColumn(
+            'customer_id',
+            array(
+                'header' => $this->__('Customer #'),
+                'index' => 'customer_id'
+            )
+        );
 
-        $this->addColumn('order_increment_id', array(
-            'header' => $this->__('Order #'),
-            'index' => 'order_increment_id'
-        ));
+        $this->addColumn(
+            'order_increment_id',
+            array(
+                'header' => $this->__('Order #'),
+                'index' => 'order_increment_id'
+            )
+        );
 
         return parent::_prepareColumns();
     }
@@ -115,6 +125,6 @@ class CMGroep_Idin_Block_Adminhtml_Idin_Transaction_Grid extends Mage_Adminhtml_
      */
     public function getRowUrl($item)
     {
-        return $this->getUrl('adminhtml/idin_transaction/details', ['id' => $item->getId()]);
+        return $this->getUrl('adminhtml/idin_transaction/details', array('id' => $item->getId()));
     }
 }
