@@ -211,7 +211,7 @@ class ApiClient
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
             curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
         } elseif ($method != self::$GET) {
-            throw new ApiException('Method ' . $method . ' is not recognized.');
+            throw new \CMGroep\Idin\ApiException('Method ' . $method . ' is not recognized.');
         }
         curl_setopt($curl, CURLOPT_URL, $url);
 
@@ -274,7 +274,7 @@ class ApiClient
                 $data = $http_body;
             }
 
-            throw new ApiException(
+            throw new \CMGroep\Idin\ApiException(
                 "[".$response_info['http_code']."] Error connecting to the API ($url)",
                 $response_info['http_code'],
                 $http_header,
