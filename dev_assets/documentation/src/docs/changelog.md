@@ -1,9 +1,14 @@
+### 0.2.1 <small> - 3 februari 2017</small>
+* Translation fixes
+
+[<i class="material-icons inline-material-icon">&#xE2C4;</i> Deze versie downloaden](http://docs.epartment.nl/idin/releases/CMGroep_Idin-0.2.1.tgz)</span>
+
 ### 0.2.0 <small> - 3 februari 2017</small>
 * Added better cryptography for entrance code generation.
 * Cancelled transaction are now handled correctly.
 * In case of transaction errors, the message of the error will be visible to the consumer.
 
-[<i class="material-icons inline-material-icon">&#xE2C4;</i> Deze versie downloaden](http://docs.epartment.nl/idin/releases/CMGroep_Idin-0.2.0.tgz)</span>
+<a href="#" class="idin-coral"><i class="material-icons inline-material-icon">&#xE000;</i> Deze versie is niet publiekelijk beschikbaar</a>
 
 ### 0.1.6 <small> - 27 januari 2017</small>
 * Changed User-Agent for API client in order to easily determine which version of the extension is used.
