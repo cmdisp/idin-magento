@@ -85,11 +85,15 @@ class CMGroep_Idin_Helper_Api_Transaction extends Mage_Core_Helper_Abstract
     /**
      * Executes the current transaction
      *
-     * @return \CMGroep\Idin\Models\TransactionResponse
+     * @return \CMGroep\Idin\Models\TransactionResponse|\CMGroep\Idin\Models\Error
      */
     public function execute()
     {
-        $transactionResponse = $this->_idinApi->transactionPost($this->_transactionRequest);
+        try {
+            $transactionResponse = $this->_idinApi->transactionPost($this->_transactionRequest);
+        } catch (\CMGroep\Idin\ApiException $ex) {
+            return $ex->getResponseObject();
+        }
 
         return $transactionResponse;
     }

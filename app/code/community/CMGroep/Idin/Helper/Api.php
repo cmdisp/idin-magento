@@ -92,7 +92,7 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
     /**
      * Retrieves all issuers from the iDIN directory
      *
-     * @return \CMGroep\Idin\Models\DirectoryResponse[]
+     * @return \CMGroep\Idin\Models\DirectoryResponse[]|\CMGroep\Idin\Models\Error
      */
     public function getDirectory()
     {
@@ -100,9 +100,13 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
 
         /** @var \CMGroep\Idin\Models\DirectoryRequest $directoryRequest */
         $directoryRequest = $this->prepareRequest(new \CMGroep\Idin\Models\DirectoryRequest());
-        $directoryResponse = $api->directoryPost($directoryRequest);
 
-        return $directoryResponse;
+        try {
+            $directoryResponse = $api->directoryPost($directoryRequest);
+            return $directoryResponse;
+        } catch (\CMGroep\Idin\ApiException $ex) {
+            return $ex->getResponseObject();
+        }
     }
 
     /**
@@ -110,14 +114,18 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
      *
      * @param $merchantToken
      *
-     * @return \CMGroep\Idin\Models\MerchantResponse
+     * @return \CMGroep\Idin\Models\MerchantResponse|\CMGroep\Idin\Models\Error
      */
     public function getMerchantInformation($merchantToken)
     {
         $api = $this->getIdinApi();
-        $merchantResponse = $api->merchantsMerchantTokenGet($merchantToken);
 
-        return $merchantResponse;
+        try {
+            $merchantResponse = $api->merchantsMerchantTokenGet($merchantToken);
+            return $merchantResponse;
+        } catch (\CMGroep\Idin\ApiException $ex) {
+            return $ex->getResponseObject();
+        }
     }
 
     /**
@@ -125,7 +133,7 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
      *
      * @param $transactionId
      *
-     * @return \CMGroep\Idin\Models\StatusResponse
+     * @return \CMGroep\Idin\Models\StatusResponse|\CMGroep\Idin\Models\Error
      */
     public function getTransactionStatus($transactionId)
     {
@@ -135,9 +143,14 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
         $transactionStatusRequest = $this->prepareRequest(new \CMGroep\Idin\Models\StatusRequest());
         $transactionStatusRequest->setTransactionId($transactionId);
 
-        $transactionStatusResponse = $api->statusPost($transactionStatusRequest);
-
-        return $transactionStatusResponse;
+        try {
+            $transactionStatusResponse = $api->statusPost(
+                $transactionStatusRequest
+            );
+            return $transactionStatusResponse;
+        } catch (\CMGroep\Idin\ApiException $ex) {
+            return $ex->getResponseObject();
+        }
     }
 
     /**
@@ -147,16 +160,7 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
      */
     public function generateEntranceCode()
     {
-        $entranceCode = '';
-        $characters = array_merge(range('A', 'Z'), range('a', 'z'), range('0', '9'));
-        $max = count($characters) - 1;
-
-        for ($i = 0; $i < 40; $i++) {
-            $rand = mt_rand(0, $max);
-            $entranceCode .= $characters[$rand];
-        }
-
-        return $entranceCode;
+        return Mage::helper('cmgroep_idin/crypto')->randomString(40);
     }
 
     /**

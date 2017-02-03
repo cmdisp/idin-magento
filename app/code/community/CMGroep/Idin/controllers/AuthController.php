@@ -94,6 +94,15 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
         $transactionResponse = $transaction->execute();
 
         /**
+         * Check if transaction was successful
+         */
+        if ($transactionResponse instanceof \CMGroep\Idin\Models\Error) {
+            $this->_getSession()->addError($transactionResponse->getMessage());
+            $this->_redirectReferer();
+            return;
+        }
+
+        /**
          * Save transaction for reference
          */
         $transactionLog = Mage::getModel('cmgroep_idin/transaction')
@@ -127,14 +136,36 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                  */
                 if (empty($transactionLog->getTransactionResponse())) {
                     $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($transactionLog->getTransactionId());
+
+                    /**
+                     * Check if transaction was successful
+                     */
+                    if ($transactionStatus instanceof \CMGroep\Idin\Models\Error) {
+                        $this->_getSession()->addError($transactionStatus->getMessage());
+                        $this->_redirect('customer/account/login');
+                        return;
+                    }
+
                     $transactionLog->setTransactionResponse(Mage::helper('cmgroep_idin/api')->serializeStatusResponse($transactionStatus));
                     $transactionLog->save();
                 } else {
                     $transactionStatus = Mage::helper('cmgroep_idin/api')->deserializeStatusResponse($transactionLog->getTransactionResponse());
                 }
 
+                /**
+                 * Check if transaction has not been cancelled
+                 */
+                if ($transactionStatus->getStatus() == 'cancelled') {
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('The iDIN transaction has been cancelled.'));
+                    $this->_redirect('customer/account/login');
+                    return;
+                }
+
+                /**
+                 * Check if transaction was successful
+                 */
                 if ($transactionStatus->getStatus() != 'success') {
-                    $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN verification failed or canceled. Please try again later.'));
+                    $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN verification failed. Please try again later.'));
                     $this->_redirect('customer/account/login');
                     return;
                 }
@@ -259,6 +290,15 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
             ->withIdentity()
             ->execute();
 
+        /**
+         * Check if transaction was successful
+         */
+        if ($transactionResponse instanceof \CMGroep\Idin\Models\Error) {
+            $this->_getSession()->addError($transactionResponse->getMessage());
+            $this->_redirectReferer();
+            return;
+        }
+
         $dataHelper->registerTransaction($transactionResponse->getTransactionId(), $entranceCode);
 
         $this->_redirectUrl($transactionResponse->getIssuerAuthenticationUrl());
@@ -271,6 +311,15 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
     {
         if ($this->getRequest()->has('trxid') && $this->getRequest()->has('ec')) {
             $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($this->getRequest()->getParam('trxid'));
+
+            /**
+             * Check if transaction was successful
+             */
+            if ($transactionStatus instanceof \CMGroep\Idin\Models\Error) {
+                $this->_getSession()->addError($transactionStatus->getMessage());
+                $this->_redirect('customer/account/login');
+                return;
+            }
 
             Mage::helper('cmgroep_idin')->registerTransaction($this->getRequest()->getParam('trxid'), $this->getRequest()->getParam('ec'), $transactionStatus);
 
@@ -293,7 +342,16 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 } else {
                     $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('Could not find a matching account, please make sure your account is linked with iDIN or create an account by registering with iDIN below.'));
                     $this->_redirect('customer/account/login');
+                    return;
                 }
+            } elseif ($transactionStatus->getStatus() == 'cancelled') {
+                $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('The iDIN transaction has been cancelled.'));
+                $this->_redirect('customer/account/login');
+                return;
+            } else {
+                $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN transaction failed. Please try again later.'));
+                $this->_redirect('customer/account/login');
+                return;
             }
         }
     }
@@ -321,6 +379,15 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                         ->withIdentity();
 
                     $transactionResponse = $transaction->execute();
+
+                    /**
+                     * Check if transaction was successful
+                     */
+                    if ($transactionResponse instanceof \CMGroep\Idin\Models\Error) {
+                        $this->_getSession()->addError($transactionResponse->getMessage());
+                        $this->_redirectReferer();
+                        return;
+                    }
 
                     /**
                      * Log transaction referencing existing customer
@@ -358,7 +425,34 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 $transaction = $matchingTransactions->getFirstItem();
                 $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($transaction->getTransactionId());
 
+                /**
+                 * Check if transaction was successful
+                 */
+                if ($transactionStatus instanceof \CMGroep\Idin\Models\Error) {
+                    $this->_getSession()->addError($transactionStatus->getMessage());
+                    $this->_redirect('customer/account/index');
+                    return;
+                }
+
                 Mage::helper('cmgroep_idin')->registerTransaction($transaction->getTransactionId(), $transaction->getEntranceCode(), $transactionStatus);
+
+                /**
+                 * Check if transaction has not been cancelled
+                 */
+                if ($transactionStatus->getStatus() == 'cancelled') {
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('The iDIN transaction has been cancelled.'));
+                    $this->_redirect('customer/account/index');
+                    return;
+                }
+
+                /**
+                 * Check if transaction was successful
+                 */
+                if ($transactionStatus->getStatus() != 'success') {
+                    $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN transaction failed. Please try again later.'));
+                    $this->_redirect('customer/account/login');
+                    return;
+                }
 
                 /**
                  * Cache Customer ID and remove transaction record
@@ -437,6 +531,15 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
 
                 $transactionResponse = $transaction->execute();
 
+                /**
+                 * Check if transaction was successful
+                 */
+                if ($transactionResponse instanceof \CMGroep\Idin\Models\Error) {
+                    $this->_getSession()->addError($transactionResponse->getMessage());
+                    $this->_redirectReferer();
+                    return;
+                }
+
                 $transactionLog->setTransactionId($transactionResponse->getTransactionId())
                     ->save();
 
@@ -466,7 +569,34 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 $transaction = $matchingTransactions->getFirstItem();
                 $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($transaction->getTransactionId());
 
+                /**
+                 * Check if transaction was successful
+                 */
+                if ($transactionStatus instanceof \CMGroep\Idin\Models\Error) {
+                    $this->_getSession()->addError($transactionStatus->getMessage());
+                    $this->_redirect('customer/account/index');
+                    return;
+                }
+
                 Mage::helper('cmgroep_idin')->registerTransaction($transaction->getTransactionId(), $transaction->getEntranceCode(), $transactionStatus);
+
+                /**
+                 * Check if transaction has not been cancelled
+                 */
+                if ($transactionStatus->getStatus() == 'cancelled') {
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('The iDIN transaction has been cancelled.'));
+                    $this->_redirect('customer/account/index');
+                    return;
+                }
+
+                /**
+                 * Check if transaction was successful
+                 */
+                if ($transactionStatus->getStatus() != 'success') {
+                    $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN verification failed. Please try again later.'));
+                    $this->_redirect('customer/account/index');
+                    return;
+                }
 
                 /*
                  * Store result of age verification
@@ -503,10 +633,31 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 $transaction = $matchingTransactions->getFirstItem();
                 $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($this->getRequest()->getParam('trxid'));
 
+                /**
+                 * Check if transaction was successful
+                 */
+                if ($transactionStatus instanceof \CMGroep\Idin\Models\Error) {
+                    $this->_getSession()->addError($transactionStatus->getMessage());
+                    $this->_redirectUrl(Mage::helper('checkout/url')->getCheckoutUrl());
+                    return;
+                }
+
                 Mage::helper('cmgroep_idin')->registerTransaction($transaction->getTransactionId(), $transaction->getEntranceCode(), $transactionStatus);
 
+                /**
+                 * Check if transaction has not been cancelled
+                 */
+                if ($transactionStatus->getStatus() == 'cancelled') {
+                    $this->_getSession()->addError(Mage::helper('cmgroep_idin')->__('The iDIN transaction has been cancelled.'));
+                    $this->_redirectUrl(Mage::helper('checkout/url')->getCheckoutUrl());
+                    return;
+                }
+
+                /**
+                 * Check if transaction was not successful
+                 */
                 if ($transactionStatus->getStatus() != 'success') {
-                    $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN verification failed or canceled. Please try again later.'));
+                    $this->_getSession()->addNotice(Mage::helper('cmgroep_idin')->__('iDIN verification failed. Please try again later.'));
                     $this->_redirectUrl(Mage::helper('checkout/url')->getCheckoutUrl());
                     return;
                 }

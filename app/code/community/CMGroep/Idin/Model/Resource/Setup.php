@@ -59,7 +59,8 @@ class CMGroep_Idin_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
                 null,
                 array(
                     'nullable' => false
-                )
+                ),
+                'Transaction Data'
             )
             ->addColumn(
                 'entrance_code',
