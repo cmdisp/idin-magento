@@ -8,7 +8,7 @@ return array(
 
 //The Magento Connect extension name.  Must be unique on Magento Connect
 //Has no relation to your code module name.  Will be the Connect extension name
-'extension_name'         => 'CMGroep_Idin',
+'extension_name'         => 'official-idin-magento-extension',
 
 //Your extension version.  By default, if you're creating an extension from a 
 //single Magento module, the tar-to-connect script will look to make sure this

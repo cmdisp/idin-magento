@@ -46,5 +46,5 @@ pages:
 
 # URL for extension download
 extension:
-  title: CMGroep_Idin-1.0.0.tgz
-  file: http://docs.epartment.nl/idin/releases/CMGroep_Idin-1.0.0.tgz
+  title: official-idin-magento-extension-1.0.0.tgz
+  file: http://docs.epartment.nl/idin/releases/official-idin-magento-extension-1.0.0.tgz
