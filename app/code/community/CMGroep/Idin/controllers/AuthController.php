@@ -369,7 +369,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 /**
                  * Check if customer is not connected to iDIN already
                  */
-                if (empty($customer->getIdinBin())) {
+                if ($customer->getIdinBin()) {
                     $dataHelper = Mage::helper('cmgroep_idin');
                     $apiHelper = Mage::helper('cmgroep_idin/api');
                     $entranceCode = $apiHelper->generateEntranceCode();
