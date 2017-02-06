@@ -63,7 +63,7 @@ class CMGroep_Idin_Block_Adminhtml_Customer_Edit_Tab_View_Idin extends Mage_Admi
      */
     public function getCustomerIdinConnected()
     {
-        return empty($this->getCustomer()->getIdinBin()) == false;
+        return $this->getCustomer()->getIdinBin() != null;
     }
 
     /**

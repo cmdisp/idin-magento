@@ -69,7 +69,7 @@ class CMGroep_Idin_Block_Customer_Account_Info extends CMGroep_Idin_Block_Abstra
      */
     public function customerHasIdin()
     {
-        return empty($this->getCustomer()->getIdinBin()) === false;
+        return $this->getCustomer()->getIdinBin() != null;
     }
 
     /**
