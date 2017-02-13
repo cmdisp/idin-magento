@@ -186,7 +186,7 @@ class CMGroep_Idin_Helper_Api extends Mage_Core_Helper_Abstract
     {
         return \CMGroep\Idin\ObjectSerializer::deserialize(
             json_decode($statusResponseData),
-            \CMGroep\Idin\Models\StatusResponse::class
+            'CMGroep\Idin\Models\StatusResponse'
         );
     }
 }
