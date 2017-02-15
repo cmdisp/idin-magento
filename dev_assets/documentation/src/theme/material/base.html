@@ -1,4 +1,8 @@
-{% import "partials/language.html" as lang %}
+{% if "nl" in config.language %}
+  {% import "partials/language_nl.html" as lang %}
+{% else %}
+  {% import "partials/language_en.html" as lang %}
+{% endif %}
 <!DOCTYPE html>
 <html class="no-js">
   <head>
@@ -124,7 +128,7 @@
       {% endblock %}
     </div>
     {% block scripts %}
-      <script src="{{ base_url }}/assets/javascripts/application-7f35cda7dd.js"></script>
+      <script src="{{ base_url }}/assets/javascripts/application-410733a73b.js"></script>
       <script>var config={url:{base:"{{ base_url }}"}},app=new Application(config);app.initialize()</script>
       {% for path in extra_javascript %}
         <script src="{{ path }}"></script>

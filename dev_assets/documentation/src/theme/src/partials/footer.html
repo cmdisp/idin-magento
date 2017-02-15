@@ -20,7 +20,11 @@
   IN THE SOFTWARE.
 -->
 
-{% import "partials/language.html" as lang %}
+{% if "nl" in config.language %}
+  {% import "partials/language_nl.html" as lang %}
+{% else %}
+  {% import "partials/language_en.html" as lang %}
+{% endif %}
 
 <!-- Application footer -->
 <footer class="md-footer">

@@ -1,4 +1,8 @@
-{% import "partials/language.html" as lang %}
+{% if "nl" in config.language %}
+  {% import "partials/language_nl.html" as lang %}
+{% else %}
+  {% import "partials/language_en.html" as lang %}
+{% endif %}
 <footer class="md-footer">
   {% if page.previous_page or page.next_page %}
     <div class="md-footer-nav">

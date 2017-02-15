@@ -34,6 +34,8 @@ copyright: 'Copyright &copy; 2016 - 2017 Martin Donath'
 # Documentation and theme
 theme_dir: material
 
+language: 'en'
+
 # Options
 extra:
   palette:

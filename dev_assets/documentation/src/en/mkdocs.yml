@@ -1,0 +1,54 @@
+site_name: CM iDIN Extension for Magento
+site_description:  The official CM iDIN extension for Magento
+site_author: Epartment E-Commerce
+site_url: http://www.cm.nl/
+
+theme: 'material'
+theme_dir: '../theme/material'
+
+language: 'en'
+
+copyright: 'CM Groep iDIN Extension for Magento - &copy; CM Groep 2016 - 2017'
+
+extra:
+  palette:
+    primary: 'idin-blue'
+    accent: 'idin-coral'
+  font:
+      text: 'Overpass'
+      code: 'Overpass Mono'
+
+markdown_extensions:
+ - admonition
+ - toc(permalink=true)
+ - pymdownx.betterem(smart_enable=all)
+ - pymdownx.emoji:
+       emoji_generator: !!python/name:pymdownx.emoji.to_svg
+ - pymdownx.magiclink
+ - pymdownx.tasklist(custom_checkbox=true)
+ - pymdownx.tilde
+ - pymdownx.smartsymbols
+ - pymdownx.critic
+
+pages:
+  - Introduction: index.md
+  - Features:
+    - Registration through iDIN: features/registration.md
+    - Authenticate through iDIN: features/authentication.md
+    - Age Verification through iDIN: features/age_verification.md
+  - Installation: installation.md
+  - Configuration:
+    - Common: configuration/common.md
+    - Configure registration: configuration/registration.md
+    - Configure authentication: configuration/authentication.md
+    - Configure age verification: configuration/age_verification.md
+  - FAQ: faq.md
+  - Support: support.md
+  - Changelog: changelog.md
+
+# URL for extension download
+extension:
+  title: official-idin-magento-extension-1.0.0.tgz
+  file: http://docs.epartment.nl/idin/releases/official-idin-magento-extension-1.0.0.tgz
+  download_title_latest_version: Download latest version
+  download_title: Download extension

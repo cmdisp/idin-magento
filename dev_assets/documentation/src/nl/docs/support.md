@@ -18,4 +18,4 @@ Als u (installatie) problemen ondervindt of hulp nodig heeft met specifieke Mage
 
 Ondersteuning: [Maak een support ticket](http://epartment.freshdesk.com/support/tickets/new)<br/>
 E-mail: [support@epartment.nl](mailto:support@epartment.nl)<br/>
-Documentatie: [iDIN extensie documentatie](http://docs.epartment.nl/idin)
+Documentatie: [iDIN extensie documentatie](http://docs.epartment.nl/idin/nl)

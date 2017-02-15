@@ -4,9 +4,11 @@ site_author: Epartment E-Commerce
 site_url: http://www.cm.nl/
 
 theme: 'material'
-theme_dir: 'theme/material'
+theme_dir: '../theme/material'
 
-copyright: 'CM Groep iDIN Magento Extensie - &copy; CM Groep 2016 - 2017'
+language: 'nl'
+
+copyright: 'CM Groep iDIN Extensie voor Magento - &copy; CM Groep 2016 - 2017'
 
 extra:
   palette:

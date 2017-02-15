@@ -58,8 +58,12 @@ docs:
     - pip install --upgrade virtualenv
     - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src
     - pip install -r requirements.txt
+    - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/nl
     - mkdocs build
-    - mkdir -p /builds/epartment/cmgroep-idin/build
-    - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/site
-    - scp -P 339 -r ./* epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/
+    - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/nl/site
+    - scp -P 339 -r ./* epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/nl
+    - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/en
+    - mkdocs build
+    - cd /builds/epartment/cmgroep-idin/dev_assets/documentation/src/en/site
+    - scp -P 339 -r ./* epartment@production119.hipex.io:~/domains/docs.epartment.nl/public_html/idin/en
   when: manual
