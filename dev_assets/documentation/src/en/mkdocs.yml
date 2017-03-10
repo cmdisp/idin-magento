@@ -36,6 +36,7 @@ pages:
     - Registration through iDIN: features/registration.md
     - Authenticate through iDIN: features/authentication.md
     - Age Verification through iDIN: features/age_verification.md
+    - iDIN Transaction log: features/transaction_log.md
   - Installation: installation.md
   - Configuration:
     - Common: configuration/common.md

@@ -1,4 +1,4 @@
-Is a 18+ verification necessary for products you offer? With the iDIN / Magento extension you can obligate your customer to do so; the age of the customer will be verified by iDIN before the order can be completed. You can even relate 18+ verification to particular products, so your other products can be sold without age verification. 
+Is 18+ verification necessary for products you offer? With the iDIN / Magento extension you can obligate your customer to do so; the age of the customer will be verified by iDIN before the order can be completed. You can even relate 18+ verification to particular products, so your other products can be sold without age verification. 
 
 ![Screenshot of iDIN Age Verification on product pages](/images/features/age_verification_1.png)
 3.1 Age Verification on product pages

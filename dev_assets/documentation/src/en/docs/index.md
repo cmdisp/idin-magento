@@ -1,5 +1,5 @@
 ##Usage of iDIN
-iDIN is the new way to identify online, a collective of the Dutch banks who successfully introduced iDEAL to the market. [More information](https://www.idin.nl/). 
+iDIN is the new way to identify someone online, a collective of the Dutch banks who successfully introduced iDEAL to the market. [More information](https://www.idin.nl/). 
 
 ##Features
 * Login and register through iDIN

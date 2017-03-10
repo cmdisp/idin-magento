@@ -1,8 +1,14 @@
-!!! tip "Advies"
-    We adviseren de extensie te installeren via Magento Connect. Zo weet u zeker dat de extensie juist wordt geïnstalleerd en alle installatie scripts juist worden uitgevoerd.
+## Extensie downloaden
+##### Magento Marketplace
+https://marketplace.magento.com/epartment-official-idin-magento-extension.html
+##### Magento Connect
+https://www.magentocommerce.com/magento-connect/official-idin-magento-extension.html
+
+## Installatie via Magento Marketplace
+1. Download het `tgz` bestand via de Magento Marketplace. Volg vervolgens de stappen voor de handmatige installatie.
 
 ## Installatie / update via Magento Connect
-1. Plak de extension key `extension-key` in de Magento Connect Manager
+1. Plak de extension key `http://connect20.magentocommerce.com/community/official-idin-magento-extension` in de Magento Connect Manager
 2. Klik op Install
 
 ## Handmatige installatie / update

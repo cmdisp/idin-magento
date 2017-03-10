@@ -36,6 +36,7 @@ pages:
     - Registratie met iDIN: features/registration.md
     - Authenticatie met iDIN: features/authentication.md
     - Leeftijdsverificatie met iDIN: features/age_verification.md
+    - iDIN Transactie Log: features/transaction_log.md
   - Installatie: installation.md
   - Configuratie:
     - Algemeen: configuration/common.md

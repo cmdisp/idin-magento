@@ -1,8 +1,14 @@
-!!! tip "Please note"
-    To make sure this installation of the extension will be correctly executed, we advice you to install this extension through Magento Connect.
+## Download the extension
+##### Magento Marketplace
+https://marketplace.magento.com/epartment-official-idin-magento-extension.html
+##### Magento Connect
+https://www.magentocommerce.com/magento-connect/official-idin-magento-extension.html
+
+## Installation through Magento Marketplace
+1. Download the `tgz` file through the Magento Marketplace. Then please follow the steps for manual installation below.
 
 ## Install / update through Magento Connect
-1. Paste the extension key `extension-key` into the connect manager
+1. Paste the extension key `http://connect20.magentocommerce.com/community/official-idin-magento-extension` into the connect manager
 2. Click on install
 
 ## Manual installation / update

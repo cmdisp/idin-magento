@@ -134,7 +134,7 @@ class CMGroep_Idin_AuthController extends Mage_Core_Controller_Front_Action
                 /**
                  * Only retrieve response the first time, consecutive requests will fetch it from the DB.
                  */
-                if ($transactionLog->getTransactionResponse()) {
+                if ($transactionLog->getTransactionResponse() == null) {
                     $transactionStatus = Mage::helper('cmgroep_idin/api')->getTransactionStatus($transactionLog->getTransactionId());
 
                     /**
